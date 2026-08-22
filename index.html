@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wallet Prototype</title>
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>Wallet — Sandbox</title>
 
 <style>
 :root{
-  --bg:#080b10;
-  --panel:#151b23;
-  --panel2:#1b222c;
-  --border:#29313b;
-  --text:#f5f7fa;
-  --muted:#8f9baa;
-  --gold:#f0b90b;
-  --green:#16c784;
-  --red:#ea3943;
-  --blue:#4da3ff;
+  --bg:#090b0f;
+  --panel:#15191f;
+  --panel2:#1c2128;
+  --border:#2b323b;
+  --text:#f4f6f8;
+  --muted:#8d98a8;
+  --gold:#f3ba19;
+  --gold2:#ffcf3f;
+  --green:#19c985;
+  --red:#f45b69;
+  --blue:#3c9cff;
+  --shadow:0 15px 40px rgba(0,0,0,.28);
 }
 
 *{
@@ -28,13 +28,15 @@
 }
 
 body{
+  font-family:Inter,Arial,sans-serif;
   background:var(--bg);
   color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
   min-height:100vh;
 }
 
-button,input,select{
+button,
+input,
+select{
   font:inherit;
 }
 
@@ -42,130 +44,145 @@ button{
   cursor:pointer;
 }
 
+.app{
+  max-width:1100px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+/* HEADER */
+
 .header{
   position:sticky;
   top:0;
-  z-index:20;
-  background:#0d1117;
-  border-bottom:1px solid var(--border);
-}
-
-.topbar{
+  z-index:50;
   height:70px;
+  background:rgba(9,11,15,.96);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 18px;
+  padding:0 20px;
 }
 
 .logo{
   display:flex;
   align-items:center;
   gap:10px;
-  font-size:22px;
+  color:var(--gold);
+  font-size:21px;
   font-weight:800;
 }
 
 .logoMark{
-  width:30px;
-  height:30px;
-  border-radius:8px;
+  width:34px;
+  height:34px;
+  border-radius:10px;
   background:var(--gold);
+  color:#111;
   display:grid;
   place-items:center;
-  color:#111;
   font-weight:900;
 }
 
-.actions{
+.headerActions{
   display:flex;
-  align-items:center;
-  gap:10px;
+  gap:8px;
 }
 
 .iconBtn{
   width:42px;
   height:42px;
-  border:0;
-  border-radius:50%;
-  background:#202832;
+  border:1px solid var(--border);
+  background:var(--panel);
   color:white;
-  font-size:19px;
+  border-radius:12px;
+  font-size:18px;
 }
 
-.profileBtn{
-  background:var(--gold);
-  color:#111;
-  font-weight:800;
-}
+/* TICKER */
 
 .ticker{
   display:flex;
   gap:28px;
   overflow:hidden;
   white-space:nowrap;
-  padding:11px 18px;
-  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:12px 20px;
   color:var(--muted);
-  font-size:14px;
+}
+
+.tickerItem strong{
+  color:white;
 }
 
 .up{
-  color:var(--green);
+  color:var(--green)!important;
 }
 
 .down{
-  color:var(--red);
+  color:var(--red)!important;
 }
 
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:20px 16px 100px;
+/* CONTENT */
+
+.content{
+  padding:22px;
 }
 
-.titleRow{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
+.view{
+  display:none;
 }
 
-h1{
+.view.active{
+  display:block;
+}
+
+.pageTitle{
   font-size:30px;
+  margin-bottom:20px;
 }
 
-.live{
-  padding:7px 12px;
-  background:#273119;
-  color:var(--green);
-  border-radius:8px;
-  font-weight:700;
+.sectionTitle{
+  font-size:19px;
+  margin-bottom:15px;
 }
+
+/* CARDS */
 
 .card{
-  background:var(--panel);
+  background:linear-gradient(145deg,var(--panel),var(--panel2));
   border:1px solid var(--border);
-  border-radius:16px;
-  padding:20px;
-  margin-bottom:16px;
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
 }
 
 .balanceCard{
-  border:1px solid #806800;
-  background:linear-gradient(145deg,#171d24,#10151b);
+  border:1px solid rgba(243,186,25,.7);
 }
 
-.small{
+.balanceTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.eyebrow{
   color:var(--muted);
   font-size:14px;
+  margin-bottom:8px;
 }
 
 .balance{
-  margin:12px 0;
   font-size:42px;
-  font-weight:800;
-  color:var(--gold);
+  font-weight:850;
+  letter-spacing:-1px;
+  color:var(--gold2);
   word-break:break-word;
 }
 
@@ -173,84 +190,72 @@ h1{
   letter-spacing:5px;
 }
 
-.balanceSub{
+.subBalance{
   color:var(--muted);
+  margin-top:8px;
 }
 
-.stats{
+.balanceStats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:12px;
-  margin-top:22px;
+  margin-top:25px;
 }
 
 .stat{
-  padding-top:14px;
-  border-top:1px solid var(--border);
+  padding:15px;
+  background:rgba(255,255,255,.035);
+  border-radius:14px;
 }
 
-.statValue{
-  margin-top:6px;
-  font-size:19px;
+.stat span{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.stat strong{
+  font-size:17px;
+}
+
+/* ACTIONS */
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.action{
+  border:1px solid var(--border);
+  background:#20252c;
+  color:white;
+  padding:14px 10px;
+  border-radius:13px;
   font-weight:700;
 }
 
-.green{
-  color:var(--green);
-}
-
-.red{
-  color:var(--red);
-}
-
-.buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:18px;
-}
-
-.primary,
-.secondary,
-.danger{
-  border:0;
-  border-radius:10px;
-  padding:14px;
-  font-weight:800;
-}
-
-.primary{
+.action.primary{
   background:var(--gold);
   color:#111;
+  border-color:var(--gold);
 }
 
-.secondary{
-  background:#27303a;
-  color:white;
-}
-
-.danger{
-  background:#35181b;
-  color:#ff7b83;
-}
-
-.sectionTitle{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:14px;
-}
+/* ASSETS */
 
 .asset{
   display:flex;
   align-items:center;
   gap:14px;
-  padding:15px 0;
+  padding:17px 0;
   border-bottom:1px solid var(--border);
+  cursor:pointer;
 }
 
 .asset:last-child{
-  border-bottom:0;
+  border-bottom:none;
 }
 
 .coin{
@@ -259,20 +264,9 @@ h1{
   border-radius:50%;
   display:grid;
   place-items:center;
+  background:#292d35;
+  color:var(--gold);
   font-weight:900;
-  background:#2b3038;
-}
-
-.coin.btc{
-  color:#f7931a;
-}
-
-.coin.eth{
-  color:#8a92ff;
-}
-
-.coin.sol{
-  color:#14f195;
 }
 
 .assetInfo{
@@ -280,113 +274,116 @@ h1{
 }
 
 .assetName{
-  font-size:17px;
-  font-weight:700;
+  font-weight:800;
 }
 
-.assetQty{
+.assetAmount{
   color:var(--muted);
-  margin-top:4px;
+  margin-top:3px;
+  font-size:14px;
 }
 
 .assetValue{
   text-align:right;
-  font-weight:700;
 }
 
-.nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  z-index:30;
-  background:#11161d;
-  border-top:1px solid var(--border);
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-}
-
-.nav button{
-  background:none;
-  border:0;
-  color:var(--muted);
-  padding:12px 4px;
-  font-size:12px;
-}
-
-.nav button.active{
-  color:var(--gold);
-}
-
-.page{
-  display:none;
-}
-
-.page.active{
+.assetValue strong{
   display:block;
 }
 
-.marketTabs{
+/* GRID */
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+/* PROFILE */
+
+.profile{
   display:flex;
-  gap:8px;
-  overflow:auto;
-  margin-bottom:14px;
+  align-items:center;
+  gap:18px;
 }
 
-.marketTab{
-  border:1px solid var(--border);
-  background:#151b23;
-  color:white;
-  padding:10px 15px;
-  border-radius:9px;
-  white-space:nowrap;
-}
-
-.marketTab.active{
+.avatar{
+  width:70px;
+  height:70px;
+  border-radius:50%;
   background:var(--gold);
   color:#111;
+  display:grid;
+  place-items:center;
+  font-size:25px;
+  font-weight:900;
 }
 
-.marketPrice{
-  font-size:36px;
+.profileName{
+  font-size:23px;
   font-weight:800;
-  margin:8px 0;
 }
 
-.chart{
+.profileMeta{
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.verified{
+  display:inline-block;
+  margin-top:10px;
+  padding:7px 10px;
+  border-radius:9px;
+  background:rgba(25,201,133,.12);
+  color:var(--green);
+  font-size:13px;
+}
+
+/* MENU */
+
+.menu{
+  display:grid;
+  gap:10px;
+}
+
+.menuItem{
   width:100%;
-  height:260px;
-  background:#10151b;
-  border-radius:12px;
+  text-align:left;
+  background:var(--panel2);
+  color:white;
   border:1px solid var(--border);
-}
-
-.row{
+  border-radius:14px;
+  padding:17px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  gap:12px;
+  justify-content:space-between;
 }
 
-.formGroup{
-  margin-bottom:15px;
+.menuItem small{
+  color:var(--muted);
 }
+
+/* FORM */
 
 label{
   display:block;
   color:var(--muted);
   font-size:14px;
-  margin-bottom:7px;
+  margin-bottom:8px;
+}
+
+.inputGroup{
+  margin-bottom:16px;
 }
 
 input,
 select{
   width:100%;
-  background:#0e1319;
-  border:1px solid var(--border);
-  color:white;
-  border-radius:10px;
   padding:14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#0f1318;
+  color:white;
   outline:none;
 }
 
@@ -395,29 +392,168 @@ select:focus{
   border-color:var(--gold);
 }
 
+.btn{
+  border:0;
+  background:var(--gold);
+  color:#111;
+  padding:13px 18px;
+  border-radius:12px;
+  font-weight:800;
+}
+
+.btn.secondary{
+  background:#272d35;
+  color:white;
+}
+
+.btn.danger{
+  background:var(--red);
+  color:white;
+}
+
+/* MARKET */
+
+.marketTabs{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  margin-bottom:15px;
+}
+
+.marketTab{
+  white-space:nowrap;
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:white;
+  padding:10px 15px;
+  border-radius:10px;
+}
+
+.marketTab.active{
+  background:var(--gold);
+  color:#111;
+}
+
+.marketHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.marketPrice{
+  font-size:34px;
+  font-weight:850;
+}
+
+.marketChange{
+  font-weight:800;
+}
+
+.chart{
+  width:100%;
+  height:280px;
+  display:block;
+  background:#101419;
+  border-radius:15px;
+  border:1px solid var(--border);
+}
+
+/* P2P */
+
+.p2pTabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:18px;
+}
+
+.p2pTab{
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:white;
+  font-weight:800;
+}
+
+.p2pTab.active{
+  background:var(--gold);
+  color:#111;
+}
+
+.offer{
+  border:1px solid var(--border);
+  background:var(--panel2);
+  border-radius:15px;
+  padding:17px;
+  margin-bottom:12px;
+}
+
+.offerTop{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.offerPrice{
+  font-size:21px;
+  font-weight:850;
+}
+
+.offerMeta{
+  color:var(--muted);
+  margin:6px 0 14px;
+}
+
+/* TRANSACTIONS */
+
+.transaction{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.transaction:last-child{
+  border-bottom:0;
+}
+
+.transactionType{
+  font-weight:800;
+}
+
+.transactionDate{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+/* MODAL */
+
 .modal{
   position:fixed;
   inset:0;
+  background:rgba(0,0,0,.75);
   z-index:100;
   display:none;
-  background:rgba(0,0,0,.75);
-  padding:20px;
-  overflow:auto;
-}
-
-.modal.show{
-  display:flex;
-  align-items:center;
+  align-items:flex-end;
   justify-content:center;
 }
 
+.modal.open{
+  display:flex;
+}
+
 .modalBox{
-  width:100%;
-  max-width:520px;
-  background:#151b23;
+  width:min(650px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#15191f;
   border:1px solid var(--border);
-  border-radius:18px;
-  padding:22px;
+  border-radius:25px 25px 0 0;
+  padding:24px;
 }
 
 .modalHeader{
@@ -430,101 +566,117 @@ select:focus{
 .close{
   background:none;
   border:0;
-  color:var(--muted);
-  font-size:26px;
+  color:white;
+  font-size:25px;
 }
+
+/* NOTICE */
 
 .notice{
   padding:14px;
-  border-radius:10px;
-  background:#222a34;
-  color:#b9c2ce;
-  margin-bottom:15px;
+  border-radius:12px;
+  background:rgba(60,156,255,.09);
+  border:1px solid rgba(60,156,255,.25);
+  color:#b9d9ff;
+  margin-bottom:16px;
   line-height:1.5;
 }
 
 .warning{
-  background:#332b13;
-  color:#f6d66b;
-}
-
-.success{
-  background:#112d22;
-  color:#58dfa4;
-}
-
-.profile{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
-
-.avatar{
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  background:var(--gold);
-  color:#111;
-  display:grid;
-  place-items:center;
-  font-size:22px;
-  font-weight:900;
-}
-
-.setting{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:17px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.setting:last-child{
-  border-bottom:0;
-}
-
-.setting button{
-  background:#27303a;
-  border:0;
-  color:white;
-  padding:9px 12px;
-  border-radius:8px;
-}
-
-.empty{
-  text-align:center;
-  padding:35px 10px;
-  color:var(--muted);
-}
-
-.p2pGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.p2pCard{
-  background:#1b222c;
-  border:1px solid var(--border);
+  padding:14px;
   border-radius:12px;
-  padding:16px;
+  background:rgba(243,186,25,.09);
+  border:1px solid rgba(243,186,25,.3);
+  color:#ffe28a;
+  margin-bottom:16px;
 }
 
-@media(max-width:600px){
+/* BOTTOM NAV */
+
+.bottomNav{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:min(1100px,100%);
+  background:rgba(13,16,21,.97);
+  backdrop-filter:blur(15px);
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  z-index:60;
+}
+
+.navBtn{
+  background:none;
+  border:0;
+  color:var(--muted);
+  padding:12px 5px 10px;
+  font-size:12px;
+}
+
+.navBtn span{
+  display:block;
+  font-size:20px;
+  margin-bottom:4px;
+}
+
+.navBtn.active{
+  color:var(--gold);
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:85px;
+  transform:translateX(-50%) translateY(20px);
+  background:#242a32;
+  border:1px solid var(--border);
+  padding:13px 17px;
+  border-radius:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:200;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:700px){
+
+  .content{
+    padding:15px;
+  }
+
   .balance{
     font-size:34px;
   }
 
-  .stats{
+  .balanceStats{
     grid-template-columns:1fr;
   }
 
-  .p2pGrid{
+  .actions{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .grid{
     grid-template-columns:1fr;
   }
 
-  h1{
-    font-size:25px;
+  .pageTitle{
+    font-size:26px;
+  }
+
+  .header{
+    padding:0 14px;
   }
 }
 </style>
@@ -532,141 +684,109 @@ select:focus{
 
 <body>
 
+<div class="app">
+
 <header class="header">
-  <div class="topbar">
 
-    <div class="logo">
-      <div class="logoMark">W</div>
-      Wallet
-    </div>
-
-    <div class="actions">
-      <button class="iconBtn" onclick="openPage('settings')">⚙</button>
-      <button class="iconBtn profileBtn" onclick="openPage('profile')">U</button>
-    </div>
-
+  <div class="logo">
+    <div class="logoMark">W</div>
+    WALLET
   </div>
 
-  <div class="ticker" id="ticker">
-    Loading live market data...
+  <div class="headerActions">
+    <button class="iconBtn" onclick="showToast('Notifications are currently clear')">🔔</button>
+    <button class="iconBtn" onclick="openView('settings')">⚙️</button>
+    <button class="iconBtn" onclick="openView('profile')">👤</button>
   </div>
+
 </header>
 
+<div class="ticker" id="ticker">
+  <div class="tickerItem">Loading markets...</div>
+</div>
 
-<main class="container">
+<main class="content">
 
-<!-- HOME -->
+<!-- DASHBOARD -->
 
-<section id="home" class="page active">
+<section id="dashboard" class="view active">
 
-  <div class="titleRow">
-    <h1>Portfolio</h1>
-    <div class="live">● LIVE</div>
-  </div>
+  <h1 class="pageTitle">Portfolio</h1>
 
   <div class="card balanceCard">
 
-    <div class="small">Total Portfolio Value</div>
+    <div class="balanceTop">
 
-    <div class="balance" id="balanceDisplay">
-      $263,532.10
+      <div>
+        <div class="eyebrow">Total portfolio value</div>
+        <div id="balance" class="balance">$263,753.10</div>
+        <div class="subBalance">Estimated portfolio value</div>
+      </div>
+
+      <button class="iconBtn" onclick="toggleBalance()">👁</button>
+
     </div>
 
-    <div class="balanceSub">
-      Live market reference • Prototype interface
-    </div>
-
-    <div class="stats">
+    <div class="balanceStats">
 
       <div class="stat">
-        <div class="small">Available Balance</div>
-        <div class="statValue" id="availableBalance">
-          $263,532.10
-        </div>
+        <span>Available balance</span>
+        <strong>$263,753.10</strong>
       </div>
 
       <div class="stat">
-        <div class="small">Profit / Loss</div>
-        <div class="statValue green">
-          +$39,941.81
-        </div>
+        <span>Portfolio change</span>
+        <strong class="up">+$8,214.30</strong>
       </div>
 
       <div class="stat">
-        <div class="small">24h Change</div>
-        <div class="statValue green">
-          +3.21%
-        </div>
+        <span>24h change</span>
+        <strong id="portfolioChange" class="up">+0.00%</strong>
       </div>
 
     </div>
 
-    <div class="buttons">
-      <button class="primary" onclick="openWithdraw()">
+    <div class="actions">
+
+      <button class="action primary" onclick="openModal('withdrawModal')">
         Withdraw
       </button>
 
-      <button class="secondary" onclick="openRefund()">
+      <button class="action" onclick="openModal('depositModal')">
+        Deposit
+      </button>
+
+      <button class="action" onclick="openView('p2p')">
+        P2P
+      </button>
+
+      <button class="action" onclick="openView('refund')">
         Refund
       </button>
+
     </div>
 
   </div>
 
+  <div class="card">
+
+    <div class="sectionTitle">Your Assets</div>
+
+    <div id="assets"></div>
+
+  </div>
 
   <div class="card">
 
-    <div class="sectionTitle">
-      <h2>Your Assets</h2>
-      <button class="secondary" onclick="openDeposit()">
-        Deposit
-      </button>
+    <div class="sectionTitle">Sample Partnership Reward</div>
+
+    <div style="font-size:30px;font-weight:850;color:var(--gold)">
+      $4,000.00
     </div>
 
-    <div class="asset">
-
-      <div class="coin btc">₿</div>
-
-      <div class="assetInfo">
-        <div class="assetName">Bitcoin</div>
-        <div class="assetQty">3.00000000 BTC</div>
-      </div>
-
-      <div class="assetValue" id="btcValue">
-        Loading...
-      </div>
-
-    </div>
-
-    <div class="asset">
-
-      <div class="coin eth">Ξ</div>
-
-      <div class="assetInfo">
-        <div class="assetName">Ethereum</div>
-        <div class="assetQty">10.00000000 ETH</div>
-      </div>
-
-      <div class="assetValue" id="ethValue">
-        Loading...
-      </div>
-
-    </div>
-
-    <div class="asset">
-
-      <div class="coin sol">S</div>
-
-      <div class="assetInfo">
-        <div class="assetName">Solana</div>
-        <div class="assetQty">76.00000000 SOL</div>
-      </div>
-
-      <div class="assetValue" id="solValue">
-        Loading...
-      </div>
-
-    </div>
+    <p style="color:var(--muted);margin-top:7px">
+      Sample reward balance displayed for interface testing.
+    </p>
 
   </div>
 
@@ -675,89 +795,41 @@ select:focus{
 
 <!-- MARKETS -->
 
-<section id="markets" class="page">
+<section id="markets" class="view">
 
-  <div class="titleRow">
-    <h1>Markets</h1>
-    <div class="live">● LIVE</div>
-  </div>
+  <h1 class="pageTitle">Markets</h1>
 
-  <div class="marketTabs">
-    <button class="marketTab active" onclick="changeMarket('bitcoin',this)">
-      BTC/USDT
-    </button>
-
-    <button class="marketTab" onclick="changeMarket('ethereum',this)">
-      ETH/USDT
-    </button>
-
-    <button class="marketTab" onclick="changeMarket('solana',this)">
-      SOL/USDT
-    </button>
-  </div>
+  <div class="marketTabs" id="marketTabs"></div>
 
   <div class="card">
 
-    <div class="small" id="marketName">
-      Bitcoin / USDT
-    </div>
+    <div class="marketHeader">
 
-    <div class="marketPrice" id="marketPrice">
-      Loading...
-    </div>
+      <div>
+        <div class="eyebrow" id="marketSymbol">BTC/USDT</div>
+        <div class="marketPrice" id="marketPrice">$--</div>
+      </div>
 
-    <div id="marketChange" class="green">
-      Loading...
-    </div>
+      <div id="marketChange" class="marketChange">
+        --
+      </div>
 
-    <br>
+    </div>
 
     <canvas id="chart" class="chart"></canvas>
 
   </div>
 
-  <div class="card">
+  <div class="grid">
 
-    <h2>Market Overview</h2>
-    <br>
-
-    <div class="asset">
-      <div class="coin btc">₿</div>
-
-      <div class="assetInfo">
-        <div class="assetName">Bitcoin</div>
-        <div class="assetQty">BTC/USDT</div>
-      </div>
-
-      <div class="assetValue" id="marketBTC">
-        --
-      </div>
+    <div class="card">
+      <div class="eyebrow">24h High</div>
+      <div id="highValue" style="font-size:23px;font-weight:800">$--</div>
     </div>
 
-    <div class="asset">
-      <div class="coin eth">Ξ</div>
-
-      <div class="assetInfo">
-        <div class="assetName">Ethereum</div>
-        <div class="assetQty">ETH/USDT</div>
-      </div>
-
-      <div class="assetValue" id="marketETH">
-        --
-      </div>
-    </div>
-
-    <div class="asset">
-      <div class="coin sol">S</div>
-
-      <div class="assetInfo">
-        <div class="assetName">Solana</div>
-        <div class="assetQty">SOL/USDT</div>
-      </div>
-
-      <div class="assetValue" id="marketSOL">
-        --
-      </div>
+    <div class="card">
+      <div class="eyebrow">24h Low</div>
+      <div id="lowValue" style="font-size:23px;font-weight:800">$--</div>
     </div>
 
   </div>
@@ -767,50 +839,72 @@ select:focus{
 
 <!-- P2P -->
 
-<section id="p2p" class="page">
+<section id="p2p" class="view">
 
-  <div class="titleRow">
-    <h1>P2P</h1>
-    <div class="live">Marketplace</div>
+  <h1 class="pageTitle">P2P</h1>
+
+  <div class="notice">
+    P2P offers below are interface examples. No real order or payment is processed by this front-end.
   </div>
+
+  <div class="p2pTabs">
+
+    <button class="p2pTab active" onclick="setP2P('buy',this)">
+      Buy
+    </button>
+
+    <button class="p2pTab" onclick="setP2P('sell',this)">
+      Sell
+    </button>
+
+  </div>
+
+  <div id="offers"></div>
+
+</section>
+
+
+<!-- TRANSACTIONS -->
+
+<section id="transactions" class="view">
+
+  <h1 class="pageTitle">Transactions</h1>
 
   <div class="card">
 
-    <div class="marketTabs">
-      <button class="marketTab active">Buy</button>
-      <button class="marketTab">Sell</button>
-    </div>
+    <div class="transaction">
 
-    <div class="p2pGrid">
-
-      <div class="p2pCard">
-        <b>USDT / Local Currency</b>
-        <p class="small">Payment method</p>
-        <br>
-        <strong>Bank Transfer</strong>
-        <br><br>
-        <button class="primary" onclick="demoAction()">
-          View offer
-        </button>
+      <div>
+        <div class="transactionType">Portfolio credit</div>
+        <div class="transactionDate">Today · 10:22 PM</div>
       </div>
 
-      <div class="p2pCard">
-        <b>USDT / Local Currency</b>
-        <p class="small">Payment method</p>
-        <br>
-        <strong>Instant Transfer</strong>
-        <br><br>
-        <button class="primary" onclick="demoAction()">
-          View offer
-        </button>
-      </div>
+      <strong class="up">+$4,000.00</strong>
 
     </div>
 
-  </div>
+    <div class="transaction">
 
-  <div class="notice">
-    P2P is presented as a front-end prototype. No payment or cryptocurrency transaction is executed.
+      <div>
+        <div class="transactionType">Bitcoin allocation</div>
+        <div class="transactionDate">Yesterday · 4:18 PM</div>
+      </div>
+
+      <strong>3.00000000 BTC</strong>
+
+    </div>
+
+    <div class="transaction">
+
+      <div>
+        <div class="transactionType">Solana allocation</div>
+        <div class="transactionDate">Yesterday · 3:42 PM</div>
+      </div>
+
+      <strong>76.00000000 SOL</strong>
+
+    </div>
+
   </div>
 
 </section>
@@ -818,21 +912,28 @@ select:focus{
 
 <!-- PROFILE -->
 
-<section id="profile" class="page">
+<section id="profile" class="view">
 
-  <div class="titleRow">
-    <h1>Profile</h1>
-  </div>
+  <h1 class="pageTitle">Profile</h1>
 
   <div class="card">
 
     <div class="profile">
 
-      <div class="avatar">U</div>
+      <div class="avatar">GS</div>
 
       <div>
-        <h2>Wallet User</h2>
-        <p class="small">Verified prototype account</p>
+
+        <div class="profileName">Guilherme Souza</div>
+
+        <div class="profileMeta">
+          Account ID: 756371252
+        </div>
+
+        <div class="verified">
+          ✓ Account information
+        </div>
+
       </div>
 
     </div>
@@ -841,24 +942,25 @@ select:focus{
 
   <div class="card">
 
-    <div class="setting">
-      <span>Settings</span>
-      <button onclick="openPage('settings')">Open</button>
-    </div>
+    <div class="sectionTitle">Account</div>
 
-    <div class="setting">
-      <span>Account</span>
-      <button onclick="openPage('settings')">View</button>
-    </div>
+    <div class="menu">
 
-    <div class="setting">
-      <span>Security</span>
-      <button onclick="openSecurity()">View</button>
-    </div>
+      <button class="menuItem" onclick="openView('settings')">
+        <span>⚙️ Settings</span>
+        <span>›</span>
+      </button>
 
-    <div class="setting">
-      <span>Transaction History</span>
-      <button onclick="openHistory()">View</button>
+      <button class="menuItem" onclick="openView('security')">
+        <span>🔐 Security</span>
+        <span>›</span>
+      </button>
+
+      <button class="menuItem" onclick="openView('transactions')">
+        <span>📋 Transaction history</span>
+        <span>›</span>
+      </button>
+
     </div>
 
   </div>
@@ -868,302 +970,295 @@ select:focus{
 
 <!-- SETTINGS -->
 
-<section id="settings" class="page">
+<section id="settings" class="view">
 
-  <div class="titleRow">
-    <h1>Settings</h1>
+  <h1 class="pageTitle">Settings</h1>
+
+  <div class="card">
+
+    <div class="sectionTitle">Account email</div>
+
+    <div class="inputGroup">
+
+      <label>Email address</label>
+
+      <input
+        id="emailInput"
+        type="email"
+        placeholder="Enter your email"
+      >
+
+    </div>
+
+    <button class="btn" onclick="saveEmail()">
+      Save email
+    </button>
+
   </div>
 
   <div class="card">
 
-    <div class="setting">
-      <div>
-        <b>Email</b>
-        <p class="small" id="emailDisplay">
-          user@example.com
-        </p>
-      </div>
-    </div>
+    <div class="sectionTitle">Language</div>
 
-    <div class="setting">
-      <div>
-        <b>Account ID</b>
-        <p class="small" id="uidDisplay">
-          000000000
-        </p>
-      </div>
-    </div>
+    <select id="languageSelect" onchange="changeLanguage()">
 
-    <div class="setting">
+      <option value="en">English</option>
+      <option value="pt">Português — Brasil</option>
+      <option value="de">Deutsch</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+      <option value="it">Italiano</option>
+      <option value="nl">Nederlands</option>
+      <option value="tr">Türkçe</option>
+      <option value="ja">日本語</option>
+      <option value="ko">한국어</option>
 
-      <div>
-        <b>Show balance</b>
-        <p class="small">
-          Toggle portfolio visibility
-        </p>
-      </div>
-
-      <button onclick="toggleBalance()">
-        Toggle
-      </button>
-
-    </div>
-
-    <div class="setting">
-
-      <div>
-        <b>Currency</b>
-        <p class="small">
-          USD
-        </p>
-      </div>
-
-      <button onclick="demoAction()">
-        USD
-      </button>
-
-    </div>
-
-    <div class="setting">
-
-      <div>
-        <b>Notifications</b>
-        <p class="small">
-          Application alerts
-        </p>
-      </div>
-
-      <button onclick="demoAction()">
-        Enabled
-      </button>
-
-    </div>
+    </select>
 
   </div>
 
-  <div class="notice">
-    Account information shown here is configurable prototype data. Do not place real passwords or private keys in this HTML file.
+  <div class="card">
+
+    <div class="sectionTitle">Account information</div>
+
+    <div class="menu">
+
+      <button class="menuItem" onclick="openView('security')">
+        <span>Security</span>
+        <span>›</span>
+      </button>
+
+      <button class="menuItem" onclick="showToast('Appearance preferences opened')">
+        <span>Appearance</span>
+        <span>Dark</span>
+      </button>
+
+      <button class="menuItem" onclick="showToast('Notifications preferences opened')">
+        <span>Notifications</span>
+        <span>›</span>
+      </button>
+
+    </div>
+
   </div>
 
 </section>
 
+
+<!-- SECURITY -->
+
+<section id="security" class="view">
+
+  <h1 class="pageTitle">Security</h1>
+
+  <div class="card">
+
+    <div class="sectionTitle">Email verification</div>
+
+    <div class="inputGroup">
+
+      <label>Email</label>
+
+      <input id="securityEmail" type="email" placeholder="Enter email">
+
+    </div>
+
+    <button class="btn" onclick="saveSecurityEmail()">
+      Save email
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <div class="sectionTitle">Account ID</div>
+
+    <div style="font-size:21px;font-weight:800">
+      756371252
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="sectionTitle">Security options</div>
+
+    <div class="menu">
+
+      <button class="menuItem" onclick="showToast('Password settings opened')">
+        <span>Change password</span>
+        <span>›</span>
+      </button>
+
+      <button class="menuItem" onclick="showToast('Two-factor authentication settings opened')">
+        <span>Two-factor authentication</span>
+        <span>›</span>
+      </button>
+
+      <button class="menuItem" onclick="showToast('Active sessions opened')">
+        <span>Active sessions</span>
+        <span>›</span>
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- REFUND -->
+
+<section id="refund" class="view">
+
+  <h1 class="pageTitle">Refund</h1>
+
+  <div class="card">
+
+    <div class="sectionTitle">Refund information</div>
+
+    <div class="notice">
+      A refund record can be displayed here for account-history purposes. Actual settlement requires a connected payment or financial backend.
+    </div>
+
+    <div style="font-size:31px;font-weight:850;color:var(--green)">
+      $4,000.00
+    </div>
+
+    <div style="color:var(--muted);margin-top:8px">
+      Status: Recorded
+    </div>
+
+    <button
+      class="btn"
+      style="margin-top:18px"
+      onclick="showToast('Refund information opened')"
+    >
+      View details
+    </button>
+
+  </div>
+
+</section>
 
 </main>
 
 
 <!-- BOTTOM NAV -->
 
-<nav class="nav">
+<nav class="bottomNav">
 
-  <button class="active" onclick="openPage('home',this)">
-    🏠<br>Home
+  <button class="navBtn active" onclick="openView('dashboard',this)">
+    <span>⌂</span>
+    Home
   </button>
 
-  <button onclick="openPage('markets',this)">
-    📈<br>Markets
+  <button class="navBtn" onclick="openView('markets',this)">
+    <span>📈</span>
+    Markets
   </button>
 
-  <button onclick="openPage('p2p',this)">
-    🤝<br>P2P
+  <button class="navBtn" onclick="openView('p2p',this)">
+    <span>⇄</span>
+    P2P
   </button>
 
-  <button onclick="openPage('profile',this)">
-    👤<br>Profile
+  <button class="navBtn" onclick="openView('transactions',this)">
+    <span>▤</span>
+    History
   </button>
 
-  <button onclick="openPage('settings',this)">
-    ⚙️<br>Settings
+  <button class="navBtn" onclick="openView('profile',this)">
+    <span>●</span>
+    Profile
   </button>
 
 </nav>
 
+</div>
+
 
 <!-- WITHDRAW MODAL -->
 
-<div class="modal" id="withdrawModal">
+<div id="withdrawModal" class="modal">
 
   <div class="modalBox">
 
     <div class="modalHeader">
+
       <h2>Withdraw</h2>
+
       <button class="close" onclick="closeModal('withdrawModal')">
         ×
       </button>
+
     </div>
 
     <div class="notice">
-      Select a network and enter the destination address for this prototype.
+      Enter the destination address for the asset you want to withdraw.
+      This interface does not broadcast a blockchain transaction.
     </div>
 
-    <div class="formGroup">
+    <div class="inputGroup">
 
-      <label>Network</label>
+      <label>Asset</label>
 
-      <select id="network">
+      <select id="withdrawAsset">
 
-        <option value="">
-          Select network
-        </option>
-
-        <option value="TON">
-          TON
-        </option>
-
-        <option value="Ethereum">
-          Ethereum
-        </option>
-
-        <option value="Bitcoin">
-          Bitcoin
-        </option>
-
-        <option value="Solana">
-          Solana
-        </option>
+        <option>Bitcoin (BTC)</option>
+        <option>Ethereum (ETH)</option>
+        <option>Solana (SOL)</option>
+        <option>BNB</option>
+        <option>USDT</option>
 
       </select>
 
     </div>
 
-    <div class="formGroup">
+    <div class="inputGroup">
+
+      <label>Network</label>
+
+      <select>
+
+        <option>Bitcoin Network</option>
+        <option>Ethereum / ERC-20</option>
+        <option>BNB Smart Chain</option>
+        <option>Solana Network</option>
+        <option>TRON / TRC-20</option>
+
+      </select>
+
+    </div>
+
+    <div class="inputGroup">
+
+      <label>Destination wallet address</label>
+
+      <input
+        id="withdrawAddress"
+        placeholder="Paste wallet address"
+      >
+
+    </div>
+
+    <div class="inputGroup">
 
       <label>Amount</label>
 
       <input
-        id="withdrawAmount"
         type="number"
         placeholder="Enter amount"
       >
 
     </div>
 
-    <div class="formGroup">
-
-      <label>Wallet address</label>
-
-      <input
-        id="withdrawAddress"
-        type="text"
-        placeholder="Paste destination wallet address"
-      >
-
-    </div>
-
-    <button class="primary" style="width:100%" onclick="withdrawReview()">
-      Continue
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- APPROVAL MODAL -->
-
-<div class="modal" id="approvalModal">
-
-  <div class="modalBox">
-
-    <div class="modalHeader">
-      <h2>Withdrawal Confirmation</h2>
-
-      <button class="close" onclick="closeModal('approvalModal')">
-        ×
-      </button>
-    </div>
-
-    <div class="notice warning">
-
-      Before proceeding, confirm whether the withdrawal has received approval from the Trading Management Center.
-
-    </div>
-
-    <p class="small" style="margin-bottom:15px">
-      This is a simulated approval workflow. No real approval request is sent.
-    </p>
-
-    <div class="buttons">
-
-      <button class="secondary" onclick="approvalResult(false)">
-        Not yet
-      </button>
-
-      <button class="primary" onclick="approvalResult(true)">
-        Yes, confirmed
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- RESULT MODAL -->
-
-<div class="modal" id="resultModal">
-
-  <div class="modalBox">
-
-    <div class="modalHeader">
-
-      <h2 id="resultTitle">
-        Withdrawal Status
-      </h2>
-
-      <button class="close" onclick="closeModal('resultModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="notice warning" id="resultText">
-      Waiting for confirmation.
-    </div>
-
-    <button class="secondary"
-            style="width:100%"
-            onclick="closeModal('resultModal')">
-      Close
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- REFUND MODAL -->
-
-<div class="modal" id="refundModal">
-
-  <div class="modalBox">
-
-    <div class="modalHeader">
-
-      <h2>Refund</h2>
-
-      <button class="close" onclick="closeModal('refundModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="notice success">
-
-      Demo refund status: the refund-fee step is marked as completed in this prototype.
-
-    </div>
-
-    <div class="notice warning">
-
-      The prototype does not actually receive, hold, or transfer funds. No real refund has been processed.
-
-    </div>
-
-    <button class="secondary"
-            style="width:100%"
-            onclick="closeModal('refundModal')">
-      Close
+    <button
+      class="btn"
+      style="width:100%"
+      onclick="submitWithdrawal()"
+    >
+      Review withdrawal
     </button>
 
   </div>
@@ -1173,7 +1268,7 @@ select:focus{
 
 <!-- DEPOSIT MODAL -->
 
-<div class="modal" id="depositModal">
+<div id="depositModal" class="modal">
 
   <div class="modalBox">
 
@@ -1187,583 +1282,590 @@ select:focus{
 
     </div>
 
-    <div class="formGroup">
+    <div class="inputGroup">
 
-      <label>Network</label>
+      <label>Choose asset</label>
 
       <select>
 
-        <option>TON</option>
-        <option>Ethereum</option>
-        <option>Bitcoin</option>
-        <option>Solana</option>
+        <option>Bitcoin (BTC)</option>
+        <option>Ethereum (ETH)</option>
+        <option>Solana (SOL)</option>
+        <option>USDT</option>
 
       </select>
 
     </div>
 
-    <div class="notice">
+    <div class="card" style="text-align:center">
 
-      Deposit addresses are disabled in this front-end prototype. A real wallet should generate addresses through a secure backend or wallet provider.
+      <div style="font-size:42px">
+        ▣
+      </div>
+
+      <p style="color:var(--muted);margin-top:12px">
+        Deposit address becomes available when a supported wallet backend is connected.
+      </p>
 
     </div>
-
-    <button class="secondary"
-            style="width:100%"
-            onclick="closeModal('depositModal')">
-      Close
-    </button>
 
   </div>
 
 </div>
 
 
+<div id="toast" class="toast"></div>
+
+
 <script>
 
-const tg = window.Telegram?.WebApp;
+/* =========================
+   APPLICATION STATE
+========================= */
 
-if(tg){
-  tg.ready();
-  tg.expand();
-}
+const state = {
 
+  balanceVisible:true,
 
-/*
-  Prototype configuration.
+  balance:263753.10,
 
-  Change these values to your own DEMO account information.
-  Do not store real passwords, private keys, seed phrases,
-  exchange credentials, or authentication tokens in this file.
-*/
+  email:localStorage.getItem("walletEmail") || "",
 
-const DEMO_ACCOUNT = {
-  email: "user@example.com",
-  uid: "000000000"
+  selectedMarket:"BTCUSDT",
+
+  p2pMode:"buy",
+
+  markets:{
+    BTCUSDT:{name:"BTC/USDT"},
+    ETHUSDT:{name:"ETH/USDT"},
+    SOLUSDT:{name:"SOL/USDT"},
+    BNBUSDT:{name:"BNB/USDT"},
+    XRPUSDT:{name:"XRP/USDT"}
+  }
+
 };
 
-document.getElementById("emailDisplay").textContent =
-  DEMO_ACCOUNT.email;
 
-document.getElementById("uidDisplay").textContent =
-  DEMO_ACCOUNT.uid;
+/* =========================
+   NAVIGATION
+========================= */
 
+function openView(id,nav){
 
-/* -----------------------------
-   PAGE NAVIGATION
------------------------------ */
+  document.querySelectorAll(".view").forEach(v=>{
+    v.classList.remove("active");
+  });
 
-function openPage(page, button){
-
-  document.querySelectorAll(".page")
-    .forEach(p => p.classList.remove("active"));
-
-  const target = document.getElementById(page);
+  const target=document.getElementById(id);
 
   if(target){
     target.classList.add("active");
   }
 
-  document.querySelectorAll(".nav button")
-    .forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".navBtn").forEach(b=>{
+    b.classList.remove("active");
+  });
 
-  if(button){
-    button.classList.add("active");
+  if(nav){
+    nav.classList.add("active");
   }
 
   window.scrollTo({
     top:0,
     behavior:"smooth"
   });
+
+  if(id==="markets"){
+    loadMarket(state.selectedMarket);
+  }
+
+  if(id==="p2p"){
+    renderOffers();
+  }
+
 }
 
 
-/* -----------------------------
-   BALANCE VISIBILITY
------------------------------ */
-
-let balanceVisible = true;
+/* =========================
+   BALANCE
+========================= */
 
 function toggleBalance(){
 
-  balanceVisible = !balanceVisible;
+  state.balanceVisible=!state.balanceVisible;
 
-  const values = [
-    document.getElementById("balanceDisplay"),
-    document.getElementById("availableBalance")
-  ];
+  const balance=document.getElementById("balance");
 
-  values.forEach(el => {
+  if(state.balanceVisible){
 
-    if(balanceVisible){
+    balance.textContent="$263,753.10";
+    balance.classList.remove("balanceHidden");
 
-      el.classList.remove("balanceHidden");
+  }else{
 
-      if(el.id === "balanceDisplay"){
-        el.textContent = "$263,532.10";
-      }else{
-        el.textContent = "$263,532.10";
+    balance.textContent="••••••••";
+    balance.classList.add("balanceHidden");
+
+  }
+
+}
+
+
+/* =========================
+   MODALS
+========================= */
+
+function openModal(id){
+
+  document.getElementById(id).classList.add("open");
+
+}
+
+function closeModal(id){
+
+  document.getElementById(id).classList.remove("open");
+
+}
+
+document.querySelectorAll(".modal").forEach(modal=>{
+
+  modal.addEventListener("click",e=>{
+
+    if(e.target===modal){
+      modal.classList.remove("open");
+    }
+
+  });
+
+});
+
+
+/* =========================
+   TOAST
+========================= */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast=document.getElementById("toast");
+
+  toast.textContent=message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer=setTimeout(()=>{
+    toast.classList.remove("show");
+  },2800);
+
+}
+
+
+/* =========================
+   EMAIL
+========================= */
+
+function saveEmail(){
+
+  const email=document.getElementById("emailInput").value.trim();
+
+  if(!email){
+    showToast("Please enter an email address");
+    return;
+  }
+
+  localStorage.setItem("walletEmail",email);
+  state.email=email;
+
+  document.getElementById("securityEmail").value=email;
+
+  showToast("Email saved on this device");
+
+}
+
+function saveSecurityEmail(){
+
+  const email=document.getElementById("securityEmail").value.trim();
+
+  if(!email){
+    showToast("Please enter an email address");
+    return;
+  }
+
+  localStorage.setItem("walletEmail",email);
+  state.email=email;
+
+  document.getElementById("emailInput").value=email;
+
+  showToast("Security email saved on this device");
+
+}
+
+
+/* =========================
+   LANGUAGE
+========================= */
+
+function changeLanguage(){
+
+  const lang=document.getElementById("languageSelect").value;
+
+  const names={
+    en:"English",
+    pt:"Português",
+    de:"Deutsch",
+    es:"Español",
+    fr:"Français",
+    it:"Italiano",
+    nl:"Nederlands",
+    tr:"Türkçe",
+    ja:"日本語",
+    ko:"한국어"
+  };
+
+  showToast("Language selected: "+names[lang]);
+
+  localStorage.setItem("walletLanguage",lang);
+
+}
+
+
+/* =========================
+   ASSETS
+========================= */
+
+const assetData=[
+
+  {
+    name:"Bitcoin",
+    symbol:"BTC",
+    amount:"3.00000000 BTC",
+    value:219603.08,
+    icon:"₿"
+  },
+
+  {
+    name:"Solana",
+    symbol:"SOL",
+    amount:"76.00000000 SOL",
+    value:6675.65,
+    icon:"S"
+  },
+
+  {
+    name:"Reward",
+    symbol:"REWARD",
+    amount:"Sample reward",
+    value:40000,
+    icon:"★"
+  }
+
+];
+
+
+function renderAssets(){
+
+  const container=document.getElementById("assets");
+
+  container.innerHTML="";
+
+  assetData.forEach(asset=>{
+
+    const row=document.createElement("div");
+
+    row.className="asset";
+
+    row.onclick=()=>{
+
+      if(asset.symbol==="BTC"){
+        openView("markets");
+        state.selectedMarket="BTCUSDT";
+        loadMarket("BTCUSDT");
       }
 
-    }else{
+      if(asset.symbol==="SOL"){
+        openView("markets");
+        state.selectedMarket="SOLUSDT";
+        loadMarket("SOLUSDT");
+      }
 
-      el.textContent = "••••••••";
+    };
 
-      el.classList.add("balanceHidden");
+    row.innerHTML=`
 
-    }
+      <div class="coin">${asset.icon}</div>
+
+      <div class="assetInfo">
+
+        <div class="assetName">${asset.name}</div>
+
+        <div class="assetAmount">
+          ${asset.amount}
+        </div>
+
+      </div>
+
+      <div class="assetValue">
+
+        <strong>
+          $${asset.value.toLocaleString("en-US",{
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+          })}
+        </strong>
+
+        <span style="color:var(--muted)">
+          USD
+        </span>
+
+      </div>
+
+    `;
+
+    container.appendChild(row);
 
   });
 
 }
 
 
-/* -----------------------------
-   MODALS
------------------------------ */
+/* =========================
+   MARKET TABS
+========================= */
 
-function openModal(id){
-  document.getElementById(id).classList.add("show");
-}
+function renderMarketTabs(){
 
-function closeModal(id){
-  document.getElementById(id).classList.remove("show");
-}
+  const container=document.getElementById("marketTabs");
 
+  container.innerHTML="";
 
-/* -----------------------------
-   WITHDRAW
------------------------------ */
+  Object.keys(state.markets).forEach(symbol=>{
 
-function openWithdraw(){
-  openModal("withdrawModal");
-}
+    const button=document.createElement("button");
 
-function withdrawReview(){
+    button.className="marketTab";
 
-  const network =
-    document.getElementById("network").value;
+    if(symbol===state.selectedMarket){
+      button.classList.add("active");
+    }
 
-  const amount =
-    document.getElementById("withdrawAmount").value;
+    button.textContent=state.markets[symbol].name;
 
-  const address =
-    document.getElementById("withdrawAddress").value.trim();
+    button.onclick=()=>{
 
-  if(!network){
-    alert("Please select a network.");
-    return;
-  }
+      state.selectedMarket=symbol;
 
-  if(!amount || Number(amount) <= 0){
-    alert("Please enter a valid amount.");
-    return;
-  }
+      document.querySelectorAll(".marketTab")
+        .forEach(b=>b.classList.remove("active"));
 
-  if(!address){
-    alert("Please enter a destination wallet address.");
-    return;
-  }
+      button.classList.add("active");
 
-  closeModal("withdrawModal");
+      loadMarket(symbol);
 
-  openModal("approvalModal");
-}
+    };
 
+    container.appendChild(button);
 
-function approvalResult(approved){
-
-  closeModal("approvalModal");
-
-  const result =
-    document.getElementById("resultText");
-
-  if(approved){
-
-    result.className = "notice success";
-
-    result.textContent =
-      "Demo status: approval has been recorded locally. No real Trading Management Center notification or blockchain withdrawal has been performed.";
-
-  }else{
-
-    result.className = "notice warning";
-
-    result.textContent =
-      "Demo status: confirmation from the Trading Management Center has not yet been recorded. This prototype does not send real approval requests.";
-
-  }
-
-  openModal("resultModal");
-}
-
-
-/* -----------------------------
-   REFUND
------------------------------ */
-
-function openRefund(){
-  openModal("refundModal");
-}
-
-
-/* -----------------------------
-   DEPOSIT
------------------------------ */
-
-function openDeposit(){
-  openModal("depositModal");
-}
-
-
-/* -----------------------------
-   OTHER UI
------------------------------ */
-
-function demoAction(){
-
-  alert(
-    "This feature is currently a front-end prototype. No real transaction is performed."
-  );
-
-}
-
-function openSecurity(){
-
-  alert(
-    "Security settings are available in the prototype. Real authentication should be implemented on a secure backend."
-  );
-
-}
-
-function openHistory(){
-
-  alert(
-    "No transaction history yet."
-  );
+  });
 
 }
 
 
-/* -----------------------------
-   LIVE MARKET DATA
-   CoinGecko public API
------------------------------ */
+/* =========================
+   BINANCE PUBLIC MARKET API
+========================= */
 
-const COINS = {
-
-  bitcoin:{
-    name:"Bitcoin / USDT",
-    symbol:"BTC",
-    color:"#f7931a"
-  },
-
-  ethereum:{
-    name:"Ethereum / USDT",
-    symbol:"ETH",
-    color:"#8a92ff"
-  },
-
-  solana:{
-    name:"Solana / USDT",
-    symbol:"SOL",
-    color:"#14f195"
-  }
-
-};
-
-let selectedCoin = "bitcoin";
-let marketData = {};
-
-
-/*
-  Fetch live public market prices.
-*/
-
-async function fetchMarkets(){
+async function fetchTicker(symbol){
 
   try{
 
-    const url =
-      "https://api.coingecko.com/api/v3/simple/price" +
-      "?ids=bitcoin,ethereum,solana" +
-      "&vs_currencies=usd" +
-      "&include_24hr_change=true";
-
-    const response = await fetch(url);
+    const response=await fetch(
+      "https://api.binance.com/api/v3/ticker/24hr?symbol="+symbol
+    );
 
     if(!response.ok){
-      throw new Error("Market request failed");
+      throw new Error("Market unavailable");
     }
 
-    const data = await response.json();
-
-    marketData = data;
-
-    updateMarketUI();
-
-    updateTicker();
-
-    updateAssets();
-
-    drawChart();
+    return await response.json();
 
   }catch(error){
 
     console.log(error);
 
-    document.getElementById("ticker").textContent =
-      "Live market data temporarily unavailable.";
+    return null;
 
   }
 
 }
 
 
-/* -----------------------------
-   MARKET UI
------------------------------ */
+/* =========================
+   MARKET LOAD
+========================= */
 
-function updateMarketUI(){
+async function loadMarket(symbol){
 
-  const coin =
-    marketData[selectedCoin];
+  const market=state.markets[symbol];
 
-  if(!coin) return;
+  document.getElementById("marketSymbol").textContent=market.name;
 
-  const price =
-    coin.usd;
+  document.getElementById("marketPrice").textContent="Loading...";
 
-  const change =
-    coin.usd_24h_change || 0;
+  const data=await fetchTicker(symbol);
 
-  document.getElementById("marketName").textContent =
-    COINS[selectedCoin].name;
+  if(!data){
 
-  document.getElementById("marketPrice").textContent =
-    "$" + formatMoney(price);
+    document.getElementById("marketPrice").textContent="$--";
+    document.getElementById("marketChange").textContent="Market unavailable";
 
-  const changeEl =
-    document.getElementById("marketChange");
-
-  changeEl.textContent =
-    (change >= 0 ? "+" : "") +
-    change.toFixed(2) +
-    "% (24h)";
-
-  changeEl.className =
-    change >= 0 ? "green" : "red";
-
-}
-
-
-function updateTicker(){
-
-  if(!marketData.bitcoin) return;
-
-  const btc =
-    marketData.bitcoin;
-
-  const eth =
-    marketData.ethereum;
-
-  const sol =
-    marketData.solana;
-
-  document.getElementById("ticker").innerHTML = `
-
-    <span>
-      BTC/USDT
-      <b>$${formatMoney(btc.usd)}</b>
-      <span class="${btc.usd_24h_change >= 0 ? "up":"down"}">
-        ${btc.usd_24h_change.toFixed(2)}%
-      </span>
-    </span>
-
-    <span>
-      ETH/USDT
-      <b>$${formatMoney(eth.usd)}</b>
-      <span class="${eth.usd_24h_change >= 0 ? "up":"down"}">
-        ${eth.usd_24h_change.toFixed(2)}%
-      </span>
-    </span>
-
-    <span>
-      SOL/USDT
-      <b>$${formatMoney(sol.usd)}</b>
-      <span class="${sol.usd_24h_change >= 0 ? "up":"down"}">
-        ${sol.usd_24h_change.toFixed(2)}%
-      </span>
-    </span>
-
-  `;
-
-}
-
-
-function updateAssets(){
-
-  if(marketData.bitcoin){
-
-    const btcValue =
-      marketData.bitcoin.usd * 3;
-
-    document.getElementById("btcValue").textContent =
-      "$" + formatMoney(btcValue);
+    return;
 
   }
 
-  if(marketData.ethereum){
+  const price=Number(data.lastPrice);
 
-    const ethValue =
-      marketData.ethereum.usd * 10;
+  const change=Number(data.priceChangePercent);
 
-    document.getElementById("ethValue").textContent =
-      "$" + formatMoney(ethValue);
-
-  }
-
-  if(marketData.solana){
-
-    const solValue =
-      marketData.solana.usd * 76;
-
-    document.getElementById("solValue").textContent =
-      "$" + formatMoney(solValue);
-
-  }
-
-  document.getElementById("marketBTC").textContent =
-    marketData.bitcoin
-      ? "$" + formatMoney(marketData.bitcoin.usd)
-      : "--";
-
-  document.getElementById("marketETH").textContent =
-    marketData.ethereum
-      ? "$" + formatMoney(marketData.ethereum.usd)
-      : "--";
-
-  document.getElementById("marketSOL").textContent =
-    marketData.solana
-      ? "$" + formatMoney(marketData.solana.usd)
-      : "--";
-
-}
-
-
-function formatMoney(value){
-
-  return Number(value).toLocaleString(
-    "en-US",
-    {
+  document.getElementById("marketPrice").textContent=
+    "$"+price.toLocaleString("en-US",{
       minimumFractionDigits:2,
       maximumFractionDigits:2
+    });
+
+  const changeElement=document.getElementById("marketChange");
+
+  changeElement.textContent=
+    (change>=0?"+":"")+change.toFixed(2)+"%";
+
+  changeElement.className=
+    "marketChange "+(change>=0?"up":"down");
+
+  document.getElementById("highValue").textContent=
+    "$"+Number(data.highPrice).toLocaleString();
+
+  document.getElementById("lowValue").textContent=
+    "$"+Number(data.lowPrice).toLocaleString();
+
+  document.getElementById("portfolioChange").textContent=
+    (change>=0?"+":"")+change.toFixed(2)+"%";
+
+  document.getElementById("portfolioChange").className=
+    change>=0?"up":"down";
+
+  await drawChart(symbol);
+
+}
+
+
+/* =========================
+   KLINE DATA
+========================= */
+
+async function getKlines(symbol){
+
+  try{
+
+    const response=await fetch(
+      "https://api.binance.com/api/v3/klines?symbol="+
+      symbol+
+      "&interval=15m&limit=60"
+    );
+
+    if(!response.ok){
+      throw new Error("Kline error");
     }
-  );
+
+    return await response.json();
+
+  }catch(error){
+
+    console.log(error);
+
+    return [];
+
+  }
 
 }
 
 
-/* -----------------------------
-   MARKET SWITCHING
------------------------------ */
+/* =========================
+   CHART
+========================= */
 
-function changeMarket(coin,button){
+async function drawChart(symbol){
 
-  selectedCoin = coin;
+  const canvas=document.getElementById("chart");
 
-  document.querySelectorAll(".marketTab")
-    .forEach(b => b.classList.remove("active"));
+  const ctx=canvas.getContext("2d");
 
-  button.classList.add("active");
+  const rect=canvas.getBoundingClientRect();
 
-  updateMarketUI();
+  const dpr=window.devicePixelRatio || 1;
 
-  drawChart();
-
-}
-
-
-/* -----------------------------
-   SIMPLE FRONT-END CHART
------------------------------ */
-
-function drawChart(){
-
-  const canvas =
-    document.getElementById("chart");
-
-  if(!canvas) return;
-
-  const rect =
-    canvas.getBoundingClientRect();
-
-  const dpr =
-    window.devicePixelRatio || 1;
-
-  canvas.width =
-    rect.width * dpr;
-
-  canvas.height =
-    rect.height * dpr;
-
-  const ctx =
-    canvas.getContext("2d");
+  canvas.width=rect.width*dpr;
+  canvas.height=rect.height*dpr;
 
   ctx.scale(dpr,dpr);
 
-  const width =
-    rect.width;
-
-  const height =
-    rect.height;
+  const width=rect.width;
+  const height=rect.height;
 
   ctx.clearRect(0,0,width,height);
 
-  const coin =
-    marketData[selectedCoin];
+  const candles=await getKlines(symbol);
 
-  if(!coin) return;
+  if(!candles.length){
 
-  const base =
-    coin.usd;
+    drawFallbackChart(ctx,width,height);
 
-  const change =
-    coin.usd_24h_change || 0;
-
-  const points = [];
-
-  let value = base * (1 - change / 100);
-
-  for(let i=0;i<35;i++){
-
-    value *=
-      1 + ((Math.random()-0.45) * 0.012);
-
-    points.push(value);
+    return;
 
   }
 
-  const min =
-    Math.min(...points);
+  const prices=candles.map(c=>Number(c[4]));
 
-  const max =
-    Math.max(...points);
+  const min=Math.min(...prices);
+  const max=Math.max(...prices);
+
+  const padding=30;
+
+  /* GRID */
+
+  ctx.strokeStyle="#252b32";
+  ctx.lineWidth=1;
+
+  for(let i=0;i<5;i++){
+
+    const y=
+      padding+
+      (height-padding*2)*(i/4);
+
+    ctx.beginPath();
+    ctx.moveTo(0,y);
+    ctx.lineTo(width,y);
+    ctx.stroke();
+
+  }
+
+  /* LINE */
 
   ctx.beginPath();
 
-  points.forEach((value,i)=>{
+  prices.forEach((price,index)=>{
 
-    const x =
-      (i/(points.length-1))*width;
+    const x=
+      padding+
+      (width-padding*2)*
+      (index/(prices.length-1));
 
-    const y =
-      height -
-      ((value-min)/(max-min || 1)) *
-      (height-25) -
-      10;
+    const y=
+      height-padding-
+      ((price-min)/(max-min || 1))*
+      (height-padding*2);
 
-    if(i===0){
+    if(index===0){
       ctx.moveTo(x,y);
     }else{
       ctx.lineTo(x,y);
@@ -1771,34 +1873,318 @@ function drawChart(){
 
   });
 
-  ctx.strokeStyle =
-    change >= 0 ? "#16c784" : "#ea3943";
+  ctx.strokeStyle="#19c985";
+  ctx.lineWidth=3;
+  ctx.stroke();
 
-  ctx.lineWidth = 3;
+  /* AREA */
+
+  const lastX=width-padding;
+
+  ctx.lineTo(lastX,height-padding);
+  ctx.lineTo(padding,height-padding);
+  ctx.closePath();
+
+  const gradient=ctx.createLinearGradient(0,0,0,height);
+
+  gradient.addColorStop(0,"rgba(25,201,133,.25)");
+  gradient.addColorStop(1,"rgba(25,201,133,0)");
+
+  ctx.fillStyle=gradient;
+  ctx.fill();
+
+}
+
+
+function drawFallbackChart(ctx,width,height){
+
+  ctx.strokeStyle="#19c985";
+  ctx.lineWidth=3;
+
+  ctx.beginPath();
+
+  for(let i=0;i<12;i++){
+
+    const x=25+i*((width-50)/11);
+
+    const y=
+      height/2+
+      Math.sin(i*1.2)*35+
+      Math.random()*20;
+
+    if(i===0){
+      ctx.moveTo(x,y);
+    }else{
+      ctx.lineTo(x,y);
+    }
+
+  }
 
   ctx.stroke();
 
 }
 
 
-/* -----------------------------
-   INITIAL LOAD
------------------------------ */
+/* =========================
+   TICKER
+========================= */
 
-fetchMarkets();
+async function updateTicker(){
+
+  const symbols=[
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+  ];
+
+  const ticker=document.getElementById("ticker");
+
+  ticker.innerHTML="";
+
+  for(const symbol of symbols){
+
+    const data=await fetchTicker(symbol);
+
+    if(!data) continue;
+
+    const name=symbol.replace("USDT","/USDT");
+
+    const change=Number(data.priceChangePercent);
+
+    const div=document.createElement("div");
+
+    div.className="tickerItem";
+
+    div.innerHTML=`
+
+      ${name}
+      <strong>
+        $${Number(data.lastPrice).toLocaleString()}
+      </strong>
+
+      <span class="${change>=0?"up":"down"}">
+        ${change>=0?"+":""}${change.toFixed(2)}%
+      </span>
+
+    `;
+
+    ticker.appendChild(div);
+
+  }
+
+}
 
 
-/*
-  Refresh live market information
-  approximately every 30 seconds.
-*/
+/* =========================
+   P2P
+========================= */
 
-setInterval(fetchMarkets,30000);
+function setP2P(mode,button){
 
-window.addEventListener(
-  "resize",
-  drawChart
-);
+  state.p2pMode=mode;
+
+  document.querySelectorAll(".p2pTab")
+    .forEach(b=>b.classList.remove("active"));
+
+  button.classList.add("active");
+
+  renderOffers();
+
+}
+
+
+function renderOffers(){
+
+  const container=document.getElementById("offers");
+
+  const buyOffers=[
+
+    {
+      merchant:"Global Exchange",
+      price:"$73,210.00",
+      limit:"$100 - $8,000",
+      payment:"Bank transfer"
+    },
+
+    {
+      merchant:"Digital Market",
+      price:"$73,280.00",
+      limit:"$200 - $15,000",
+      payment:"Instant transfer"
+    },
+
+    {
+      merchant:"Crypto Trader",
+      price:"$73,340.00",
+      limit:"$500 - $25,000",
+      payment:"Bank transfer"
+    }
+
+  ];
+
+  const sellOffers=[
+
+    {
+      merchant:"Verified Market",
+      price:"$73,490.00",
+      limit:"$100 - $7,000",
+      payment:"Bank transfer"
+    },
+
+    {
+      merchant:"Digital Desk",
+      price:"$73,550.00",
+      limit:"$250 - $12,000",
+      payment:"Instant transfer"
+    },
+
+    {
+      merchant:"Trading Partner",
+      price:"$73,620.00",
+      limit:"$500 - $20,000",
+      payment:"Bank transfer"
+    }
+
+  ];
+
+  const offers=
+    state.p2pMode==="buy"
+    ?buyOffers
+    :sellOffers;
+
+  container.innerHTML="";
+
+  offers.forEach(offer=>{
+
+    const div=document.createElement("div");
+
+    div.className="offer";
+
+    div.innerHTML=`
+
+      <div class="offerTop">
+
+        <strong>${offer.merchant}</strong>
+
+        <span class="up">Available</span>
+
+      </div>
+
+      <div class="offerPrice">
+        ${offer.price}
+      </div>
+
+      <div class="offerMeta">
+        Limit: ${offer.limit}<br>
+        Payment: ${offer.payment}
+      </div>
+
+      <button
+        class="btn"
+        onclick="selectOffer('${offer.merchant}')"
+      >
+        ${state.p2pMode==="buy"?"Buy BTC":"Sell BTC"}
+      </button>
+
+    `;
+
+    container.appendChild(div);
+
+  });
+
+}
+
+
+function selectOffer(name){
+
+  showToast(
+    "Selected "+name+". Order review opened."
+  );
+
+}
+
+
+/* =========================
+   WITHDRAWAL
+========================= */
+
+function submitWithdrawal(){
+
+  const address=
+    document.getElementById("withdrawAddress")
+    .value.trim();
+
+  if(!address){
+
+    showToast("Enter a destination wallet address");
+
+    return;
+
+  }
+
+  closeModal("withdrawModal");
+
+  showToast(
+    "Withdrawal review prepared. No transaction was broadcast."
+  );
+
+}
+
+
+/* =========================
+   STARTUP
+========================= */
+
+function initialize(){
+
+  renderAssets();
+
+  renderMarketTabs();
+
+  document.getElementById("emailInput").value=state.email;
+
+  document.getElementById("securityEmail").value=state.email;
+
+  const savedLanguage=
+    localStorage.getItem("walletLanguage");
+
+  if(savedLanguage){
+    document.getElementById("languageSelect").value=savedLanguage;
+  }
+
+  updateTicker();
+
+  loadMarket(state.selectedMarket);
+
+  setInterval(updateTicker,30000);
+
+  setInterval(()=>{
+    loadMarket(state.selectedMarket);
+  },30000);
+
+}
+
+initialize();
+
+
+/* =========================
+   RESIZE CHART
+========================= */
+
+window.addEventListener("resize",()=>{
+
+  if(
+    document
+      .getElementById("markets")
+      .classList
+      .contains("active")
+  ){
+
+    drawChart(state.selectedMarket);
+
+  }
+
+});
 
 </script>
 
