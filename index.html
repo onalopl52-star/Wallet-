@@ -1,325 +1,577 @@
+const ACCOUNT = {
+  name: "Jose Silva",
+  uid: "756371252",
+  email: "Guilhermesouza53@hotmail.com"
+password:Guilherme1290!!
+};
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Wallet UI Prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallet Portal</title>
 
 <style>
-*{box-sizing:border-box}
 :root{
-  --bg:#080a0d;
-  --panel:#171c23;
-  --panel2:#1d232b;
-  --line:#2b333d;
-  --text:#f4f6f8;
-  --muted:#929aa6;
-  --gold:#f0b90b;
-  --green:#16c784;
-  --red:#f45b69;
-  --blue:#4285f4;
+  --bg:#0b0e13;
+  --card:#151a21;
+  --card2:#1b212a;
+  --line:#29313b;
+  --text:#f4f7fb;
+  --muted:#8d98a8;
+  --accent:#f5b900;
+  --green:#20c997;
+  --red:#ff667d;
+  --blue:#3b82f6;
 }
+
+*{
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:Inter,Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
 }
-button,input,select{font:inherit}
-button{cursor:pointer}
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
 .app{
-  max-width:620px;
-  margin:auto;
+  max-width:520px;
   min-height:100vh;
+  margin:auto;
   background:var(--bg);
-  padding-bottom:90px;
 }
-.top{
+
+/* HEADER */
+
+.header{
   position:sticky;
   top:0;
   z-index:20;
-  background:#10141a;
-  border-bottom:1px solid var(--line);
-}
-.header{
-  height:76px;
+  height:68px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 20px;
+  padding:0 18px;
+  background:#11151b;
+  border-bottom:1px solid var(--line);
 }
+
 .logo{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:9px;
+  font-size:21px;
   font-weight:800;
-  font-size:24px;
-  color:var(--gold);
 }
-.logoMark{
-  width:40px;height:40px;
-  border-radius:12px;
-  background:var(--gold);
-  color:#111;
+
+.logo-mark{
+  width:30px;
+  height:30px;
+  border-radius:9px;
+  background:var(--accent);
   display:grid;
   place-items:center;
+  color:#111;
   font-weight:900;
 }
-.headerActions{
+
+.header-actions{
   display:flex;
-  gap:9px;
+  gap:8px;
 }
-.iconBtn{
-  width:45px;height:45px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:#171c23;
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#202731;
   color:white;
-  font-size:21px;
+  font-size:19px;
 }
+
+.profile-btn{
+  background:var(--accent);
+  color:#111;
+  font-weight:800;
+}
+
+/* MARKET TICKER */
+
 .ticker{
-  display:flex;
-  gap:25px;
   overflow:hidden;
   white-space:nowrap;
-  padding:12px 18px;
-  border-top:1px solid var(--line);
+  background:#10141a;
+  border-bottom:1px solid var(--line);
+  padding:10px 0;
+}
+
+.ticker-inner{
+  display:inline-flex;
+  gap:28px;
+  padding-left:20px;
+  animation:scrollTicker 22s linear infinite;
+}
+
+@keyframes scrollTicker{
+  from{transform:translateX(0)}
+  to{transform:translateX(-35%)}
+}
+
+.up{
+  color:var(--green);
+}
+
+.down{
+  color:var(--red);
+}
+
+/* CONTENT */
+
+.content{
+  padding:18px;
+}
+
+.page-title{
+  font-size:30px;
+  margin:8px 0 18px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:16px;
+}
+
+.balance-card{
+  border:1px solid var(--accent);
+  background:
+    radial-gradient(circle at 90% 10%,rgba(245,185,0,.09),transparent 35%),
+    var(--card);
+}
+
+.balance-label{
   color:var(--muted);
   font-size:14px;
+  margin-bottom:8px;
 }
-.ticker span{color:var(--green)}
-main{padding:22px 18px}
-h1{font-size:32px;margin:5px 0 20px}
-h2{margin:0 0 15px}
-.card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:20px;
-  margin-bottom:18px;
-}
-.balanceCard{
-  border-color:#b58b08;
-}
-.balanceLabel{color:var(--muted);font-size:15px}
+
 .balance{
-  font-size:42px;
+  font-size:39px;
   font-weight:800;
-  color:var(--gold);
-  margin:8px 0;
+  letter-spacing:-1px;
 }
-.demoTag{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:8px;
-  background:#302a13;
-  color:#ffd84d;
-  font-size:12px;
-  font-weight:700;
+
+.balance-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-.actions{
+
+.eye{
+  border:0;
+  background:#242b35;
+  color:white;
+  border-radius:10px;
+  padding:8px 11px;
+}
+
+.sub-value{
+  color:var(--muted);
+  margin-top:8px;
+}
+
+.stats{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  margin-top:20px;
+  margin-top:22px;
 }
-.primary,.secondary{
-  border:0;
+
+.stat{
+  background:var(--card2);
+  padding:14px;
   border-radius:13px;
-  padding:15px;
-  font-weight:800;
 }
-.primary{background:var(--gold);color:#111}
-.secondary{background:#242a32;color:white;border:1px solid var(--line)}
+
+.stat span{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.stat strong{
+  font-size:18px;
+}
+
+/* ACTIONS */
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.action{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--card);
+  color:white;
+  padding:13px 5px;
+}
+
+.action-icon{
+  display:block;
+  font-size:22px;
+  margin-bottom:7px;
+}
+
+.action-label{
+  font-size:12px;
+}
+
+/* ASSETS */
+
 .asset{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:16px 0;
-  border-bottom:1px solid var(--line);
-}
-.asset:last-child{border-bottom:0}
-.coin{
-  display:flex;
   gap:12px;
-  align-items:center;
-}
-.coinIcon{
-  width:44px;height:44px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#292e35;
-  font-weight:900;
-}
-.assetName{font-weight:800}
-.small{color:var(--muted);font-size:14px;margin-top:4px}
-.assetPrice{font-weight:800;text-align:right}
-.green{color:var(--green)}
-.red{color:var(--red)}
-.tabs{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  margin-bottom:18px;
-}
-.tab{
-  border:1px solid var(--line);
-  background:#171c23;
-  color:white;
-  padding:13px 20px;
-  border-radius:13px;
-  white-space:nowrap;
-}
-.tab.active{
-  background:var(--gold);
-  color:#111;
-  border-color:var(--gold);
-}
-.marketHeader{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.marketPrice{
-  font-size:38px;
-  font-weight:800;
-  margin-top:7px;
-}
-.marketChange{font-weight:700}
-.chartBox{
-  height:280px;
-  margin-top:15px;
-  border-radius:15px;
-  background:#0d1116;
-  overflow:hidden;
-  position:relative;
-}
-canvas{width:100%;height:100%}
-.status{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  color:var(--muted);
-  pointer-events:none;
-}
-.profile{
-  display:flex;
-  gap:15px;
-  align-items:center;
-}
-.avatar{
-  width:65px;height:65px;
-  border-radius:50%;
-  background:var(--gold);
-  color:#111;
-  display:grid;
-  place-items:center;
-  font-size:24px;
-  font-weight:900;
-}
-.badge{
-  margin-top:7px;
-  display:inline-block;
-  color:var(--green);
-  background:#12392d;
-  padding:5px 9px;
-  border-radius:8px;
-  font-size:12px;
-}
-.setting{
-  display:flex;
-  justify-content:space-between;
-  padding:16px 0;
+  padding:15px 0;
   border-bottom:1px solid var(--line);
 }
-.setting:last-child{border-bottom:0}
-.bottom{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(620px,100%);
-  height:72px;
-  background:#10141a;
-  border-top:1px solid var(--line);
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  z-index:30;
+
+.asset:last-child{
+  border-bottom:0;
 }
-.nav{
+
+.coin{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  background:#30271b;
+  color:#f5b900;
+}
+
+.coin.sol{
+  background:#143d36;
+  color:#20c997;
+}
+
+.asset-main{
+  flex:1;
+}
+
+.asset-name{
+  font-weight:700;
+}
+
+.asset-amount{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:3px;
+}
+
+.asset-value{
+  text-align:right;
+  font-weight:700;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:sticky;
+  bottom:0;
+  z-index:15;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  background:#11151b;
+  border-top:1px solid var(--line);
+  padding:9px 5px;
+}
+
+.nav-btn{
   background:none;
   border:0;
   color:var(--muted);
-  font-size:12px;
+  font-size:11px;
 }
-.nav.active{color:var(--gold)}
-.navIcon{display:block;font-size:21px;margin-bottom:3px}
-.modal{
-  display:none;
+
+.nav-btn.active{
+  color:var(--accent);
+}
+
+.nav-icon{
+  display:block;
+  font-size:19px;
+  margin-bottom:4px;
+}
+
+/* MODAL */
+
+.overlay{
   position:fixed;
   inset:0;
-  z-index:100;
-  background:rgba(0,0,0,.75);
+  z-index:50;
+  background:rgba(0,0,0,.72);
+  display:none;
   align-items:flex-end;
   justify-content:center;
 }
-.modal.show{display:flex}
+
+.overlay.show{
+  display:flex;
+}
+
 .sheet{
-  width:min(620px,100%);
-  background:#171c23;
-  border:1px solid var(--line);
-  border-radius:24px 24px 0 0;
-  padding:24px;
+  width:min(520px,100%);
   max-height:88vh;
   overflow:auto;
+  background:#151a21;
+  border-radius:24px 24px 0 0;
+  padding:22px;
+  border:1px solid var(--line);
 }
-.sheetHeader{
+
+.sheet-head{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  margin-bottom:20px;
 }
+
+.sheet-title{
+  font-size:23px;
+  font-weight:800;
+}
+
 .close{
+  width:38px;
+  height:38px;
   border:0;
-  background:#252b33;
-  color:white;
-  width:38px;height:38px;
   border-radius:50%;
+  background:#252c35;
+  color:white;
+  font-size:20px;
 }
-label{
+
+/* FORM */
+
+.field{
+  margin-bottom:14px;
+}
+
+.field label{
   display:block;
   color:var(--muted);
-  margin:18px 0 8px;
+  font-size:13px;
+  margin-bottom:7px;
 }
-input,select{
+
+.field input,
+.field select{
   width:100%;
-  padding:14px;
-  border-radius:12px;
   border:1px solid var(--line);
-  background:#0d1116;
+  border-radius:12px;
+  background:#0e1217;
   color:white;
+  padding:14px;
   outline:none;
 }
-.notice{
-  margin-top:16px;
-  padding:15px;
+
+.primary{
+  width:100%;
+  border:0;
   border-radius:13px;
-  background:#211d0d;
-  border:1px solid #62510d;
-  color:#e8d37b;
-  line-height:1.5;
-}
-.address{
-  word-break:break-all;
-  background:#0d1116;
-  border:1px solid var(--line);
+  background:var(--accent);
+  color:#111;
   padding:14px;
-  border-radius:12px;
-  margin-top:10px;
-  color:#c9d0d8;
+  font-weight:800;
 }
-.hidden{display:none!important}
+
+.secondary{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#222933;
+  color:white;
+  padding:14px;
+  font-weight:700;
+  margin-top:9px;
+}
+
+/* PROFILE */
+
+.profile{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.avatar{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#111;
+  display:grid;
+  place-items:center;
+  font-size:21px;
+  font-weight:900;
+}
+
+.verified{
+  display:inline-block;
+  margin-top:7px;
+  padding:5px 9px;
+  border-radius:8px;
+  background:#104f40;
+  color:#36e0a9;
+  font-size:12px;
+  font-weight:700;
+}
+
+/* P2P */
+
+.p2p-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.p2p-tab{
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:#202731;
+  color:white;
+}
+
+.p2p-tab.active{
+  background:var(--accent);
+  color:#111;
+}
+
+.offer{
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:10px;
+}
+
+.offer-top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.merchant{
+  font-weight:700;
+}
+
+.price{
+  font-size:20px;
+  font-weight:800;
+  margin:12px 0;
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.tag{
+  padding:5px 8px;
+  border-radius:7px;
+  background:#252c35;
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* SETTINGS */
+
+.setting-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.setting-row:last-child{
+  border-bottom:0;
+}
+
+.setting-name{
+  font-weight:700;
+}
+
+.setting-value{
+  color:var(--muted);
+  font-size:13px;
+  max-width:220px;
+  text-align:right;
+}
+
+/* NOTICE */
+
+.notice{
+  border:1px solid #3b4653;
+  background:#202731;
+  border-radius:13px;
+  padding:14px;
+  color:#b8c2cf;
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:15px;
+}
+
+.success{
+  border-color:#176b55;
+  background:#102f28;
+  color:#55ddb5;
+}
+
+.warning{
+  border-color:#80671d;
+  background:#302914;
+  color:#f3cf65;
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:35px 10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:390px){
+  .balance{
+    font-size:32px;
+  }
+
+  .actions{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
 </style>
 </head>
 
@@ -327,777 +579,658 @@ input,select{
 
 <div class="app">
 
-<header class="top">
-  <div class="header">
-    <div class="logo">
-      <div class="logoMark">W</div>
-      WALLET
-    </div>
+<header class="header">
 
-    <div class="headerActions">
-      <button class="iconBtn" onclick="openModal('settings')">⚙️</button>
-      <button class="iconBtn" onclick="openModal('profile')">👤</button>
-    </div>
+  <div class="logo">
+    <div class="logo-mark">W</div>
+    Wallet
   </div>
 
-  <div class="ticker">
-    BTC/USDT <span id="btcTicker">--</span>
-    ETH/USDT <span id="ethTicker">--</span>
-    SOL/USDT <span id="solTicker">--</span>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="openModal('notifications')">🔔</button>
+    <button class="icon-btn" onclick="openModal('profile')">JS</button>
   </div>
+
 </header>
 
-<main>
-
-<section id="home">
-
-<h1>Wallet Overview</h1>
-
-<div class="card balanceCard">
-  <span class="demoTag">UI PROTOTYPE</span>
-  <div class="balanceLabel" style="margin-top:14px">
-    Portfolio Value
-  </div>
-
-  <div class="balance" id="balance">
-    $2,637,532.10
-  </div>
-
-  <div class="small">
-    Display balance for interface testing
-  </div>
-
-  <div class="actions">
-    <button class="primary" onclick="openModal('withdraw')">
-      Withdraw
-    </button>
-
-    <button class="secondary" onclick="openModal('refund')">
-      Refund
-    </button>
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>BTC/USDT <b id="btcTicker">$73,344.27</b> <span class="up">+2.34%</span></span>
+    <span>SOL/USDT <b id="solTicker">$87.92</b> <span class="down">-0.52%</span></span>
+    <span>ETH/USDT $3,421.50 <span class="up">+1.12%</span></span>
+    <span>USDT/USD $1.00 <span class="up">+0.01%</span></span>
   </div>
 </div>
 
-<div class="card">
-  <h2>Your Assets</h2>
+<main class="content">
 
-  <div class="asset">
-    <div class="coin">
-      <div class="coinIcon">₿</div>
-      <div>
-        <div class="assetName">Bitcoin</div>
-        <div class="small">BTC</div>
-      </div>
+<h1 class="page-title">Portfolio</h1>
+
+<section class="card balance-card">
+
+  <div class="balance-label">Total Portfolio Value</div>
+
+  <div class="balance-row">
+
+    <div class="balance" id="totalBalance">
+      $263,532.10
     </div>
-    <div class="assetPrice" id="btcAsset">--</div>
+
+    <button class="eye" onclick="toggleBalance()">◉</button>
+
   </div>
 
-  <div class="asset">
-    <div class="coin">
-      <div class="coinIcon">Ξ</div>
-      <div>
-        <div class="assetName">Ethereum</div>
-        <div class="small">ETH</div>
-      </div>
-    </div>
-    <div class="assetPrice" id="ethAsset">--</div>
+  <div class="sub-value" id="brlValue">
+    ≈ R$ 1,317,660.50
   </div>
 
-  <div class="asset">
-    <div class="coin">
-      <div class="coinIcon">S</div>
-      <div>
-        <div class="assetName">Solana</div>
-        <div class="small">SOL</div>
-      </div>
+  <div class="stats">
+
+    <div class="stat">
+      <span>Available Balance</span>
+      <strong id="availableBalance">$263,532.10</strong>
     </div>
-    <div class="assetPrice" id="solAsset">--</div>
+
+    <div class="stat">
+      <span>24h Change</span>
+      <strong class="up">+3.21%</strong>
+    </div>
+
+    <div class="stat">
+      <span>Profit/Loss</span>
+      <strong class="up">+$39,941.81</strong>
+    </div>
+
+    <div class="stat">
+      <span>Account Status</span>
+      <strong class="up">Active</strong>
+    </div>
+
   </div>
-</div>
 
 </section>
 
+<div class="actions">
 
-<section id="markets" class="hidden">
+  <button class="action" onclick="openModal('send')">
+    <span class="action-icon">↗</span>
+    <span class="action-label">Send</span>
+  </button>
 
-<h1>Markets</h1>
+  <button class="action" onclick="openModal('receive')">
+    <span class="action-icon">↙</span>
+    <span class="action-label">Receive</span>
+  </button>
 
-<div class="tabs">
-  <button class="tab active" onclick="changePair('BTCUSDT',this)">BTC/USDT</button>
-  <button class="tab" onclick="changePair('ETHUSDT',this)">ETH/USDT</button>
-  <button class="tab" onclick="changePair('SOLUSDT',this)">SOL/USDT</button>
-</div>
+  <button class="action" onclick="openModal('withdraw')">
+    <span class="action-icon">↑</span>
+    <span class="action-label">Withdraw</span>
+  </button>
 
-<div class="card">
-
-  <div class="marketHeader">
-    <div>
-      <div class="small" id="pairName">BTC/USDT</div>
-      <div class="marketPrice" id="marketPrice">--</div>
-    </div>
-
-    <div id="marketChange" class="marketChange">
-      --
-    </div>
-  </div>
-
-  <div class="chartBox">
-    <canvas id="chart"></canvas>
-    <div id="chartStatus" class="status">Loading live market data…</div>
-  </div>
+  <button class="action" onclick="openModal('refund')">
+    <span class="action-icon">↻</span>
+    <span class="action-label">Refund</span>
+  </button>
 
 </div>
+
+<section class="card">
+
+  <div class="balance-row">
+    <h2>Your Assets</h2>
+    <button class="eye" onclick="openModal('receive')">Deposit</button>
+  </div>
+
+  <div class="asset">
+
+    <div class="coin">₿</div>
+
+    <div class="asset-main">
+      <div class="asset-name">Bitcoin</div>
+      <div class="asset-amount">3.00000000 BTC</div>
+    </div>
+
+    <div class="asset-value" id="btcValue">
+      $220,032.81
+    </div>
+
+  </div>
+
+  <div class="asset">
+
+    <div class="coin sol">S</div>
+
+    <div class="asset-main">
+      <div class="asset-name">Solana</div>
+      <div class="asset-amount">76.00000000 SOL</div>
+    </div>
+
+    <div class="asset-value" id="solValue">
+      $6,675.65
+    </div>
+
+  </div>
+
+  <div class="asset">
+
+    <div class="coin">★</div>
+
+    <div class="asset-main">
+      <div class="asset-name">Reward Credit</div>
+      <div class="asset-amount">Account credit</div>
+    </div>
+
+    <div class="asset-value">
+      $36,823.64
+    </div>
+
+  </div>
 
 </section>
 
+<section class="card">
 
-<section id="history" class="hidden">
-
-<h1>Transaction History</h1>
-
-<div class="card">
-  <div style="font-size:18px;font-weight:800">
-    No transaction history
-  </div>
-  <div class="small" style="margin-top:8px">
-    Transactions will appear here when transaction records are connected to a real backend.
-  </div>
-</div>
-
-</section>
-
-<section id="profilePage" class="hidden">
-
-<h1>Profile</h1>
-
-<div class="card">
-  <div class="profile">
-    <div class="avatar">W</div>
-    <div>
-      <div style="font-size:21px;font-weight:800">
-        Wallet User
-      </div>
-      <div class="small">
-        Account profile
-      </div>
-      <div class="badge">
-        Account status: Prototype
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="card">
-  <h2>Account</h2>
-
-  <div class="setting">
-    <span>Email</span>
-    <span class="small">Not configured</span>
+  <div class="balance-row">
+    <h2>Quick Access</h2>
   </div>
 
-  <div class="setting">
-    <span>Account ID</span>
-    <span class="small">Not configured</span>
-  </div>
+  <button class="secondary" onclick="openModal('p2p')">
+    P2P Marketplace →
+  </button>
 
-  <div class="setting">
-    <span>Security</span>
-    <span class="small">Frontend only</span>
-  </div>
-</div>
+  <button class="secondary" onclick="openModal('history')">
+    Transaction History →
+  </button>
+
+  <button class="secondary" onclick="openModal('settings')">
+    Account Settings →
+  </button>
 
 </section>
 
 </main>
 
-<nav class="bottom">
-  <button class="nav active" onclick="showPage('home',this)">
-    <span class="navIcon">⌂</span>Home
-  </button>
+<nav class="bottom-nav">
 
-  <button class="nav" onclick="showPage('markets',this)">
-    <span class="navIcon">📈</span>Markets
-  </button>
+<button class="nav-btn active" onclick="scrollTopPage()">
+<span class="nav-icon">⌂</span>
+Home
+</button>
 
-  <button class="nav" onclick="showPage('history',this)">
-    <span class="navIcon">▤</span>History
-  </button>
+<button class="nav-btn" onclick="openModal('p2p')">
+<span class="nav-icon">⇄</span>
+P2P
+</button>
 
-  <button class="nav" onclick="showPage('profilePage',this)">
-    <span class="navIcon">●</span>Profile
-  </button>
+<button class="nav-btn" onclick="openModal('receive')">
+<span class="nav-icon">↓</span>
+Receive
+</button>
+
+<button class="nav-btn" onclick="openModal('history')">
+<span class="nav-icon">◷</span>
+History
+</button>
+
+<button class="nav-btn" onclick="openModal('profile')">
+<span class="nav-icon">●</span>
+Profile
+</button>
+
 </nav>
 
 </div>
 
 
-<!-- WITHDRAW -->
+<!-- MODAL -->
 
-<div class="modal" id="withdrawModal">
+<div class="overlay" id="modal">
+
 <div class="sheet">
 
-<div class="sheetHeader">
-  <h2>Withdraw</h2>
-  <button class="close" onclick="closeModal('withdraw')">×</button>
+<div class="sheet-head">
+
+<div class="sheet-title" id="modalTitle">
+Wallet
 </div>
 
-<p class="small">
-  Enter the destination details for your withdrawal request.
-</p>
-
-<label>Destination address</label>
-<input
-  id="withdrawAddress"
-  placeholder="Paste your wallet address"
-/>
-
-<label>Network</label>
-<select id="withdrawNetwork">
-  <option>Bitcoin Network</option>
-  <option>Ethereum / ERC-20</option>
-  <option>BNB Smart Chain / BEP-20</option>
-  <option>Solana Network</option>
-  <option>Other</option>
-</select>
-
-<label>Amount</label>
-<input type="number" placeholder="Enter amount">
-
-<div class="notice">
-  <strong>Approval required</strong><br><br>
-  Before a withdrawal can proceed, the request must be
-  reviewed and approved through the wallet's authorized
-  trading-management interface.
-  <br><br>
-  This prototype does not perform or submit real withdrawals.
-</div>
-
-<button class="primary"
-        style="width:100%;margin-top:18px"
-        onclick="requestApproval()">
-  Request Review
-</button>
-
-</div>
-</div>
-
-
-<!-- DEPOSIT -->
-
-<div class="modal" id="depositModal">
-<div class="sheet">
-
-<div class="sheetHeader">
-  <h2>Deposit</h2>
-  <button class="close" onclick="closeModal('deposit')">×</button>
-</div>
-
-<label>Select network</label>
-
-<select id="depositNetwork">
-  <option>Bitcoin Network</option>
-  <option>Ethereum / ERC-20</option>
-  <option>BNB Smart Chain / BEP-20</option>
-  <option>Solana Network</option>
-</select>
-
-<div class="notice">
-  Select the network first. A real deposit address should
-  only be generated by the wallet backend after the account
-  and network have been verified.
-</div>
-
-<div class="address">
-  Deposit address will appear here after backend integration.
-</div>
-
-</div>
-</div>
-
-
-<!-- REFUND -->
-
-<div class="modal" id="refundModal">
-<div class="sheet">
-
-<div class="sheetHeader">
-  <h2>Refund</h2>
-  <button class="close" onclick="closeModal('refund')">×</button>
-</div>
-
-<div class="notice">
-  <strong>Refund status</strong><br><br>
-  The refund record can be displayed here as a paid/processed
-  record in the interface. A real refund must be verified
-  against an actual transaction or backend record before it
-  is treated as settled.
-</div>
-
-<div class="card" style="margin-top:18px;margin-bottom:0">
-  <div class="small">Refund record</div>
-  <div style="font-size:22px;font-weight:800;margin-top:7px">
-    No verified refund transaction
-  </div>
-</div>
-
-</div>
-</div>
-
-
-<!-- PROFILE -->
-
-<div class="modal" id="profileModal">
-<div class="sheet">
-
-<div class="sheetHeader">
-  <h2>Profile</h2>
-  <button class="close" onclick="closeModal('profile')">×</button>
-</div>
-
-<div class="profile">
-  <div class="avatar">W</div>
-  <div>
-    <strong>Wallet User</strong>
-    <div class="small">Account profile</div>
-  </div>
-</div>
-
-<div class="card" style="margin-top:20px;margin-bottom:0">
-
-<div class="setting">
-  <span>Email</span>
-  <span class="small">Not configured</span>
-</div>
-
-<div class="setting">
-  <span>Account ID</span>
-  <span class="small">Not configured</span>
-</div>
-
-<button class="secondary"
-        style="width:100%;margin-top:15px"
-        onclick="closeModal('profile');openModal('settings')">
-  Settings
-</button>
+<button class="close" onclick="closeModal()">×</button>
 
 </div>
 
-</div>
-</div>
-
-
-<!-- SETTINGS -->
-
-<div class="modal" id="settingsModal">
-<div class="sheet">
-
-<div class="sheetHeader">
-  <h2>Settings</h2>
-  <button class="close" onclick="closeModal('settings')">×</button>
-</div>
-
-<div class="setting">
-  <span>Currency</span>
-  <select style="width:120px">
-    <option>USD</option>
-    <option>EUR</option>
-    <option>GBP</option>
-  </select>
-</div>
-
-<div class="setting">
-  <span>Hide balance</span>
-  <button class="secondary" onclick="toggleBalance()">
-    Toggle
-  </button>
-</div>
-
-<div class="setting">
-  <span>Email</span>
-  <span class="small">Not configured</span>
-</div>
-
-<div class="setting">
-  <span>Account ID</span>
-  <span class="small">Not configured</span>
-</div>
-
-<div class="setting">
-  <span>Security</span>
-  <span class="small">Backend required</span>
-</div>
-
-<div class="notice">
-  This is a frontend prototype. Do not place passwords,
-  private keys, seed phrases, or real account credentials
-  inside this HTML file.
-</div>
+<div id="modalContent"></div>
 
 </div>
+
 </div>
 
 
 <script>
 
 /*
-  PUBLIC MARKET DATA
-  Binance public REST API is used for market prices and
-  candlestick data. No API key is required for these
-  public market endpoints.
+  CONFIGURATION
+  Change these values for your prototype.
+
+  Do NOT put real passwords or private keys here.
 */
 
-const API = "https://api.binance.com";
+const ACCOUNT = {
+  name: "Jose Silva",
+  uid: "756371252",
+  email: "your-email@example.com"
+};
 
-let currentPair = "BTCUSDT";
+const START_BALANCE = 263532.10;
+
 let balanceVisible = true;
+let simulatedBalance = START_BALANCE;
+
+let btcPrice = 73344.27;
+let solPrice = 87.92;
+
+let btcAmount = 3;
+let solAmount = 76;
 
 
-/* -------------------------
-   PAGE NAVIGATION
-------------------------- */
+/* -----------------------------
+   BALANCE DISPLAY
+----------------------------- */
 
-function showPage(page,button){
+function money(value){
+  return new Intl.NumberFormat("en-US",{
+    style:"currency",
+    currency:"USD"
+  }).format(value);
+}
 
-  document
-    .querySelectorAll("main > section")
-    .forEach(section => section.classList.add("hidden"));
+function updatePortfolio(){
 
-  document
-    .getElementById(page)
-    .classList.remove("hidden");
+  const btcValue = btcAmount * btcPrice;
+  const solValue = solAmount * solPrice;
 
-  document
-    .querySelectorAll(".nav")
-    .forEach(n => n.classList.remove("active"));
+  /*
+    Reward credit is static in this prototype.
+  */
 
-  button.classList.add("active");
+  const reward = 36823.64;
 
-  if(page === "markets"){
-    loadChart();
+  simulatedBalance =
+    btcValue +
+    solValue +
+    reward;
+
+  document.getElementById("btcValue").textContent =
+    money(btcValue);
+
+  document.getElementById("solValue").textContent =
+    money(solValue);
+
+  document.getElementById("btcTicker").textContent =
+    money(btcPrice);
+
+  document.getElementById("solTicker").textContent =
+    money(solPrice);
+
+  if(balanceVisible){
+
+    document.getElementById("totalBalance").textContent =
+      money(simulatedBalance);
+
+    document.getElementById("availableBalance").textContent =
+      money(simulatedBalance);
+
+    document.getElementById("brlValue").textContent =
+      "≈ " + money(simulatedBalance * 5).replace("$","R$");
+
   }
-}
-
-
-/* -------------------------
-   MODALS
-------------------------- */
-
-function openModal(name){
-  document
-    .getElementById(name + "Modal")
-    .classList.add("show");
-}
-
-function closeModal(name){
-  document
-    .getElementById(name + "Modal")
-    .classList.remove("show");
-}
-
-
-/* -------------------------
-   WITHDRAW
-------------------------- */
-
-function requestApproval(){
-
-  alert(
-    "Withdrawal request prepared for review. " +
-    "A real withdrawal cannot proceed until it is " +
-    "verified by the authorized trading-management system."
-  );
 
 }
 
 
-/* -------------------------
-   BALANCE VISIBILITY
-------------------------- */
+/* -----------------------------
+   LIVE MARKET DATA
+----------------------------- */
+
+async function getMarketPrices(){
+
+  try{
+
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,solana&vs_currencies=usd"
+    );
+
+    const data = await response.json();
+
+    if(data.bitcoin?.usd){
+      btcPrice = data.bitcoin.usd;
+    }
+
+    if(data.solana?.usd){
+      solPrice = data.solana.usd;
+    }
+
+    updatePortfolio();
+
+  }catch(error){
+
+    /*
+      If the public API is unavailable,
+      the interface continues using its
+      last known prices.
+    */
+
+    console.log("Market data unavailable.");
+
+  }
+
+}
+
+
+/*
+  Refresh market data every 5 seconds.
+*/
+
+getMarketPrices();
+
+setInterval(getMarketPrices,5000);
+
+
+/* -----------------------------
+   BALANCE PRIVACY
+----------------------------- */
 
 function toggleBalance(){
 
-  const el = document.getElementById("balance");
-
   balanceVisible = !balanceVisible;
 
-  el.textContent =
-    balanceVisible
-      ? "$2,637,532.10"
-      : "••••••••";
-}
+  if(balanceVisible){
 
+    document.getElementById("totalBalance").textContent =
+      money(simulatedBalance);
 
-/* -------------------------
-   MARKET PRICES
-------------------------- */
+    document.getElementById("availableBalance").textContent =
+      money(simulatedBalance);
 
-async function getPrice(symbol){
+    document.getElementById("brlValue").textContent =
+      "≈ " + money(simulatedBalance * 5).replace("$","R$");
 
-  try{
+  }else{
 
-    const response =
-      await fetch(
-        API + "/api/v3/ticker/24hr?symbol=" + symbol
-      );
+    document.getElementById("totalBalance").textContent =
+      "••••••••";
 
-    if(!response.ok) throw new Error();
+    document.getElementById("availableBalance").textContent =
+      "••••••••";
 
-    return await response.json();
-
-  }catch(error){
-
-    return null;
-
-  }
-}
-
-
-function money(value){
-
-  if(value === null || value === undefined)
-    return "--";
-
-  return "$" + Number(value).toLocaleString(
-    "en-US",
-    {
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    }
-  );
-}
-
-
-async function updateMarkets(){
-
-  const pairs = [
-    ["BTCUSDT","btcTicker","btcAsset"],
-    ["ETHUSDT","ethTicker","ethAsset"],
-    ["SOLUSDT","solTicker","solAsset"]
-  ];
-
-  for(const item of pairs){
-
-    const data = await getPrice(item[0]);
-
-    if(!data) continue;
-
-    const price = Number(data.lastPrice);
-    const change = Number(data.priceChangePercent);
-
-    document.getElementById(item[1]).textContent =
-      money(price) + " " +
-      (change >= 0 ? "+" : "") +
-      change.toFixed(2) + "%";
-
-    document.getElementById(item[2]).textContent =
-      money(price);
-  }
-
-  if(!document.getElementById("markets").classList.contains("hidden")){
-    const data = await getPrice(currentPair);
-
-    if(data){
-
-      document.getElementById("marketPrice").textContent =
-        money(data.lastPrice);
-
-      const change =
-        Number(data.priceChangePercent);
-
-      const changeEl =
-        document.getElementById("marketChange");
-
-      changeEl.textContent =
-        (change >= 0 ? "+" : "") +
-        change.toFixed(2) + "%";
-
-      changeEl.className =
-        "marketChange " +
-        (change >= 0 ? "green" : "red");
-    }
-  }
-
-}
-
-
-/* Update live prices */
-
-updateMarkets();
-
-setInterval(updateMarkets,5000);
-
-
-/* -------------------------
-   CHART
-------------------------- */
-
-async function loadChart(){
-
-  const canvas =
-    document.getElementById("chart");
-
-  const ctx =
-    canvas.getContext("2d");
-
-  const status =
-    document.getElementById("chartStatus");
-
-  status.textContent =
-    "Loading live market data…";
-
-  try{
-
-    const response =
-      await fetch(
-        API +
-        "/api/v3/klines?symbol=" +
-        currentPair +
-        "&interval=5m&limit=80"
-      );
-
-    if(!response.ok) throw new Error();
-
-    const data =
-      await response.json();
-
-    const prices =
-      data.map(item => Number(item[4]));
-
-    drawChart(canvas,ctx,prices);
-
-    status.textContent = "";
-
-    document.getElementById("pairName")
-      .textContent =
-      currentPair.replace("USDT","/USDT");
-
-  }catch(error){
-
-    status.textContent =
-      "Market data is temporarily unavailable.";
+    document.getElementById("brlValue").textContent =
+      "Balance hidden";
 
   }
 
 }
 
 
-function drawChart(canvas,ctx,prices){
+/* -----------------------------
+   MODALS
+----------------------------- */
 
-  const rect =
-    canvas.getBoundingClientRect();
+function openModal(type){
 
-  const dpr =
-    window.devicePixelRatio || 1;
+  const modal = document.getElementById("modal");
+  const title = document.getElementById("modalTitle");
+  const content = document.getElementById("modalContent");
 
-  canvas.width =
-    rect.width * dpr;
+  modal.classList.add("show");
 
-  canvas.height =
-    rect.height * dpr;
+  if(type === "withdraw"){
 
-  ctx.scale(dpr,dpr);
+    title.textContent = "Withdraw";
 
-  const width =
-    rect.width;
+    content.innerHTML = `
 
-  const height =
-    rect.height;
+      <div class="notice">
+        Enter the destination wallet address for the asset you want to withdraw.
+      </div>
 
-  ctx.clearRect(0,0,width,height);
+      <div class="field">
+        <label>Asset</label>
 
-  if(prices.length < 2) return;
+        <select>
+          <option>Bitcoin (BTC)</option>
+          <option>Solana (SOL)</option>
+          <option>USDT</option>
+        </select>
+      </div>
 
-  const min =
-    Math.min(...prices);
+      <div class="field">
+        <label>Destination wallet address</label>
 
-  const max =
-    Math.max(...prices);
+        <input
+          placeholder="Paste your wallet address"
+          autocomplete="off"
+        >
+      </div>
 
-  const padding = 22;
+      <div class="field">
+        <label>Amount</label>
 
-  ctx.beginPath();
+        <input
+          type="number"
+          placeholder="Enter amount"
+        >
+      </div>
 
-  prices.forEach((price,index)=>{
+      <div class="notice warning">
 
-    const x =
-      padding +
-      index *
-      ((width-padding*2)/(prices.length-1));
+        Withdrawal requests in this prototype require
+        administrator approval before the simulated request
+        can proceed.
 
-    const y =
-      height-padding -
-      ((price-min)/(max-min || 1)) *
-      (height-padding*2);
+      </div>
 
-    if(index===0)
-      ctx.moveTo(x,y);
-    else
-      ctx.lineTo(x,y);
+      <button class="primary" onclick="requestWithdrawal()">
+        Request Withdrawal Approval
+      </button>
 
-  });
+      <button class="secondary" onclick="closeModal()">
+        Cancel
+      </button>
 
-  ctx.strokeStyle =
-    "#16c784";
+    `;
 
-  ctx.lineWidth = 3;
-
-  ctx.stroke();
-
-
-  /* area under chart */
-
-  ctx.lineTo(width-padding,height-padding);
-  ctx.lineTo(padding,height-padding);
-  ctx.closePath();
-
-  ctx.globalAlpha = .12;
-  ctx.fillStyle = "#16c784";
-  ctx.fill();
-
-  ctx.globalAlpha = 1;
-
-}
+  }
 
 
-/* -------------------------
-   CHANGE MARKET
-------------------------- */
+  else if(type === "refund"){
 
-function changePair(pair,button){
+    title.textContent = "Refund";
 
-  currentPair = pair;
+    content.innerHTML = `
 
-  document
-    .querySelectorAll(".tab")
-    .forEach(t => t.classList.remove("active"));
+      <div class="notice success">
 
-  button.classList.add("active");
+        Refund information is available for this account.
 
-  loadChart();
-  updateMarkets();
+      </div>
 
-}
+      <div class="card">
+
+        <div class="balance-label">
+          Refund Status
+        </div>
+
+        <h2>Paid</h2>
+
+        <p style="color:var(--muted);line-height:1.6">
+          The refund has been recorded as paid.
+          The current wallet interface cannot modify
+          the account balance through this screen.
+        </p>
+
+      </div>
+
+      <button class="primary" onclick="closeModal()">
+        Done
+      </button>
+
+    `;
+
+  }
 
 
-/* -------------------------
-   CLOSE MODALS BY BACKDROP
-------------------------- */
+  else if(type === "p2p"){
 
-document
-  .querySelectorAll(".modal")
-  .forEach(modal => {
+    title.textContent = "P2P Marketplace";
 
-    modal.addEventListener("click",function(e){
+    content.innerHTML = `
 
-      if(e.target === modal){
-        modal.classList.remove("show");
-      }
+      <div class="p2p-tabs">
 
-    });
+        <button
+          class="p2p-tab active"
+          onclick="switchP2P('buy',this)">
+          Buy
+        </button>
 
-  });
+        <button
+          class="p2p-tab"
+          onclick="switchP2P('sell',this)">
+          Sell
+        </button>
 
-</script>
+      </div>
 
-</body>
-</html>
+      <div id="p2pOffers">
+
+        ${p2pOffers("buy")}
+
+      </div>
+
+      <div class="notice">
+
+        P2P orders shown here are interface examples.
+        No payment or cryptocurrency transfer is executed
+        by this front-end prototype.
+
+      </div>
+
+    `;
+
+  }
+
+
+  else if(type === "settings"){
+
+    title.textContent = "Settings";
+
+    content.innerHTML = `
+
+      <div class="setting-row">
+        <div class="setting-name">Account name</div>
+        <div class="setting-value">
+          ${ACCOUNT.name}
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-name">Email</div>
+        <div class="setting-value">
+          ${ACCOUNT.email}
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-name">Account ID</div>
+        <div class="setting-value">
+          ${ACCOUNT.uid}
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-name">Security</div>
+        <div class="setting-value">
+          Protected
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-name">Notifications</div>
+        <div class="setting-value">
+          Enabled
+        </div>
+      </div>
+
+      <br>
+
+      <button class="primary" onclick="closeModal()">
+        Done
+      </button>
+
+    `;
+
+  }
+
+
+  else if(type === "profile"){
+
+    title.textContent = "Profile";
+
+    content.innerHTML = `
+
+      <div class="profile">
+
+        <div class="avatar">
+          JS
+        </div>
+
+        <div>
+
+          <h2 style="margin:0">
+            ${ACCOUNT.name}
+          </h2>
+
+          <div style="color:var(--muted)">
+            Account ID: ${ACCOUNT.uid}
+          </div>
+
+          <span class="verified">
+            ✓ Account Active
+          </span>
+
+        </div>
+
+      </div>
+
+      <br>
+
+      <button class="secondary"
+        onclick="openModal('settings')">
+        Settings
+      </button>
+
+      <button class="secondary"
+        onclick="openModal('history')">
+        Transaction History
+      </button>
+
+      <button class="secondary"
+        onclick="openModal('p2p')">
+        P2P Marketplace
+      </button>
+
+    `;
+
+  }
+
+
+  else if(type === "history"){
+
+    title.textContent = "Transaction History";
+
+    content.innerHTML = `
+
+      <div class="empty">
+
+        <div style="font-size:38px">◷</div>
+
+        <h3>No trans
