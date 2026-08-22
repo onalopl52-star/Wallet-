@@ -3,816 +3,193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wallet UI Prototype</title>
+<title>Wallet Login</title>
 
 <style>
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+    box-sizing: border-box;
 }
 
 body {
-  background: #0b0e12;
-  color: #f5f7fa;
-  min-height: 100vh;
+    margin: 0;
+    min-height: 100vh;
+    background: #0b0e11;
+    color: #f5f5f5;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
-button,
-input {
-  font: inherit;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* LOGIN */
-#loginScreen {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.login-box {
-  width: 100%;
-  max-width: 420px;
-  background: #171b21;
-  border: 1px solid #292f38;
-  border-radius: 22px;
-  padding: 30px 24px;
-  box-shadow: 0 20px 50px rgba(0,0,0,.35);
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: #181c21;
+    border: 1px solid #30353d;
+    border-radius: 20px;
+    padding: 32px 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
 }
 
 .logo {
-  text-align: center;
-  font-size: 30px;
-  font-weight: 800;
-  margin-bottom: 8px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.logo span {
-  color: #f0b90b;
+.logo-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #f0b90b;
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-size: 25px;
+    font-weight: bold;
 }
 
-.subtitle {
-  text-align: center;
-  color: #8e98a8;
-  margin-bottom: 30px;
+.logo h1 {
+    margin: 14px 0 5px;
+    font-size: 25px;
+}
+
+.logo p {
+    margin: 0;
+    color: #9299a6;
+    font-size: 14px;
 }
 
 label {
-  display: block;
-  color: #aab3c0;
-  margin: 15px 0 7px;
+    display: block;
+    margin: 18px 0 8px;
+    color: #c5cad2;
+    font-size: 14px;
 }
 
 input {
-  width: 100%;
-  padding: 15px;
-  border-radius: 12px;
-  border: 1px solid #343b46;
-  background: #0f1318;
-  color: white;
-  outline: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #3a4048;
+    background: #101318;
+    color: white;
+    font-size: 15px;
+    outline: none;
 }
 
 input:focus {
-  border-color: #f0b90b;
+    border-color: #f0b90b;
 }
 
-.primary {
-  width: 100%;
-  margin-top: 24px;
-  padding: 15px;
-  border: 0;
-  border-radius: 12px;
-  background: #f0b90b;
-  color: #111;
-  font-weight: 800;
-  cursor: pointer;
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px;
+    border: 0;
+    border-radius: 10px;
+    background: #f0b90b;
+    color: #111;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.login-error {
-  color: #ff667d;
-  margin-top: 15px;
-  text-align: center;
+button:hover {
+    background: #ffc928;
 }
 
-/* APP */
-header {
-  height: 70px;
-  background: #12161b;
-  border-bottom: 1px solid #292f38;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+.error {
+    display: none;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 9px;
+    background: #351b1b;
+    color: #ff7777;
+    font-size: 14px;
 }
 
-.brand {
-  color: #f0b90b;
-  font-size: 22px;
-  font-weight: 800;
-}
-
-.header-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.icon-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 0;
-  background: #242a32;
-  color: white;
-  cursor: pointer;
-}
-
-main {
-  max-width: 900px;
-  margin: auto;
-  padding: 22px;
-}
-
-.profile-card,
-.balance-card,
-.asset-card,
-.section-card {
-  background: #171c22;
-  border: 1px solid #2b323b;
-  border-radius: 18px;
-  padding: 22px;
-  margin-bottom: 18px;
-}
-
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.avatar {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: #f0b90b;
-  color: #111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 20px;
-}
-
-.profile small,
-.muted {
-  color: #8e98a8;
-}
-
-.balance-label {
-  color: #8e98a8;
-  margin-bottom: 8px;
-}
-
-.balance {
-  font-size: 40px;
-  font-weight: 800;
-  margin-bottom: 18px;
-}
-
-.balance.hidden-balance {
-  letter-spacing: 5px;
-}
-
-.actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.action {
-  padding: 15px;
-  border-radius: 12px;
-  border: 1px solid #353d48;
-  background: #222830;
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.action.withdraw {
-  background: #f0b90b;
-  color: #111;
-}
-
-.asset {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 0;
-  border-bottom: 1px solid #2b323b;
-}
-
-.asset:last-child {
-  border-bottom: 0;
-}
-
-.asset-name {
-  font-weight: 700;
-}
-
-.asset-value {
-  text-align: right;
-}
-
-.green {
-  color: #20c997;
-}
-
-/* MODAL */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.72);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  z-index: 30;
-}
-
-.modal-box {
-  width: 100%;
-  max-width: 470px;
-  background: #171c22;
-  border: 1px solid #353d48;
-  border-radius: 20px;
-  padding: 24px;
-}
-
-.modal-title {
-  font-size: 24px;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
-
-.modal-text {
-  color: #aab3c0;
-  line-height: 1.6;
-  margin-bottom: 18px;
-}
-
-.address {
-  width: 100%;
-  min-height: 90px;
-  resize: vertical;
-  margin-bottom: 12px;
-}
-
-.modal-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.modal-buttons button {
-  flex: 1;
-  padding: 13px;
-  border-radius: 11px;
-  border: 0;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.cancel {
-  background: #292f38;
-  color: white;
-}
-
-.confirm {
-  background: #f0b90b;
-  color: #111;
-}
-
-/* PROFILE MENU */
-.menu {
-  position: fixed;
-  right: 18px;
-  top: 65px;
-  width: 250px;
-  background: #181d23;
-  border: 1px solid #303741;
-  border-radius: 16px;
-  padding: 10px;
-  z-index: 20;
-}
-
-.menu button {
-  width: 100%;
-  padding: 14px;
-  text-align: left;
-  border: 0;
-  background: transparent;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.menu button:hover {
-  background: #252b33;
-}
-
-@media(max-width:600px) {
-  main {
-    padding: 14px;
-  }
-
-  .balance {
-    font-size: 32px;
-  }
+.demo-note {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #20252c;
+    color: #9299a6;
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<section id="loginScreen">
-  <div class="login-box">
+<div class="login-card">
 
-    <div class="logo">WALLET<span>+</span></div>
-
-    <div class="subtitle">
-      Secure wallet interface
+    <div class="logo">
+        <div class="logo-icon">W</div>
+        <h1>Wallet</h1>
+        <p>Secure account access</p>
     </div>
 
-    <label>Account ID</label>
-    <input id="uid" placeholder="Enter account ID">
+    <form id="loginForm">
 
-    <label>Email</label>
-    <input id="email" type="email" placeholder="Enter email">
+        <label for="email">Email address</label>
+        <input
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+            autocomplete="username"
+            required
+        >
 
-    <label>Password</label>
-    <input id="password" type="password" placeholder="Enter password">
+        <label for="password">Password</label>
+        <input
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+        >
 
-    <button class="primary" onclick="login()">Sign in</button>
+        <button type="submit">Sign in</button>
 
-    <div id="loginError" class="login-error"></div>
+        <div id="error" class="error">
+            Incorrect demo credentials.
+        </div>
 
-  </div>
-</section>
+    </form>
 
-
-<!-- WALLET -->
-<section id="walletApp" class="hidden">
-
-<header>
-  <div class="brand">WALLET+</div>
-
-  <div class="header-buttons">
-    <button class="icon-btn" onclick="toggleMenu()">☰</button>
-  </div>
-</header>
-
-
-<main>
-
-  <div class="profile-card">
-    <div class="profile">
-      <div class="avatar">WP</div>
-
-      <div>
-        <h2>Wallet Profile</h2>
-        <small>Account ID: 000000000</small>
-      </div>
+    <div class="demo-note">
+        Front-end demonstration only. No real financial credentials
+        or funds are processed by this page.
     </div>
-  </div>
-
-
-  <div class="balance-card">
-
-    <div class="balance-label">
-      Total Portfolio Value
-    </div>
-
-    <div id="balance" class="balance">
-      $263,753.10
-    </div>
-
-    <div class="muted">
-      Market value updates automatically
-    </div>
-
-    <br>
-
-    <div class="actions">
-
-      <button
-        class="action withdraw"
-        onclick="openWithdraw()">
-        Withdraw
-      </button>
-
-      <button
-        class="action"
-        onclick="openRefund()">
-        Refund
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="asset-card">
-
-    <h2>Your Assets</h2>
-
-    <div class="asset">
-      <div>
-        <div class="asset-name">Bitcoin</div>
-        <small class="muted">BTC</small>
-      </div>
-
-      <div class="asset-value">
-        <strong id="btc">$73,344.27</strong>
-        <div class="green">+2.34%</div>
-      </div>
-    </div>
-
-
-    <div class="asset">
-      <div>
-        <div class="asset-name">Solana</div>
-        <small class="muted">SOL</small>
-      </div>
-
-      <div class="asset-value">
-        <strong id="sol">$87.92</strong>
-        <div class="green">+1.12%</div>
-      </div>
-    </div>
-
-
-    <div class="asset">
-      <div>
-        <div class="asset-name">Portfolio Credit</div>
-        <small class="muted">Account balance</small>
-      </div>
-
-      <div class="asset-value">
-        <strong>$40,000.00</strong>
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="section-card">
-
-    <h2>Transaction History</h2>
-
-    <br>
-
-    <p class="muted">
-      No transactions yet.
-    </p>
-
-  </div>
-
-</main>
-
-</section>
-
-
-<!-- PROFILE MENU -->
-<div id="profileMenu" class="menu hidden">
-
-  <button onclick="openProfile()">
-    👤 Profile
-  </button>
-
-  <button onclick="openSettings()">
-    ⚙️ Settings
-  </button>
-
-  <button onclick="toggleBalance()">
-    👁 Hide / Show Balance
-  </button>
-
-  <button onclick="logout()">
-    ↪ Sign out
-  </button>
 
 </div>
-
-
-<!-- WITHDRAW MODAL -->
-<div id="withdrawModal" class="modal hidden">
-
-  <div class="modal-box">
-
-    <div class="modal-title">
-      Withdraw
-    </div>
-
-    <div class="modal-text">
-      Enter the receiving wallet address for the exchange
-      or wallet where you want to send your assets.
-    </div>
-
-    <textarea
-      id="walletAddress"
-      class="address"
-      placeholder="Paste wallet address here"></textarea>
-
-    <div class="modal-text">
-      This interface is a front-end prototype. No real
-      withdrawal is processed by this page.
-    </div>
-
-    <div class="modal-buttons">
-
-      <button class="cancel" onclick="closeModals()">
-        Cancel
-      </button>
-
-      <button class="confirm" onclick="submitWithdraw()">
-        Continue
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- REFUND MODAL -->
-<div id="refundModal" class="modal hidden">
-
-  <div class="modal-box">
-
-    <div class="modal-title">
-      Refund
-    </div>
-
-    <div class="modal-text">
-      Your refund status is displayed here. The front-end
-      interface does not alter your account balance or
-      process real payments.
-    </div>
-
-    <button
-      class="confirm"
-      style="width:100%;padding:14px;border:0;border-radius:10px;"
-      onclick="closeModals()">
-      Close
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- SETTINGS MODAL -->
-<div id="settingsModal" class="modal hidden">
-
-  <div class="modal-box">
-
-    <div class="modal-title">
-      Settings
-    </div>
-
-    <p class="modal-text">
-      Account ID: <strong>000000000</strong>
-      <br><br>
-      Email: test@example.com
-      <br><br>
-      Security status: Front-end prototype
-    </p>
-
-    <button
-      class="confirm"
-      style="width:100%;padding:14px;border:0;border-radius:10px;"
-      onclick="closeModals()">
-      Close
-    </button>
-
-  </div>
-
-</div>
-
 
 <script>
+const DEMO_EMAIL = "demo@example.com";
+const DEMO_PASSWORD = "DemoPass123!";
 
-/*
-  FRONT-END PROTOTYPE ONLY.
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-  Do NOT put real passwords or private keys here.
-*/
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
-const TEST_ID = "123456789";
-const TEST_EMAIL = "test@example.com";
-const TEST_PASSWORD = "test-password";
+    if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
 
-function login() {
+        sessionStorage.setItem("demoWalletLoggedIn", "true");
 
-  const id =
-    document.getElementById("uid").value.trim();
+        // Change this to the page containing your existing wallet UI.
+        window.location.href = "index.html";
 
-  const email =
-    document.getElementById("email").value.trim();
-
-  const password =
-    document.getElementById("password").value;
-
-  if (
-    id === TEST_ID &&
-    email === TEST_EMAIL &&
-    password === TEST_PASSWORD
-  ) {
-
-    document
-      .getElementById("loginScreen")
-      .classList.add("hidden");
-
-    document
-      .getElementById("walletApp")
-      .classList.remove("hidden");
-
-  } else {
-
-    document.getElementById("loginError").textContent =
-      "Incorrect test credentials.";
-
-  }
-}
-
-
-/* Simulated market movement */
-
-let balanceValue = 263753.10;
-
-setInterval(() => {
-
-  const movement =
-    (Math.random() - 0.5) * 250;
-
-  balanceValue += movement;
-
-  document.getElementById("balance").textContent =
-    "$" +
-    balanceValue.toLocaleString(
-      "en-US",
-      {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }
-    );
-
-}, 3000);
-
-
-/* MENU */
-
-function toggleMenu() {
-
-  document
-    .getElementById("profileMenu")
-    .classList.toggle("hidden");
-
-}
-
-
-/* PROFILE */
-
-function openProfile() {
-
-  document.getElementById("profileMenu")
-    .classList.add("hidden");
-
-  alert(
-    "Profile\n\nAccount ID: 123456789\n\nWallet profile"
-  );
-
-}
-
-
-/* SETTINGS */
-
-function openSettings() {
-
-  document.getElementById("profileMenu")
-    .classList.add("hidden");
-
-  document.getElementById("settingsModal")
-    .classList.remove("hidden");
-
-}
-
-
-/* BALANCE */
-
-function toggleBalance() {
-
-  const balance =
-    document.getElementById("balance");
-
-  balance.classList.toggle("hidden-balance");
-
-  if (
-    balance.classList.contains("hidden-balance")
-  ) {
-
-    balance.dataset.real =
-      balance.textContent;
-
-    balance.textContent = "••••••••";
-
-  } else {
-
-    balance.textContent =
-      balance.dataset.real || "$263,753.10";
-
-  }
-
-}
-
-
-/* WITHDRAW */
-
-function openWithdraw() {
-
-  document.getElementById("withdrawModal")
-    .classList.remove("hidden");
-
-}
-
-
-/* REFUND */
-
-function openRefund() {
-
-  document.getElementById("refundModal")
-    .classList.remove("hidden");
-
-}
-
-
-/* CLOSE */
-
-function closeModals() {
-
-  document.querySelectorAll(".modal")
-    .forEach(modal => {
-      modal.classList.add("hidden");
-    });
-
-}
-
-
-/* WITHDRAW SUBMISSION */
-
-function submitWithdraw() {
-
-  const address =
-    document.getElementById("walletAddress")
-      .value.trim();
-
-  if (!address) {
-
-    alert("Please enter a wallet address.");
-
-    return;
-
-  }
-
-  alert(
-    "Withdrawal request recorded for this prototype. No real transaction has been submitted."
-  );
-
-  closeModals();
-
-}
-
-
-/* LOGOUT */
-
-function logout() {
-
-  location.reload();
-
-}
-
+    } else {
+        document.getElementById("error").style.display = "block";
+    }
+});
 </script>
 
 </body>
