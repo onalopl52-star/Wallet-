@@ -3,193 +3,865 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wallet Login</title>
+<title>Wallet UI</title>
 
 <style>
-* {
-    box-sizing: border-box;
+:root{
+  --bg:#080a0d;
+  --card:#14181f;
+  --card2:#1b2028;
+  --line:#29313b;
+  --text:#f7f8fa;
+  --muted:#929aa6;
+  --accent:#f0b90b;
+  --green:#20c997;
+  --red:#ff667d;
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    background: #0b0e11;
-    color: #f5f5f5;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
 }
 
-.login-card {
-    width: 100%;
-    max-width: 420px;
-    background: #181c21;
-    border: 1px solid #30353d;
-    border-radius: 20px;
-    padding: 32px 25px;
-    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+button{
+  font:inherit;
+  cursor:pointer;
 }
 
-.logo {
-    text-align: center;
-    margin-bottom: 30px;
+.app{
+  max-width:520px;
+  margin:auto;
+  min-height:100vh;
+  background:var(--bg);
 }
 
-.logo-icon {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background: #f0b90b;
-    color: #111;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    font-size: 25px;
-    font-weight: bold;
+/* HEADER */
+.header{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  background:#0c0e12;
+  z-index:10;
 }
 
-.logo h1 {
-    margin: 14px 0 5px;
-    font-size: 25px;
+.logo{
+  font-size:23px;
+  font-weight:800;
+  color:var(--accent);
 }
 
-.logo p {
-    margin: 0;
-    color: #9299a6;
-    font-size: 14px;
+.header-actions{
+  display:flex;
+  gap:10px;
 }
 
-label {
-    display: block;
-    margin: 18px 0 8px;
-    color: #c5cad2;
-    font-size: 14px;
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:#242a32;
+  color:white;
+  font-size:20px;
 }
 
-input {
-    width: 100%;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #3a4048;
-    background: #101318;
-    color: white;
-    font-size: 15px;
-    outline: none;
+.profile-btn{
+  background:var(--accent);
+  color:#111;
+  font-weight:bold;
 }
 
-input:focus {
-    border-color: #f0b90b;
+/* MARKET BAR */
+.market{
+  display:flex;
+  gap:28px;
+  overflow:hidden;
+  white-space:nowrap;
+  padding:13px 18px;
+  border-bottom:1px solid var(--line);
+  color:var(--muted);
+  font-size:14px;
 }
 
-button {
-    width: 100%;
-    margin-top: 25px;
-    padding: 15px;
-    border: 0;
-    border-radius: 10px;
-    background: #f0b90b;
-    color: #111;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
+.up{color:var(--green)}
+.down{color:var(--red)}
+
+/* CONTENT */
+.content{
+  padding:20px;
 }
 
-button:hover {
-    background: #ffc928;
+.title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
 }
 
-.error {
-    display: none;
-    margin-top: 15px;
-    padding: 12px;
-    border-radius: 9px;
-    background: #351b1b;
-    color: #ff7777;
-    font-size: 14px;
+h1{
+  margin:0;
+  font-size:30px;
 }
 
-.demo-note {
-    margin-top: 20px;
-    padding: 12px;
-    border-radius: 10px;
-    background: #20252c;
-    color: #9299a6;
-    font-size: 12px;
-    line-height: 1.5;
-    text-align: center;
+.demo-label{
+  font-size:11px;
+  padding:7px 10px;
+  border-radius:8px;
+  background:#272b32;
+  color:var(--muted);
+}
+
+/* BALANCE */
+.balance-card{
+  background:linear-gradient(145deg,#1a2028,#11151b);
+  border:1px solid #4d430d;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:18px;
+}
+
+.balance-label{
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:10px;
+}
+
+.balance{
+  font-size:38px;
+  font-weight:800;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+
+.balance-sub{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.balance-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:22px;
+}
+
+.action{
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#20262e;
+  color:white;
+  font-weight:bold;
+}
+
+.action.primary{
+  background:var(--accent);
+  color:#111;
+  border:0;
+}
+
+/* CARDS */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:18px;
+}
+
+.card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.card-title{
+  font-size:20px;
+  font-weight:700;
+}
+
+.asset{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:15px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.asset:last-child{
+  border-bottom:0;
+}
+
+.asset-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.coin{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#292d34;
+  font-weight:bold;
+}
+
+.asset-name{
+  font-weight:bold;
+}
+
+.asset-amount{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+.asset-value{
+  text-align:right;
+  font-weight:bold;
+}
+
+/* QUICK BUTTONS */
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.quick{
+  padding:17px;
+  border:1px solid var(--line);
+  background:var(--card2);
+  color:white;
+  border-radius:14px;
+  text-align:left;
+}
+
+.quick strong{
+  display:block;
+  margin-bottom:6px;
+}
+
+.quick span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* MODAL */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:50;
+}
+
+.overlay.show{
+  display:flex;
+}
+
+.modal{
+  width:100%;
+  max-width:520px;
+  background:#151a21;
+  border-radius:24px 24px 0 0;
+  padding:24px;
+  border-top:1px solid var(--line);
+  max-height:90vh;
+  overflow:auto;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.modal h2{
+  margin:0;
+}
+
+.close{
+  background:#292f37;
+  color:white;
+  border:0;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+}
+
+.input{
+  width:100%;
+  padding:15px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#0d1014;
+  color:white;
+  outline:none;
+  margin:8px 0 15px;
+}
+
+.modal-button{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:12px;
+  background:var(--accent);
+  color:#111;
+  font-weight:bold;
+  margin-top:8px;
+}
+
+.notice{
+  padding:15px;
+  border-radius:12px;
+  background:#20262e;
+  color:var(--muted);
+  line-height:1.5;
+  margin-bottom:15px;
+}
+
+/* PROFILE */
+.profile{
+  display:flex;
+  gap:15px;
+  align-items:center;
+  background:var(--card2);
+  border:1px solid var(--line);
+  padding:18px;
+  border-radius:16px;
+  margin-bottom:16px;
+}
+
+.avatar{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#111;
+  display:grid;
+  place-items:center;
+  font-weight:bold;
+  font-size:20px;
+}
+
+.profile-name{
+  font-size:18px;
+  font-weight:bold;
+}
+
+.profile-sub{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:5px;
+}
+
+/* SETTINGS */
+.setting{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.setting:last-child{
+  border-bottom:0;
+}
+
+.setting-info strong{
+  display:block;
+}
+
+.setting-info span{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+/* SWITCH */
+.switch{
+  position:relative;
+  width:48px;
+  height:26px;
+}
+
+.switch input{
+  display:none;
+}
+
+.slider{
+  position:absolute;
+  inset:0;
+  background:#303640;
+  border-radius:30px;
+}
+
+.slider:before{
+  content:"";
+  position:absolute;
+  width:20px;
+  height:20px;
+  left:3px;
+  top:3px;
+  background:white;
+  border-radius:50%;
+  transition:.2s;
+}
+
+.switch input:checked + .slider{
+  background:var(--accent);
+}
+
+.switch input:checked + .slider:before{
+  transform:translateX(22px);
+}
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  color:#68717d;
+  font-size:11px;
+  padding:20px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="login-card">
+<div class="app">
 
-    <div class="logo">
-        <div class="logo-icon">W</div>
-        <h1>Wallet</h1>
-        <p>Secure account access</p>
+<header class="header">
+  <div class="logo">WALLET</div>
+
+  <div class="header-actions">
+    <button class="icon-btn" onclick="openModal('notifications')">🔔</button>
+    <button class="icon-btn profile-btn" onclick="openModal('profile')">JS</button>
+  </div>
+</header>
+
+<div class="market">
+  <span>BTC/USDT <b>$73,344.27</b> <span class="up">+2.34%</span></span>
+  <span>ETH/USDT <b>$3,421.50</b> <span class="up">+1.18%</span></span>
+  <span>SOL/USDT <b>$87.92</b> <span class="down">-0.52%</span></span>
+</div>
+
+<main class="content">
+
+  <div class="title-row">
+    <h1>Wallet</h1>
+    <span class="demo-label">UI PROTOTYPE</span>
+  </div>
+
+  <section class="balance-card">
+
+    <div class="balance-label">Total Portfolio Value</div>
+
+    <div class="balance" id="balance">$263,753.10</div>
+
+    <div class="balance-sub">
+      Portfolio value • Market prices update automatically
     </div>
 
-    <form id="loginForm">
+    <div class="balance-actions">
+      <button class="action primary" onclick="openModal('withdraw')">
+        Withdraw
+      </button>
 
-        <label for="email">Email address</label>
-        <input
-            id="email"
-            type="email"
-            placeholder="Enter your email"
-            autocomplete="username"
-            required
-        >
+      <button class="action" onclick="openModal('refund')">
+        Refund
+      </button>
+    </div>
 
-        <label for="password">Password</label>
-        <input
-            id="password"
-            type="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-            required
-        >
+  </section>
 
-        <button type="submit">Sign in</button>
+  <section class="card">
 
-        <div id="error" class="error">
-            Incorrect demo credentials.
+    <div class="card-header">
+      <div class="card-title">Your Assets</div>
+      <button class="action" onclick="openModal('deposit')">
+        Deposit
+      </button>
+    </div>
+
+    <div class="asset">
+      <div class="asset-left">
+        <div class="coin">₿</div>
+        <div>
+          <div class="asset-name">Bitcoin</div>
+          <div class="asset-amount">3.00000000 BTC</div>
         </div>
+      </div>
 
-    </form>
-
-    <div class="demo-note">
-        Front-end demonstration only. No real financial credentials
-        or funds are processed by this page.
+      <div class="asset-value">$219,603.08</div>
     </div>
+
+    <div class="asset">
+      <div class="asset-left">
+        <div class="coin">S</div>
+        <div>
+          <div class="asset-name">Solana</div>
+          <div class="asset-amount">76.00000000 SOL</div>
+        </div>
+      </div>
+
+      <div class="asset-value">$6,675.65</div>
+    </div>
+
+    <div class="asset">
+      <div class="asset-left">
+        <div class="coin">R</div>
+        <div>
+          <div class="asset-name">Reward</div>
+          <div class="asset-amount">Bonus balance</div>
+        </div>
+      </div>
+
+      <div class="asset-value">$40,000.00</div>
+    </div>
+
+  </section>
+
+  <section class="card">
+
+    <div class="card-header">
+      <div class="card-title">Quick Actions</div>
+    </div>
+
+    <div class="quick-grid">
+
+      <button class="quick" onclick="openModal('withdraw')">
+        <strong>Withdraw</strong>
+        <span>Send assets to another wallet</span>
+      </button>
+
+      <button class="quick" onclick="openModal('deposit')">
+        <strong>Deposit</strong>
+        <span>View supported deposit options</span>
+      </button>
+
+      <button class="quick" onclick="openModal('refund')">
+        <strong>Refund</strong>
+        <span>View refund information</span>
+      </button>
+
+      <button class="quick" onclick="openModal('history')">
+        <strong>History</strong>
+        <span>View transaction activity</span>
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+<div class="footer">
+  Wallet interface prototype • No real transactions are processed
+</div>
 
 </div>
 
+
+<!-- MODALS -->
+
+<div class="overlay" id="modal">
+
+  <div class="modal">
+
+    <div class="modal-header">
+      <h2 id="modalTitle"></h2>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+
+    <div id="modalContent"></div>
+
+  </div>
+
+</div>
+
+
 <script>
-const DEMO_EMAIL = "demo@example.com";
-const DEMO_PASSWORD = "DemoPass123!";
 
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+/* --------------------------------
+   DEMO MARKET MOVEMENT
+-------------------------------- */
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
+let balance = 263753.10;
 
-    if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+function updateBalance(){
 
-        sessionStorage.setItem("demoWalletLoggedIn", "true");
+  const movement = (Math.random() - 0.5) * 180;
 
-        // Change this to the page containing your existing wallet UI.
-        window.location.href = "index.html";
+  balance += movement;
 
-    } else {
-        document.getElementById("error").style.display = "block";
-    }
+  document.getElementById("balance").textContent =
+    "$" + balance.toLocaleString("en-US", {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
+}
+
+setInterval(updateBalance, 2500);
+
+
+/* --------------------------------
+   MODALS
+-------------------------------- */
+
+function openModal(type){
+
+  const overlay = document.getElementById("modal");
+  const title = document.getElementById("modalTitle");
+  const content = document.getElementById("modalContent");
+
+  overlay.classList.add("show");
+
+  if(type === "withdraw"){
+
+    title.textContent = "Withdraw";
+
+    content.innerHTML = `
+      <div class="notice">
+        Enter the destination wallet address and select the
+        asset you want to use.
+      </div>
+
+      <label>Wallet address</label>
+      <input class="input"
+        placeholder="Paste your wallet address">
+
+      <label>Asset</label>
+      <select class="input">
+        <option>Bitcoin (BTC)</option>
+        <option>Solana (SOL)</option>
+        <option>USDT</option>
+      </select>
+
+      <label>Amount</label>
+      <input class="input"
+        type="number"
+        placeholder="Enter amount">
+
+      <div class="notice">
+        This prototype does not submit or process withdrawals.
+        A production wallet should perform address validation,
+        authentication and transaction confirmation on a secure
+        backend.
+      </div>
+
+      <button class="modal-button"
+        onclick="alert('Prototype only — no withdrawal was submitted.')">
+        Review Withdrawal
+      </button>
+    `;
+  }
+
+  if(type === "refund"){
+
+    title.textContent = "Refund";
+
+    content.innerHTML = `
+      <div class="notice">
+        Refund information will appear here when a legitimate
+        refund transaction exists.
+      </div>
+
+      <div class="setting">
+        <div class="setting-info">
+          <strong>Status</strong>
+          <span>No refund transaction</span>
+        </div>
+        <span>—</span>
+      </div>
+
+      <div class="setting">
+        <div class="setting-info">
+          <strong>Amount</strong>
+          <span>No amount available</span>
+        </div>
+        <span>—</span>
+      </div>
+    `;
+  }
+
+  if(type === "deposit"){
+
+    title.textContent = "Deposit";
+
+    content.innerHTML = `
+      <div class="notice">
+        Select an asset to view its deposit information.
+      </div>
+
+      <select class="input">
+        <option>Bitcoin (BTC)</option>
+        <option>Solana (SOL)</option>
+        <option>USDT</option>
+      </select>
+
+      <button class="modal-button"
+        onclick="alert('Prototype address screen')">
+        View Deposit Address
+      </button>
+    `;
+  }
+
+  if(type === "history"){
+
+    title.textContent = "Transaction History";
+
+    content.innerHTML = `
+      <div class="notice">
+        No transactions yet.
+      </div>
+    `;
+  }
+
+  if(type === "notifications"){
+
+    title.textContent = "Notifications";
+
+    content.innerHTML = `
+      <div class="notice">
+        You're all caught up.
+      </div>
+    `;
+  }
+
+  if(type === "profile"){
+
+    title.textContent = "Profile";
+
+    content.innerHTML = `
+
+      <div class="profile">
+
+        <div class="avatar">JS</div>
+
+        <div>
+          <div class="profile-name">Wallet User</div>
+          <div class="profile-sub">
+            Account ID: 756371252
+          </div>
+        </div>
+
+      </div>
+
+      <button class="quick"
+        style="width:100%;margin-bottom:10px"
+        onclick="openModal('settings')">
+        <strong>Settings</strong>
+        <span>Account preferences and security</span>
+      </button>
+
+      <button class="quick"
+        style="width:100%"
+        onclick="openModal('history')">
+        <strong>Transaction History</strong>
+        <span>View account activity</span>
+      </button>
+    `;
+  }
+
+  if(type === "settings"){
+
+    title.textContent = "Settings";
+
+    content.innerHTML = `
+
+      <div class="setting">
+        <div class="setting-info">
+          <strong>Email</strong>
+          <span>Account email</span>
+        </div>
+        <span>Not configured</span>
+      </div>
+
+      <div class="setting">
+        <div class="setting-info">
+          <strong>Account ID</strong>
+          <span>756371252</span>
+        </div>
+      </div>
+
+      <div class="setting">
+        <div class="setting-info">
+          <strong>Hide Balance</strong>
+          <span>Hide portfolio values</span>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox"
+            onchange="toggleBalance(this)">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting">
+        <div class="setting-info">
+          <strong>Security</strong>
+          <span>Account security preferences</span>
+        </div>
+        <span>›</span>
+      </div>
+
+      <div class="setting">
+        <div class="setting-info">
+          <strong>Language</strong>
+          <span>English</span>
+        </div>
+        <span>›</span>
+      </div>
+    `;
+  }
+}
+
+
+function closeModal(){
+  document.getElementById("modal").classList.remove("show");
+}
+
+
+function toggleBalance(toggle){
+
+  const balanceElement = document.getElementById("balance");
+
+  if(toggle.checked){
+    balanceElement.dataset.original = balanceElement.textContent;
+    balanceElement.textContent = "••••••••";
+  }else{
+    balanceElement.textContent =
+      balanceElement.dataset.original || "$263,753.10";
+  }
+}
+
+
+/* Close when tapping outside */
+document.getElementById("modal").addEventListener("click",function(e){
+
+  if(e.target === this){
+    closeModal();
+  }
+
 });
+
 </script>
 
 </body>
