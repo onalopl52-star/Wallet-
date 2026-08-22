@@ -2,37 +2,43 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wallet UI Prototype</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Wallet</title>
 
 <style>
-:root{
-  --bg:#0b0f14;
-  --card:#151b22;
-  --card2:#1b222b;
-  --border:#29323d;
-  --text:#f5f7fa;
-  --muted:#8994a3;
-  --accent:#f0b90b;
-  --green:#20c997;
-  --red:#ff667d;
-  --blue:#4da3ff;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
 }
 
-*{box-sizing:border-box}
+:root{
+  --bg:#090b0f;
+  --panel:#151922;
+  --panel2:#1b2029;
+  --line:#292f39;
+  --text:#f4f6f8;
+  --muted:#8d96a5;
+  --gold:#f0b90b;
+  --green:#16c784;
+  --red:#ea4d5b;
+  --blue:#4f8cff;
+}
 
 body{
-  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:var(--bg);
   color:var(--text);
-  font-family:Inter,Arial,sans-serif;
+  min-height:100vh;
 }
 
-button,input,select{
+button,input{
   font:inherit;
 }
 
 button{
+  border:0;
   cursor:pointer;
 }
 
@@ -40,416 +46,589 @@ button{
   max-width:520px;
   margin:auto;
   min-height:100vh;
-  padding-bottom:90px;
-}
-
-/* HEADER */
-header{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:rgba(11,15,20,.96);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  padding:16px;
+  background:var(--bg);
+  padding-bottom:82px;
 }
 
 .topbar{
+  height:70px;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  padding:0 18px;
+  border-bottom:1px solid var(--line);
+  background:#0d1015;
+  position:sticky;
+  top:0;
+  z-index:20;
 }
 
-.logo{
+.brand{
   display:flex;
   align-items:center;
   gap:10px;
-  font-size:20px;
+  font-size:21px;
   font-weight:800;
+  letter-spacing:.4px;
 }
 
-.logoIcon{
-  width:36px;
-  height:36px;
+.logo{
+  width:38px;
+  height:38px;
   border-radius:50%;
-  background:var(--accent);
-  color:#111;
   display:grid;
   place-items:center;
+  background:var(--gold);
+  color:#111;
   font-weight:900;
 }
 
-.headerButtons{
+.top-actions{
   display:flex;
-  gap:8px;
+  align-items:center;
+  gap:10px;
 }
 
-.iconBtn{
+.icon-btn{
   width:40px;
   height:40px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:white;
   border-radius:12px;
+  background:transparent;
+  color:#fff;
+  font-size:21px;
 }
 
-/* DEMO NOTICE */
-.demoNotice{
-  margin:14px 16px 0;
-  padding:11px 13px;
-  border:1px solid #66520a;
-  background:#211d0c;
-  color:#f5cf4a;
-  border-radius:12px;
+.icon-btn:active{
+  background:#20252e;
+}
+
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:var(--gold);
+  color:#111;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+}
+
+.ticker{
+  height:38px;
+  overflow:hidden;
+  white-space:nowrap;
+  border-bottom:1px solid var(--line);
+  background:#101319;
+  display:flex;
+  align-items:center;
+}
+
+.ticker-track{
+  display:inline-flex;
+  gap:35px;
+  padding-left:18px;
+  animation:scroll 28s linear infinite;
+}
+
+.tick{
   font-size:12px;
-  text-align:center;
+  color:var(--muted);
 }
 
-/* PAGES */
+.tick b{
+  color:var(--text);
+}
+
+.up{color:var(--green)!important}
+.down{color:var(--red)!important}
+
+@keyframes scroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-45%)}
+}
+
 .page{
   display:none;
-  padding:18px 16px;
+  padding:18px;
 }
 
 .page.active{
   display:block;
 }
 
-h1{
-  font-size:28px;
-  margin:5px 0 20px;
+.hero{
+  padding:23px 20px;
+  border:1px solid #3b3f47;
+  border-radius:22px;
+  background:linear-gradient(145deg,#181d26,#10141a);
+  box-shadow:0 12px 35px rgba(0,0,0,.22);
 }
 
-h2{
-  font-size:20px;
-}
-
-.subtitle{
+.small-label{
   color:var(--muted);
-  font-size:14px;
-}
-
-/* BALANCE */
-.balanceCard{
-  background:linear-gradient(145deg,#1b222a,#11161c);
-  border:1px solid #80690b;
-  border-radius:20px;
-  padding:22px;
-}
-
-.balanceTitle{
-  color:var(--muted);
-  font-size:14px;
+  font-size:13px;
+  margin-bottom:8px;
 }
 
 .balance{
-  font-size:38px;
+  font-size:39px;
+  line-height:1.1;
   font-weight:800;
-  margin:10px 0;
   letter-spacing:-1px;
 }
 
-.balanceRow{
+.balance-sub{
+  color:var(--muted);
+  margin-top:8px;
+  font-size:13px;
+}
+
+.balance-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
 
 .eye{
-  background:none;
-  border:0;
-  color:var(--muted);
-  font-size:20px;
+  background:#20252e;
+  color:#fff;
+  width:38px;
+  height:38px;
+  border-radius:12px;
 }
 
-.change{
-  color:var(--green);
-  font-weight:700;
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:20px;
+}
+
+.stat{
+  background:#1a1f27;
+  border-radius:15px;
+  padding:14px;
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stat strong{
+  display:block;
+  margin-top:6px;
+  font-size:17px;
 }
 
 .actions{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:18px;
+  gap:12px;
+  margin:16px 0;
 }
 
-.primary,.secondary{
-  padding:14px;
-  border-radius:13px;
-  border:0;
+.action{
+  padding:15px;
+  border-radius:15px;
   font-weight:700;
-}
-
-.primary{
-  background:var(--accent);
+  background:var(--gold);
   color:#111;
 }
 
-.secondary{
-  background:var(--card2);
-  color:white;
-  border:1px solid var(--border);
+.action.secondary{
+  background:#20252e;
+  color:#fff;
 }
 
-/* CARDS */
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:18px;
-  margin-top:15px;
-}
-
-.cardHeader{
+.section-title{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  margin:25px 0 12px;
+  font-size:18px;
+  font-weight:750;
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:12px;
 }
 
 .asset{
   display:flex;
   align-items:center;
-  gap:12px;
-  padding:15px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.asset:last-child{
-  border-bottom:0;
+  gap:13px;
 }
 
 .coin{
-  width:44px;
-  height:44px;
+  width:46px;
+  height:46px;
   border-radius:50%;
-  background:#252d37;
   display:grid;
   place-items:center;
   font-weight:800;
+  background:#282d36;
 }
 
-.assetInfo{
+.asset-info{
   flex:1;
 }
 
-.assetName{
-  font-weight:700;
-}
-
-.assetSmall{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:4px;
-}
-
-.assetPrice{
-  text-align:right;
-  font-weight:700;
-}
-
-.marketPrice{
-  font-size:13px;
-  color:var(--muted);
-}
-
-/* MARKET */
-.marketGrid{
-  display:grid;
-  gap:12px;
-}
-
-.marketItem{
-  padding:16px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-}
-
-.marketTop{
-  display:flex;
-  justify-content:space-between;
-}
-
-.marketValue{
-  font-size:25px;
-  font-weight:800;
-  margin-top:10px;
-}
-
-/* MENU */
-.menuItem{
-  width:100%;
-  padding:17px;
-  margin-bottom:10px;
-  background:var(--card);
-  color:white;
-  border:1px solid var(--border);
-  border-radius:15px;
-  text-align:left;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.menuLeft{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.menuIcon{
-  width:38px;
-  height:38px;
-  display:grid;
-  place-items:center;
-  border-radius:10px;
-  background:var(--card2);
-}
-
-/* FORMS */
-label{
+.asset-info strong{
   display:block;
+}
+
+.asset-info span{
   color:var(--muted);
   font-size:13px;
-  margin:15px 0 7px;
 }
 
-input,select{
-  width:100%;
-  padding:14px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:#0e1319;
-  color:white;
-  outline:none;
+.asset-price{
+  text-align:right;
 }
 
-input:focus,select:focus{
-  border-color:var(--accent);
+.asset-price strong{
+  display:block;
 }
 
-.formButton{
-  width:100%;
-  margin-top:18px;
-  padding:15px;
-  border:0;
-  border-radius:13px;
-  background:var(--accent);
-  color:#111;
-  font-weight:800;
+.asset-price span{
+  color:var(--muted);
+  font-size:12px;
 }
 
-/* BOTTOM NAV */
-.bottomNav{
+.nav{
   position:fixed;
   bottom:0;
   left:50%;
   transform:translateX(-50%);
   width:min(520px,100%);
-  background:rgba(16,21,27,.97);
-  border-top:1px solid var(--border);
+  height:75px;
+  background:#101319;
+  border-top:1px solid var(--line);
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:8px 5px calc(8px + env(safe-area-inset-bottom));
+  grid-template-columns:repeat(5,1fr);
   z-index:30;
+  padding-bottom:env(safe-area-inset-bottom);
 }
 
-.navBtn{
+.nav button{
   background:none;
-  border:0;
   color:var(--muted);
-  padding:8px 3px;
-  font-size:12px;
-}
-
-.navBtn.active{
-  color:var(--accent);
-}
-
-.navIcon{
-  font-size:19px;
-  display:block;
-  margin-bottom:3px;
-}
-
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(0,0,0,.72);
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-}
-
-.modal.show{
   display:flex;
-}
-
-.modalBox{
-  width:min(520px,100%);
-  background:#151b22;
-  border:1px solid var(--border);
-  border-radius:22px 22px 0 0;
-  padding:22px;
-  max-height:88vh;
-  overflow:auto;
-}
-
-.modalHeader{
-  display:flex;
-  justify-content:space-between;
+  flex-direction:column;
   align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:11px;
 }
 
-.close{
-  background:none;
-  border:0;
-  color:var(--muted);
-  font-size:25px;
+.nav button span:first-child{
+  font-size:21px;
 }
 
-.status{
+.nav button.active{
+  color:var(--gold);
+}
+
+.market-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.market-card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
   padding:15px;
-  background:#10161d;
-  border:1px solid var(--border);
-  border-radius:13px;
-  margin-top:15px;
-  color:var(--muted);
-  line-height:1.5;
 }
 
-.confirmButtons{
+.market-card:active{
+  transform:scale(.98);
+}
+
+.market-name{
+  font-weight:750;
+}
+
+.market-price{
+  font-size:20px;
+  font-weight:800;
+  margin:12px 0 4px;
+}
+
+.chart{
+  width:100%;
+  height:100px;
+  margin-top:8px;
+}
+
+.search{
+  width:100%;
+  background:#181d25;
+  color:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+  outline:none;
+  margin-bottom:15px;
+}
+
+.menu-list{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.menu{
+  width:100%;
+  padding:17px;
+  border-radius:15px;
+  background:var(--panel);
+  color:#fff;
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  text-align:left;
+}
+
+.menu-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.menu-icon{
+  width:39px;
+  height:39px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:#222832;
+}
+
+.profile{
+  text-align:center;
+  padding:25px 15px;
+}
+
+.profile-avatar{
+  width:80px;
+  height:80px;
+  margin:auto;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--gold);
+  color:#111;
+  font-size:26px;
+  font-weight:800;
+}
+
+.profile h2{
+  margin-top:12px;
+}
+
+.profile p{
+  color:var(--muted);
+  margin-top:5px;
+  font-size:13px;
+}
+
+.form-group{
+  margin-bottom:14px;
+}
+
+.form-group label{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.form-group input{
+  width:100%;
+  padding:14px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  background:#11151b;
+  color:#fff;
+  outline:none;
+}
+
+.primary{
+  width:100%;
+  padding:15px;
+  background:var(--gold);
+  color:#111;
+  border-radius:14px;
+  font-weight:800;
+}
+
+.notice{
+  padding:15px;
+  border-radius:14px;
+  background:#181d25;
+  border:1px solid var(--line);
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:15px;
+}
+
+.qr{
+  width:180px;
+  height:180px;
+  margin:18px auto;
+  background:
+    repeating-linear-gradient(0deg,#111 0 5px,#fff 5px 10px),
+    repeating-linear-gradient(90deg,transparent 0 5px,#111 5px 10px);
+  border:12px solid #fff;
+  position:relative;
+  overflow:hidden;
+}
+
+.qr:after{
+  content:"DEMO";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+  font-weight:900;
+  color:#111;
+  background:rgba(255,255,255,.7);
+}
+
+.back{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:none;
+  color:#fff;
+  padding:5px 0 18px;
+  font-weight:700;
+}
+
+.submenu{
+  display:none;
+}
+
+.submenu.active{
+  display:block;
+}
+
+.trade-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.trade-price{
+  font-size:31px;
+  font-weight:850;
+}
+
+.trade-chart{
+  height:300px;
+  width:100%;
+  border-radius:18px;
+  background:#11151b;
+  border:1px solid var(--line);
+}
+
+.trade-actions{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:15px;
+  margin-top:12px;
 }
 
-/* TOAST */
+.buy{
+  background:var(--green);
+  color:#07110c;
+}
+
+.sell{
+  background:var(--red);
+  color:#fff;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  display:none;
+  align-items:flex-end;
+  z-index:100;
+}
+
+.modal.active{
+  display:flex;
+}
+
+.sheet{
+  width:min(520px,100%);
+  margin:auto;
+  background:#151922;
+  border-radius:24px 24px 0 0;
+  border:1px solid var(--line);
+  padding:20px;
+  max-height:90vh;
+  overflow:auto;
+}
+
+.sheet-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.close{
+  background:#242a33;
+  color:#fff;
+  width:36px;
+  height:36px;
+  border-radius:11px;
+}
+
 .toast{
   position:fixed;
   left:50%;
-  bottom:85px;
-  transform:translateX(-50%) translateY(20px);
-  background:#202832;
-  border:1px solid var(--border);
-  color:white;
-  padding:12px 16px;
-  border-radius:12px;
+  bottom:92px;
+  transform:translate(-50%,20px);
+  background:#222832;
+  color:#fff;
+  padding:12px 17px;
+  border-radius:13px;
   opacity:0;
   pointer-events:none;
   transition:.25s;
   z-index:200;
-  width:max-content;
-  max-width:90%;
+  font-size:13px;
 }
 
 .toast.show{
   opacity:1;
-  transform:translateX(-50%) translateY(0);
+  transform:translate(-50%,0);
+}
+
+.history-empty{
+  text-align:center;
+  padding:45px 15px;
+  color:var(--muted);
+}
+
+@media(max-width:380px){
+  .balance{font-size:33px}
+  .market-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -458,220 +637,282 @@ input:focus,select:focus{
 
 <div class="app">
 
-<header>
-  <div class="topbar">
-    <div class="logo">
-      <div class="logoIcon">W</div>
-      Wallet
-    </div>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">W</div>
+    <span>WALLET</span>
+  </div>
 
-    <div class="headerButtons">
-      <button class="iconBtn" onclick="showPage('profile')">👤</button>
-      <button class="iconBtn" onclick="showToast('Notifications are currently empty.')">🔔</button>
-    </div>
+  <div class="top-actions">
+    <button class="icon-btn" onclick="showPage('notifications')">♧</button>
+    <button class="icon-btn" onclick="showPage('profile')">
+      <div class="avatar">U</div>
+    </button>
   </div>
 </header>
 
-<div class="demoNotice">
-  FRONT-END WALLET PROTOTYPE • NO REAL FUNDS OR TRANSACTIONS
+<div class="ticker">
+  <div class="ticker-track" id="tickerTrack"></div>
 </div>
 
 <!-- HOME -->
-<section id="home" class="page active">
+<section class="page active" id="home">
 
-  <h1>Portfolio</h1>
+  <div class="hero">
+    <div class="small-label">Total Balance</div>
 
-  <div class="balanceCard">
-    <div class="balanceTitle">Total Portfolio Value</div>
-
-    <div class="balanceRow">
-      <div id="balance" class="balance">$263,532.10</div>
+    <div class="balance-row">
+      <div class="balance" id="balance">$263,532.10</div>
       <button class="eye" onclick="toggleBalance()">◉</button>
     </div>
 
-    <div class="change">+3.21% today</div>
+    <div class="balance-sub">Estimated portfolio value</div>
 
-    <div class="actions">
-      <button class="primary" onclick="openWithdraw()">Withdraw</button>
-      <button class="secondary" onclick="showPage('refund')">Refund</button>
+    <div class="stats">
+      <div class="stat">
+        <span>24h Change</span>
+        <strong class="up" id="change24">+2.31%</strong>
+      </div>
+
+      <div class="stat">
+        <span>Portfolio P/L</span>
+        <strong class="up">+$39,941.81</strong>
+      </div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="cardHeader">
-      <h2>Your Assets</h2>
-      <span class="subtitle">Simulated</span>
-    </div>
+  <div class="actions">
+    <button class="action" onclick="openWithdraw()">Withdraw</button>
+    <button class="action secondary" onclick="openRefund()">Refund</button>
+  </div>
 
+  <div class="section-title">
+    <span>Your Assets</span>
+    <span style="color:var(--gold);font-size:13px">View all</span>
+  </div>
+
+  <div class="card">
     <div class="asset">
       <div class="coin">₿</div>
-      <div class="assetInfo">
-        <div class="assetName">Bitcoin</div>
-        <div class="assetSmall">BTC</div>
+      <div class="asset-info">
+        <strong>Bitcoin</strong>
+        <span>3.00000000 BTC</span>
       </div>
-      <div>
-        <div class="assetPrice">$219,603.08</div>
-        <div class="assetSmall">3.000000 BTC</div>
-      </div>
-    </div>
-
-    <div class="asset">
-      <div class="coin">S</div>
-      <div class="assetInfo">
-        <div class="assetName">Solana</div>
-        <div class="assetSmall">SOL</div>
-      </div>
-      <div>
-        <div class="assetPrice">$6,675.65</div>
-        <div class="assetSmall">76.000000 SOL</div>
-      </div>
-    </div>
-
-    <div class="asset">
-      <div class="coin">R</div>
-      <div class="assetInfo">
-        <div class="assetName">Reward</div>
-        <div class="assetSmall">Bonus Credit</div>
-      </div>
-      <div>
-        <div class="assetPrice">$40,000.00</div>
+      <div class="asset-price">
+        <strong id="btcHolding">$219,603.08</strong>
+        <span id="btcRate">BTC/USDT</span>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="cardHeader">
-      <h2>Live Market</h2>
-      <span class="subtitle">API</span>
+    <div class="asset">
+      <div class="coin">S</div>
+      <div class="asset-info">
+        <strong>Solana</strong>
+        <span>76.00000000 SOL</span>
+      </div>
+      <div class="asset-price">
+        <strong id="solHolding">$6,675.65</strong>
+        <span>SOL/USDT</span>
+      </div>
     </div>
+  </div>
 
-    <div id="markets" class="marketGrid">
-      <div class="marketItem">Loading market prices...</div>
+  <div class="card">
+    <div class="asset">
+      <div class="coin">R</div>
+      <div class="asset-info">
+        <strong>Reward</strong>
+        <span>Account credit</span>
+      </div>
+      <div class="asset-price">
+        <strong>$40,000.00</strong>
+        <span>Credit</span>
+      </div>
     </div>
   </div>
 
 </section>
 
 <!-- MARKETS -->
-<section id="marketsPage" class="page">
+<section class="page" id="markets">
 
-  <h1>Markets</h1>
-
-  <div id="marketsFull" class="marketGrid">
-    <div class="marketItem">Loading...</div>
+  <div class="section-title">
+    <span>Markets</span>
+    <span style="color:var(--green);font-size:12px">● LIVE</span>
   </div>
+
+  <input class="search" placeholder="Search market..." oninput="filterMarkets(this.value)">
+
+  <div class="market-grid" id="marketGrid"></div>
 
 </section>
 
 <!-- P2P -->
-<section id="p2p" class="page">
+<section class="page" id="p2p">
 
-  <h1>P2P</h1>
-  <p class="subtitle">Explore peer-to-peer trading options.</p>
+  <div class="section-title">
+    <span>P2P</span>
+    <span style="color:var(--muted);font-size:12px">Marketplace</span>
+  </div>
 
-  <button class="menuItem" onclick="showToast('Buy Crypto page opened.')">
-    <span class="menuLeft">
-      <span class="menuIcon">🛒</span>
-      Buy Crypto
-    </span>
-    <span>›</span>
-  </button>
+  <div id="p2pMain" class="menu-list">
 
-  <button class="menuItem" onclick="showToast('Sell Crypto page opened.')">
-    <span class="menuLeft">
-      <span class="menuIcon">💱</span>
-      Sell Crypto
-    </span>
-    <span>›</span>
-  </button>
+    <button class="menu" onclick="openP2P('buy')">
+      <div class="menu-left">
+        <div class="menu-icon">↙</div>
+        <div>
+          <strong>Buy Crypto</strong>
+          <div style="color:var(--muted);font-size:12px">Buy digital assets</div>
+        </div>
+      </div>
+      <span>›</span>
+    </button>
 
-  <button class="menuItem" onclick="showToast('P2P orders are empty.')">
-    <span class="menuLeft">
-      <span class="menuIcon">📋</span>
-      My P2P Orders
-    </span>
-    <span>›</span>
-  </button>
+    <button class="menu" onclick="openP2P('sell')">
+      <div class="menu-left">
+        <div class="menu-icon">↗</div>
+        <div>
+          <strong>Sell Crypto</strong>
+          <div style="color:var(--muted);font-size:12px">Sell digital assets</div>
+        </div>
+      </div>
+      <span>›</span>
+    </button>
 
-  <button class="menuItem" onclick="showToast('No active P2P advertisements.')">
-    <span class="menuLeft">
-      <span class="menuIcon">📢</span>
-      P2P Advertisements
-    </span>
-    <span>›</span>
-  </button>
+    <button class="menu" onclick="openP2P('orders')">
+      <div class="menu-left">
+        <div class="menu-icon">▣</div>
+        <div>
+          <strong>P2P Orders</strong>
+          <div style="color:var(--muted);font-size:12px">View your orders</div>
+        </div>
+      </div>
+      <span>›</span>
+    </button>
+
+    <button class="menu" onclick="openP2P('payment')">
+      <div class="menu-left">
+        <div class="menu-icon">▤</div>
+        <div>
+          <strong>Payment Methods</strong>
+          <div style="color:var(--muted);font-size:12px">Manage payment options</div>
+        </div>
+      </div>
+      <span>›</span>
+    </button>
+
+  </div>
+
+  <div id="p2pSub" class="submenu"></div>
 
 </section>
 
-<!-- REFUND -->
-<section id="refund" class="page">
+<!-- TRADE -->
+<section class="page" id="trade">
 
-  <h1>Refund</h1>
+  <button class="back" onclick="showPage('markets')">‹ Back to markets</button>
 
-  <div class="card">
-    <h2>Refund Status</h2>
-
-    <p class="subtitle">
-      This is a simulated refund status for the front-end prototype.
-    </p>
-
-    <div class="status">
-      <strong style="color:var(--green)">Payment recorded</strong><br><br>
-      The refund has been marked as paid in this prototype.
-      The simulated wallet balance is not changed by this demonstration.
+  <div class="trade-header">
+    <div>
+      <div class="small-label" id="tradeSymbol">BTC/USDT</div>
+      <div class="trade-price" id="tradePrice">$73,344.27</div>
     </div>
+    <div class="up" id="tradeChange">+2.34%</div>
+  </div>
+
+  <canvas id="tradeChart" class="trade-chart"></canvas>
+
+  <div class="trade-actions">
+    <button class="primary buy" onclick="notify('Buy interface opened')">Buy</button>
+    <button class="primary sell" onclick="notify('Sell interface opened')">Sell</button>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="section-title" style="margin:0 0 12px">
+      <span>Market information</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div>
+        <span class="small-label">24h High</span>
+        <strong id="high">$74,821.50</strong>
+      </div>
+      <div>
+        <span class="small-label">24h Low</span>
+        <strong id="low">$71,420.20</strong>
+      </div>
+      <div>
+        <span class="small-label">24h Volume</span>
+        <strong>$2.41B</strong>
+      </div>
+      <div>
+        <span class="small-label">Status</span>
+        <strong class="up">Open</strong>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- HISTORY -->
+<section class="page" id="history">
+
+  <div class="section-title">
+    <span>Transaction History</span>
+  </div>
+
+  <div class="card history-empty">
+    <div style="font-size:38px;margin-bottom:12px">◷</div>
+    <strong style="display:block;color:#fff;margin-bottom:7px">
+      No transactions yet
+    </strong>
+    Your transaction activity will appear here.
   </div>
 
 </section>
 
 <!-- PROFILE -->
-<section id="profile" class="page">
+<section class="page" id="profile">
 
-  <h1>Profile</h1>
-
-  <div class="card">
-    <div style="display:flex;align-items:center;gap:15px">
-      <div class="logoIcon">U</div>
-
-      <div>
-        <strong>Wallet User</strong>
-        <div class="subtitle">Account profile</div>
-      </div>
-    </div>
+  <div class="profile">
+    <div class="profile-avatar">U</div>
+    <h2>User Account</h2>
+    <p>Account ID: 000000000</p>
   </div>
 
-  <div style="margin-top:15px">
+  <div class="menu-list">
 
-    <button class="menuItem" onclick="showPage('settings')">
-      <span class="menuLeft">
-        <span class="menuIcon">⚙️</span>
-        Settings
-      </span>
+    <button class="menu" onclick="showPage('settings')">
+      <div class="menu-left">
+        <div class="menu-icon">⚙</div>
+        <strong>Settings</strong>
+      </div>
       <span>›</span>
     </button>
 
-    <button class="menuItem" onclick="showPage('security')">
-      <span class="menuLeft">
-        <span class="menuIcon">🔐</span>
-        Security
-      </span>
+    <button class="menu" onclick="showPage('security')">
+      <div class="menu-left">
+        <div class="menu-icon">⌾</div>
+        <strong>Security</strong>
+      </div>
       <span>›</span>
     </button>
 
-    <button class="menuItem" onclick="showToast('No transactions yet.')">
-      <span class="menuLeft">
-        <span class="menuIcon">🧾</span>
-        Transaction History
-      </span>
+    <button class="menu" onclick="showPage('history')">
+      <div class="menu-left">
+        <div class="menu-icon">◷</div>
+        <strong>Transaction History</strong>
+      </div>
       <span>›</span>
     </button>
 
-    <button class="menuItem" onclick="showPage('language')">
-      <span class="menuLeft">
-        <span class="menuIcon">🌐</span>
-        Language
-      </span>
-      <span id="currentLanguage">English</span>
+    <button class="menu" onclick="notify('Help center opened')">
+      <div class="menu-left">
+        <div class="menu-icon">?</div>
+        <strong>Help Center</strong>
+      </div>
+      <span>›</span>
     </button>
 
   </div>
@@ -679,572 +920,828 @@ input:focus,select:focus{
 </section>
 
 <!-- SETTINGS -->
-<section id="settings" class="page">
+<section class="page" id="settings">
 
-  <h1>Settings</h1>
+  <button class="back" onclick="showPage('profile')">‹ Profile</button>
+
+  <div class="section-title">
+    <span>Settings</span>
+  </div>
 
   <div class="card">
 
-    <label>Email address</label>
-    <input id="emailInput" type="email" placeholder="Enter your email">
+    <div class="form-group">
+      <label>Email</label>
+      <input value="user@example.com" readonly>
+    </div>
 
-    <button class="formButton" onclick="saveEmail()">
-      Save Email
-    </button>
-
-    <div class="status">
-      <strong>Account ID</strong><br>
-      <span id="accountId">756371252</span>
+    <div class="form-group">
+      <label>Account ID</label>
+      <input value="000000000" readonly>
     </div>
 
   </div>
 
-  <button class="menuItem" onclick="showPage('language')">
-    <span class="menuLeft">
-      <span class="menuIcon">🌐</span>
-      Language
-    </span>
-    <span>›</span>
-  </button>
+  <div class="menu-list">
 
-  <button class="menuItem" onclick="showToast('Currency preferences opened.')">
-    <span class="menuLeft">
-      <span class="menuIcon">💵</span>
-      Currency
-    </span>
-    <span>›</span>
-  </button>
+    <button class="menu" onclick="toggleCurrency()">
+      <div class="menu-left">
+        <div class="menu-icon">$</div>
+        <strong>Currency</strong>
+      </div>
+      <span id="currencyText">USD ›</span>
+    </button>
 
-  <button class="menuItem" onclick="showToast('Appearance preferences opened.')">
-    <span class="menuLeft">
-      <span class="menuIcon">🎨</span>
-      Appearance
-    </span>
-    <span>›</span>
-  </button>
+    <button class="menu" onclick="notify('Language settings opened')">
+      <div class="menu-left">
+        <div class="menu-icon">文</div>
+        <strong>Language</strong>
+      </div>
+      <span>English ›</span>
+    </button>
 
-  <button class="secondary" style="width:100%;margin-top:10px"
-          onclick="showPage('profile')">
-    Back to Profile
-  </button>
+    <button class="menu" onclick="toggleBalance()">
+      <div class="menu-left">
+        <div class="menu-icon">◉</div>
+        <strong>Balance visibility</strong>
+      </div>
+      <span>›</span>
+    </button>
+
+  </div>
 
 </section>
 
 <!-- SECURITY -->
-<section id="security" class="page">
+<section class="page" id="security">
 
-  <h1>Security</h1>
+  <button class="back" onclick="showPage('profile')">‹ Profile</button>
 
-  <button class="menuItem" onclick="showToast('Two-factor authentication settings opened.')">
-    <span class="menuLeft">
-      <span class="menuIcon">🛡️</span>
-      Two-Factor Authentication
-    </span>
-    <span>›</span>
-  </button>
-
-  <button class="menuItem" onclick="showToast('Passcode settings opened.')">
-    <span class="menuLeft">
-      <span class="menuIcon">🔑</span>
-      Passcode
-    </span>
-    <span>›</span>
-  </button>
-
-  <button class="menuItem" onclick="showToast('Active sessions opened.')">
-    <span class="menuLeft">
-      <span class="menuIcon">📱</span>
-      Active Sessions
-    </span>
-    <span>›</span>
-  </button>
-
-</section>
-
-<!-- LANGUAGE -->
-<section id="language" class="page">
-
-  <h1>Language</h1>
-
-  <div class="card">
-
-    <label>Select language</label>
-
-    <select id="languageSelect" onchange="changeLanguage()">
-      <option value="English">English</option>
-      <option value="Português (Brasil)">Português (Brasil)</option>
-      <option value="Español">Español</option>
-      <option value="Français">Français</option>
-      <option value="Deutsch">Deutsch</option>
-      <option value="Italiano">Italiano</option>
-      <option value="Nederlands">Nederlands</option>
-      <option value="Türkçe">Türkçe</option>
-      <option value="日本語">日本語</option>
-      <option value="한국어">한국어</option>
-      <option value="中文">中文</option>
-      <option value="العربية">العربية</option>
-      <option value="Русский">Русский</option>
-    </select>
-
-    <div class="status">
-      Language selection is stored locally in this prototype.
-    </div>
-
+  <div class="section-title">
+    <span>Security</span>
   </div>
 
-</section>
+  <div class="menu-list">
 
-<!-- WITHDRAW MODAL -->
-<div id="withdrawModal" class="modal">
-
-  <div class="modalBox">
-
-    <div class="modalHeader">
-      <h2>Withdraw</h2>
-      <button class="close" onclick="closeWithdraw()">×</button>
-    </div>
-
-    <p class="subtitle">
-      Enter the destination address and select the asset you want to send.
-    </p>
-
-    <label>Withdrawal address</label>
-    <input
-      id="withdrawAddress"
-      type="text"
-      placeholder="Paste your receiving wallet address">
-
-    <label>Select coin</label>
-    <select id="withdrawCoin">
-      <option>Bitcoin (BTC)</option>
-      <option>Ethereum (ETH)</option>
-      <option>Solana (SOL)</option>
-      <option>USDT</option>
-      <option>USDC</option>
-    </select>
-
-    <label>Network</label>
-    <select id="withdrawNetwork">
-      <option>Automatic selection</option>
-      <option>Bitcoin Network</option>
-      <option>Ethereum</option>
-      <option>Solana</option>
-      <option>TRON</option>
-      <option>BSC</option>
-    </select>
-
-    <label>Amount</label>
-    <input
-      id="withdrawAmount"
-      type="number"
-      min="0"
-      step="any"
-      placeholder="Enter amount">
-
-    <button class="formButton" onclick="reviewWithdrawal()">
-      Review Withdrawal
+    <button class="menu" onclick="show2FA()">
+      <div class="menu-left">
+        <div class="menu-icon">⌾</div>
+        <div>
+          <strong>Authenticator</strong>
+          <div style="color:var(--muted);font-size:12px">Two-factor authentication</div>
+        </div>
+      </div>
+      <span>›</span>
     </button>
 
-    <div id="withdrawReview" style="display:none">
-
-      <div class="status">
-        <strong style="color:var(--accent)">
-          Approval status
-        </strong>
-        <br><br>
-
-        This prototype requires confirmation of the
-        trading-management approval status before a
-        withdrawal can proceed.
-
-        <br><br>
-
-        <strong>
-          Have you confirmed the withdrawal approval
-          from the Trading Management Center?
-        </strong>
+    <button class="menu" onclick="notify('Passcode settings opened')">
+      <div class="menu-left">
+        <div class="menu-icon">●</div>
+        <div>
+          <strong>Passcode</strong>
+          <div style="color:var(--muted);font-size:12px">Manage app access</div>
+        </div>
       </div>
+      <span>›</span>
+    </button>
 
-      <div class="confirmButtons">
-
-        <button class="primary" onclick="confirmWithdrawal()">
-          Confirmed
-        </button>
-
-        <button class="secondary" onclick="notConfirmed()">
-          Not confirmed yet
-        </button>
-
+    <button class="menu" onclick="notify('Device management opened')">
+      <div class="menu-left">
+        <div class="menu-icon">▣</div>
+        <div>
+          <strong>Devices</strong>
+          <div style="color:var(--muted);font-size:12px">Manage connected devices</div>
+        </div>
       </div>
-
-    </div>
+      <span>›</span>
+    </button>
 
   </div>
-</div>
 
-<div id="toast" class="toast"></div>
+</section>
 
-<!-- BOTTOM NAV -->
-<nav class="bottomNav">
+<!-- NOTIFICATIONS -->
+<section class="page" id="notifications">
 
-  <button class="navBtn active" onclick="showPage('home',this)">
-    <span class="navIcon">⌂</span>
-    Home
+  <div class="section-title">
+    <span>Notifications</span>
+  </div>
+
+  <div class="card history-empty">
+    <div style="font-size:38px;margin-bottom:12px">♧</div>
+    <strong style="display:block;color:#fff;margin-bottom:7px">
+      No new notifications
+    </strong>
+    You're all caught up.
+  </div>
+
+</section>
+
+<nav class="nav">
+
+  <button class="active" data-page="home" onclick="showPage('home')">
+    <span>⌂</span>
+    <span>Home</span>
   </button>
 
-  <button class="navBtn" onclick="showPage('marketsPage',this)">
-    <span class="navIcon">📈</span>
-    Markets
+  <button data-page="markets" onclick="showPage('markets')">
+    <span>▥</span>
+    <span>Markets</span>
   </button>
 
-  <button class="navBtn" onclick="showPage('p2p',this)">
-    <span class="navIcon">⇄</span>
-    P2P
+  <button data-page="p2p" onclick="showPage('p2p')">
+    <span>⇄</span>
+    <span>P2P</span>
   </button>
 
-  <button class="navBtn" onclick="showPage('profile',this)">
-    <span class="navIcon">●</span>
-    Profile
+  <button data-page="history" onclick="showPage('history')">
+    <span>◷</span>
+    <span>History</span>
+  </button>
+
+  <button data-page="profile" onclick="showPage('profile')">
+    <span>●</span>
+    <span>Profile</span>
   </button>
 
 </nav>
 
 </div>
 
+<!-- WITHDRAWAL -->
+<div class="modal" id="withdrawModal">
+
+  <div class="sheet">
+
+    <div class="sheet-head">
+      <h2>Withdraw</h2>
+      <button class="close" onclick="closeModal('withdrawModal')">×</button>
+    </div>
+
+    <div class="notice">
+      Enter the destination wallet address and withdrawal amount.
+      This interface does not execute a blockchain transaction.
+    </div>
+
+    <div class="form-group">
+      <label>Asset</label>
+      <input value="USDT" readonly>
+    </div>
+
+    <div class="form-group">
+      <label>Network</label>
+      <input value="Select network" id="network">
+    </div>
+
+    <div class="form-group">
+      <label>Wallet address</label>
+      <input placeholder="Paste destination address" id="walletAddress">
+    </div>
+
+    <div class="form-group">
+      <label>Amount</label>
+      <input type="number" placeholder="0.00" id="withdrawAmount">
+    </div>
+
+    <div class="form-group">
+      <label>Memo / Tag (if required)</label>
+      <input placeholder="Optional">
+    </div>
+
+    <button class="primary" onclick="submitWithdrawal()">
+      Continue
+    </button>
+
+  </div>
+</div>
+
+<!-- REFUND -->
+<div class="modal" id="refundModal">
+
+  <div class="sheet">
+
+    <div class="sheet-head">
+      <h2>Refund</h2>
+      <button class="close" onclick="closeModal('refundModal')">×</button>
+    </div>
+
+    <div class="notice">
+      Refund information is displayed here for account activity.
+      No real refund or balance adjustment is performed by this interface.
+    </div>
+
+    <div class="card">
+      <div class="small-label">Refund status</div>
+      <strong style="color:var(--green);font-size:20px">Paid</strong>
+      <p style="color:var(--muted);font-size:13px;margin-top:8px">
+        Refund record available for review.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="small-label">Account balance</div>
+      <strong>Unchanged</strong>
+      <p style="color:var(--muted);font-size:13px;margin-top:7px">
+        The displayed balance remains unchanged by this interface.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- 2FA -->
+<div class="modal" id="twoFAModal">
+
+  <div class="sheet">
+
+    <div class="sheet-head">
+      <h2>Authenticator</h2>
+      <button class="close" onclick="closeModal('twoFAModal')">×</button>
+    </div>
+
+    <div class="notice">
+      Scan the demonstration code with an authenticator application.
+      No real authentication secret is generated by this page.
+    </div>
+
+    <div class="qr"></div>
+
+    <div class="form-group">
+      <label>Verification code</label>
+      <input inputmode="numeric" maxlength="6" placeholder="000000">
+    </div>
+
+    <button class="primary" onclick="notify('Authenticator confirmation submitted')">
+      Confirm
+    </button>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-/* ---------------------------
-   LOCAL SETTINGS
----------------------------- */
+const markets = [
+  {symbol:"BTC/USDT",price:73344.27,change:2.34},
+  {symbol:"ETH/USDT",price:3421.52,change:1.82},
+  {symbol:"SOL/USDT",price:87.92,change:-0.52},
+  {symbol:"BNB/USDT",price:612.41,change:1.14},
+  {symbol:"XRP/USDT",price:0.6124,change:-0.31},
+  {symbol:"DOGE/USDT",price:0.1421,change:3.21},
+  {symbol:"ADA/USDT",price:0.4218,change:0.72},
+  {symbol:"AVAX/USDT",price:27.31,change:-1.04}
+];
 
-let balanceVisible = true;
+let balanceVisible=true;
+let selectedMarket=markets[0];
+let chartValues=[];
+let chartTimer=null;
 
-const savedEmail =
-  localStorage.getItem("wallet_email") || "";
+function money(n){
+  return "$"+n.toLocaleString("en-US",{
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
+}
 
-document.getElementById("emailInput").value = savedEmail;
+function showPage(id){
 
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+  });
 
-/* ---------------------------
-   PAGE NAVIGATION
----------------------------- */
-
-function showPage(id, navButton){
-
-  document.querySelectorAll(".page")
-    .forEach(page => page.classList.remove("active"));
-
-  const page = document.getElementById(id);
+  const page=document.getElementById(id);
 
   if(page){
     page.classList.add("active");
-    window.scrollTo({top:0,behavior:"smooth"});
   }
 
-  if(navButton){
-    document.querySelectorAll(".navBtn")
-      .forEach(btn => btn.classList.remove("active"));
+  document.querySelectorAll(".nav button").forEach(b=>{
+    b.classList.remove("active");
 
-    navButton.classList.add("active");
-  }
+    if(b.dataset.page===id){
+      b.classList.add("active");
+    }
+  });
+
+  window.scrollTo(0,0);
 }
-
-
-/* ---------------------------
-   BALANCE VISIBILITY
----------------------------- */
 
 function toggleBalance(){
 
-  const balance =
-    document.getElementById("balance");
+  balanceVisible=!balanceVisible;
 
-  balanceVisible = !balanceVisible;
+  document.getElementById("balance").textContent=
+    balanceVisible ? "$263,532.10" : "••••••••";
 
-  balance.textContent =
-    balanceVisible
-      ? "$263,532.10"
-      : "••••••••";
 }
-
-
-/* ---------------------------
-   WITHDRAW
----------------------------- */
 
 function openWithdraw(){
-
-  document.getElementById("withdrawModal")
-    .classList.add("show");
-
-  document.getElementById("withdrawReview")
-    .style.display = "none";
+  document.getElementById("withdrawModal").classList.add("active");
 }
 
-function closeWithdraw(){
-
-  document.getElementById("withdrawModal")
-    .classList.remove("show");
+function openRefund(){
+  document.getElementById("refundModal").classList.add("active");
 }
 
-function reviewWithdrawal(){
-
-  const address =
-    document.getElementById("withdrawAddress").value.trim();
-
-  const amount =
-    document.getElementById("withdrawAmount").value;
-
-  if(!address){
-    showToast("Please enter a withdrawal address.");
-    return;
-  }
-
-  if(!amount || Number(amount) <= 0){
-    showToast("Please enter a valid withdrawal amount.");
-    return;
-  }
-
-  document.getElementById("withdrawReview")
-    .style.display = "block";
+function closeModal(id){
+  document.getElementById(id).classList.remove("active");
 }
 
-function confirmWithdrawal(){
+function notify(message){
 
-  document.getElementById("withdrawReview").innerHTML = `
-    <div class="status">
-      <strong style="color:var(--accent)">
-        Approval confirmation pending
-      </strong>
-      <br><br>
+  const toast=document.getElementById("toast");
 
-      No approval confirmation has been received
-      in this front-end prototype.
-
-      <br><br>
-
-      Please wait for the appropriate confirmation
-      through your actual wallet/trading-management
-      system before proceeding.
-    </div>
-
-    <button
-      class="secondary"
-      style="width:100%;margin-top:15px"
-      onclick="closeWithdraw()">
-      Close
-    </button>
-  `;
-}
-
-function notConfirmed(){
-
-  document.getElementById("withdrawReview").innerHTML = `
-    <div class="status">
-      <strong style="color:var(--accent)">
-        Withdrawal approval not confirmed
-      </strong>
-      <br><br>
-
-      The withdrawal cannot proceed in this
-      prototype until the required approval status
-      has been confirmed through the appropriate
-      trading-management system.
-
-      <br><br>
-
-      Please wait for confirmation or contact the
-      responsible support team for the next step.
-    </div>
-
-    <button
-      class="secondary"
-      style="width:100%;margin-top:15px"
-      onclick="closeWithdraw()">
-      Close
-    </button>
-  `;
-}
-
-
-/* ---------------------------
-   EMAIL
----------------------------- */
-
-function saveEmail(){
-
-  const email =
-    document.getElementById("emailInput")
-      .value.trim();
-
-  if(!email || !email.includes("@")){
-    showToast("Enter a valid email address.");
-    return;
-  }
-
-  localStorage.setItem("wallet_email",email);
-
-  showToast("Email address saved.");
-}
-
-
-/* ---------------------------
-   LANGUAGE
----------------------------- */
-
-function changeLanguage(){
-
-  const value =
-    document.getElementById("languageSelect").value;
-
-  localStorage.setItem("wallet_language",value);
-
-  document.getElementById("currentLanguage")
-    .textContent = value;
-
-  showToast("Language preference saved.");
-}
-
-
-/* ---------------------------
-   TOAST
----------------------------- */
-
-let toastTimer;
-
-function showToast(message){
-
-  const toast =
-    document.getElementById("toast");
-
-  toast.textContent = message;
+  toast.textContent=message;
   toast.classList.add("show");
 
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(()=>{
+  setTimeout(()=>{
     toast.classList.remove("show");
-  },2600);
+  },2200);
 }
 
+function submitWithdrawal(){
 
-/* ---------------------------
-   LIVE MARKET API
-   CoinGecko public endpoint
----------------------------- */
+  const address=document.getElementById("walletAddress").value.trim();
+  const amount=document.getElementById("withdrawAmount").value.trim();
 
-async function loadMarkets(){
+  if(!address){
+    notify("Enter a destination wallet address");
+    return;
+  }
 
-  const ids =
-    "bitcoin,ethereum,solana,usd-coin,tether";
+  if(!amount || Number(amount)<=0){
+    notify("Enter a valid withdrawal amount");
+    return;
+  }
 
-  try{
+  closeModal("withdrawModal");
 
-    const response =
-      await fetch(
-        `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`
-      );
+  notify("Withdrawal request prepared for review");
+}
 
-    const data = await response.json();
+function show2FA(){
+  document.getElementById("twoFAModal").classList.add("active");
+}
 
-    const coins = [
-      ["bitcoin","Bitcoin","BTC"],
-      ["ethereum","Ethereum","ETH"],
-      ["solana","Solana","SOL"],
-      ["tether","Tether","USDT"],
-      ["usd-coin","USD Coin","USDC"]
-    ];
+function toggleCurrency(){
 
-    const html =
-      coins.map(([id,name,symbol])=>{
+  const el=document.getElementById("currencyText");
 
-        const price =
-          data[id]?.usd;
+  el.textContent=
+    el.textContent.startsWith("USD") ? "EUR ›" : "USD ›";
 
-        const change =
-          data[id]?.usd_24h_change;
+}
 
-        if(price === undefined){
-          return "";
-        }
+function renderMarkets(list=markets){
 
-        const changeText =
-          change >= 0
-            ? `+${change.toFixed(2)}%`
-            : `${change.toFixed(2)}%`;
+  const grid=document.getElementById("marketGrid");
 
-        return `
-          <div class="marketItem">
-            <div class="marketTop">
-              <strong>${name}</strong>
-              <span class="${change >= 0 ? "change" : ""}"
-                    style="${change < 0 ? "color:var(--red)" : ""}">
-                ${changeText}
-              </span>
-            </div>
+  grid.innerHTML="";
 
-            <div class="marketValue">
-              $${Number(price).toLocaleString(
-                undefined,
-                {
-                  minimumFractionDigits:2,
-                  maximumFractionDigits:2
-                }
-              )}
-            </div>
+  list.forEach((m,index)=>{
 
-            <div class="marketPrice">
-              ${symbol}/USD • Live market data
-            </div>
-          </div>
-        `;
+    const card=document.createElement("button");
 
-      }).join("");
+    card.className="market-card";
+    card.style.textAlign="left";
+    card.style.color="#fff";
 
-    document.getElementById("markets")
-      .innerHTML = html;
+    const changeClass=m.change>=0 ? "up" : "down";
+    const sign=m.change>=0 ? "+" : "";
 
-    document.getElementById("marketsFull")
-      .innerHTML = html;
-
-  }catch(error){
-
-    const message = `
-      <div class="marketItem">
-        Market data is temporarily unavailable.
-        <br><br>
-        Check your internet connection and refresh.
+    card.innerHTML=`
+      <div class="market-name">${m.symbol}</div>
+      <div class="market-price" id="market-price-${index}">
+        ${money(m.price)}
       </div>
+      <div class="${changeClass}" style="font-size:12px">
+        ${sign}${m.change.toFixed(2)}%
+      </div>
+      <canvas class="chart" id="mini-${index}"></canvas>
     `;
 
-    document.getElementById("markets")
-      .innerHTML = message;
+    card.onclick=()=>{
+      openTrade(m);
+    };
 
-    document.getElementById("marketsFull")
-      .innerHTML = message;
+    grid.appendChild(card);
+
+    setTimeout(()=>{
+      drawMiniChart(
+        document.getElementById(`mini-${index}`),
+        m.change>=0
+      );
+    },20);
+
+  });
+
+}
+
+function filterMarkets(value){
+
+  const q=value.toLowerCase();
+
+  renderMarkets(
+    markets.filter(m=>m.symbol.toLowerCase().includes(q))
+  );
+
+}
+
+function drawMiniChart(canvas,positive){
+
+  if(!canvas) return;
+
+  const dpr=window.devicePixelRatio||1;
+  const rect=canvas.getBoundingClientRect();
+
+  canvas.width=rect.width*dpr;
+  canvas.height=rect.height*dpr;
+
+  const ctx=canvas.getContext("2d");
+
+  ctx.scale(dpr,dpr);
+
+  let x=0;
+  let y=rect.height*.55;
+
+  ctx.beginPath();
+  ctx.moveTo(x,y);
+
+  for(let i=0;i<10;i++){
+
+    x+=(rect.width/10);
+
+    const movement=(Math.random()-.42)*(positive?22:-22);
+
+    y+=movement;
+
+    y=Math.max(12,Math.min(rect.height-12,y));
+
+    ctx.lineTo(x,y);
   }
+
+  ctx.strokeStyle=positive?"#16c784":"#ea4d5b";
+  ctx.lineWidth=2;
+  ctx.stroke();
+
 }
 
+function openTrade(market){
 
-/* ---------------------------
-   START
----------------------------- */
+  selectedMarket=market;
 
-const savedLanguage =
-  localStorage.getItem("wallet_language");
+  document.getElementById("tradeSymbol").textContent=market.symbol;
+  document.getElementById("tradePrice").textContent=money(market.price);
 
-if(savedLanguage){
+  const c=document.getElementById("tradeChange");
 
-  document.getElementById("languageSelect")
-    .value = savedLanguage;
+  c.textContent=(market.change>=0?"+":"")+market.change.toFixed(2)+"%";
+  c.className=market.change>=0?"up":"down";
 
-  document.getElementById("currentLanguage")
-    .textContent = savedLanguage;
+  showPage("trade");
+
+  createTradeChart();
 }
 
-loadMarkets();
+function createTradeChart(){
 
-/* Refresh market prices every 60 seconds */
-setInterval(loadMarkets,60000);
+  const canvas=document.getElementById("tradeChart");
+
+  if(chartTimer){
+    clearInterval(chartTimer);
+  }
+
+  chartValues=[];
+
+  let value=50;
+
+  for(let i=0;i<55;i++){
+
+    value+=(Math.random()-.46)*8;
+
+    value=Math.max(8,Math.min(92,value));
+
+    chartValues.push(value);
+  }
+
+  drawTradeChart();
+
+  chartTimer=setInterval(()=>{
+
+    value=chartValues[chartValues.length-1];
+    value+=(Math.random()-.48)*7;
+    value=Math.max(8,Math.min(92,value));
+
+    chartValues.push(value);
+
+    if(chartValues.length>65){
+      chartValues.shift();
+    }
+
+    selectedMarket.price*=1+(Math.random()-.5)*.0018;
+
+    document.getElementById("tradePrice").textContent=
+      money(selectedMarket.price);
+
+    drawTradeChart();
+
+  },1200);
+
+}
+
+function drawTradeChart(){
+
+  const canvas=document.getElementById("tradeChart");
+
+  if(!canvas) return;
+
+  const rect=canvas.getBoundingClientRect();
+  const dpr=window.devicePixelRatio||1;
+
+  canvas.width=rect.width*dpr;
+  canvas.height=rect.height*dpr;
+
+  const ctx=canvas.getContext("2d");
+
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+
+  const w=rect.width;
+  const h=rect.height;
+
+  ctx.clearRect(0,0,w,h);
+
+  ctx.strokeStyle="#252b34";
+  ctx.lineWidth=1;
+
+  for(let i=1;i<7;i++){
+
+    const y=(h/7)*i;
+
+    ctx.beginPath();
+    ctx.moveTo(0,y);
+    ctx.lineTo(w,y);
+    ctx.stroke();
+
+  }
+
+  for(let i=1;i<8;i++){
+
+    const x=(w/8)*i;
+
+    ctx.beginPath();
+    ctx.moveTo(x,0);
+    ctx.lineTo(x,h);
+    ctx.stroke();
+
+  }
+
+  ctx.beginPath();
+
+  chartValues.forEach((v,i)=>{
+
+    const x=(i/(chartValues.length-1))*w;
+    const y=h-(v/100*h);
+
+    if(i===0) ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+
+  });
+
+  ctx.strokeStyle="#16c784";
+  ctx.lineWidth=2.5;
+  ctx.stroke();
+
+  const last=chartValues[chartValues.length-1];
+
+  ctx.lineTo(w,h);
+  ctx.lineTo(0,h);
+  ctx.closePath();
+
+  const gradient=ctx.createLinearGradient(0,0,0,h);
+
+  gradient.addColorStop(0,"rgba(22,199,132,.18)");
+  gradient.addColorStop(1,"rgba(22,199,132,0)");
+
+  ctx.fillStyle=gradient;
+  ctx.fill();
+
+}
+
+function openP2P(type){
+
+  const sub=document.getElementById("p2pSub");
+
+  document.getElementById("p2pMain").style.display="none";
+
+  sub.className="submenu active";
+
+  let title="";
+  let options=[];
+
+  if(type==="buy"){
+
+    title="Buy Crypto";
+
+    options=[
+      ["USDT","Buy USDT with local currency"],
+      ["BTC","Buy Bitcoin"],
+      ["ETH","Buy Ethereum"],
+      ["SOL","Buy Solana"]
+    ];
+
+  }
+
+  if(type==="sell"){
+
+    title="Sell Crypto";
+
+    options=[
+      ["USDT","Sell USDT"],
+      ["BTC","Sell Bitcoin"],
+      ["ETH","Sell Ethereum"],
+      ["SOL","Sell Solana"]
+    ];
+
+  }
+
+  if(type==="orders"){
+
+    title="P2P Orders";
+
+    options=[
+      ["Open Orders","View active orders"],
+      ["Completed","View completed orders"],
+      ["Cancelled","View cancelled orders"]
+    ];
+
+  }
+
+  if(type==="payment"){
+
+    title="Payment Methods";
+
+    options=[
+      ["Bank Transfer","Manage bank transfer"],
+      ["Card","Manage card"],
+      ["Mobile Payment","Manage mobile payment"]
+    ];
+
+  }
+
+  sub.innerHTML=`
+    <button class="back" onclick="closeP2P()">‹ P2P</button>
+    <div class="section-title"><span>${title}</span></div>
+    <div class="menu-list">
+      ${options.map(o=>`
+        <button class="menu" onclick="openP2POption('${o[0]}')">
+          <div class="menu-left">
+            <div class="menu-icon">•</div>
+            <div>
+              <strong>${o[0]}</strong>
+              <div style="color:var(--muted);font-size:12px">${o[1]}</div>
+            </div>
+          </div>
+          <span>›</span>
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+}
+
+function closeP2P(){
+
+  document.getElementById("p2pMain").style.display="flex";
+  document.getElementById("p2pSub").className="submenu";
+
+}
+
+function openP2POption(name){
+
+  const sub=document.getElementById("p2pSub");
+
+  sub.innerHTML=`
+    <button class="back" onclick="closeP2P()">‹ P2P</button>
+
+    <div class="section-title">
+      <span>${name}</span>
+    </div>
+
+    <div class="card">
+      <div class="small-label">Available options</div>
+
+      <button class="menu" onclick="notify('${name} selected')">
+        <div class="menu-left">
+          <div class="menu-icon">⇄</div>
+          <strong>Continue</strong>
+        </div>
+        <span>›</span>
+      </button>
+
+      <div style="height:9px"></div>
+
+      <button class="menu" onclick="notify('Payment options opened')">
+        <div class="menu-left">
+          <div class="menu-icon">▤</div>
+          <strong>Payment options</strong>
+        </div>
+        <span>›</span>
+      </button>
+
+      <div style="height:9px"></div>
+
+      <button class="menu" onclick="notify('Offer list opened')">
+        <div class="menu-left">
+          <div class="menu-icon">☷</div>
+          <strong>Available offers</strong>
+        </div>
+        <span>›</span>
+      </button>
+    </div>
+  `;
+
+}
+
+function updateMarketPrices(){
+
+  markets.forEach((m,i)=>{
+
+    const movement=(Math.random()-.5)*.004;
+
+    m.price*=1+movement;
+
+    m.change+=movement*100;
+
+    if(m.change>9)m.change=9;
+    if(m.change<-9)m.change=-9;
+
+    const price=document.getElementById(`market-price-${i}`);
+
+    if(price){
+      price.textContent=money(m.price);
+    }
+
+  });
+
+  const btc=markets[0];
+
+  document.getElementById("btcHolding").textContent=
+    money(btc.price*3);
+
+  const sol=markets[2];
+
+  document.getElementById("solHolding").textContent=
+    money(sol.price*76);
+
+  document.getElementById("change24").textContent=
+    (btc.change>=0?"+":"")+btc.change.toFixed(2)+"%";
+
+}
+
+function buildTicker(){
+
+  const track=document.getElementById("tickerTrack");
+
+  track.innerHTML=markets.map(m=>`
+    <span class="tick">
+      ${m.symbol}
+      <b>${money(m.price)}</b>
+      <strong class="${m.change>=0?"up":"down"}">
+        ${m.change>=0?"+":""}${m.change.toFixed(2)}%
+      </strong>
+    </span>
+  `).join("");
+
+}
+
+renderMarkets();
+buildTicker();
+
+setInterval(()=>{
+
+  updateMarketPrices();
+  buildTicker();
+
+},1800);
+
+window.addEventListener("resize",()=>{
+  if(document.getElementById("trade").classList.contains("active")){
+    drawTradeChart();
+  }
+});
+
+document.querySelectorAll(".modal").forEach(modal=>{
+
+  modal.addEventListener("click",e=>{
+
+    if(e.target===modal){
+      modal.classList.remove("active");
+    }
+
+  });
+
+});
 </script>
 
 </body>
