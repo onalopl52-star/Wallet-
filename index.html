@@ -2,21 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Wallet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallet UI Prototype</title>
 
 <style>
 :root{
-  --bg:#090c10;
-  --card:#171c22;
-  --card2:#1e252d;
-  --line:#2b333d;
-  --text:#f4f6f8;
-  --muted:#8e99a7;
-  --yellow:#f0b90b;
-  --green:#18c78a;
-  --red:#ff5964;
-  --blue:#258cff;
+  --bg:#0b0f14;
+  --card:#151b22;
+  --card2:#1b222b;
+  --border:#29323d;
+  --text:#f5f7fa;
+  --muted:#8994a3;
+  --accent:#f0b90b;
+  --green:#20c997;
+  --red:#ff667d;
+  --blue:#4da3ff;
 }
 
 *{box-sizing:border-box}
@@ -37,419 +37,419 @@ button{
 }
 
 .app{
-  max-width:720px;
+  max-width:520px;
   margin:auto;
   min-height:100vh;
   padding-bottom:90px;
 }
 
 /* HEADER */
-.header{
+header{
   position:sticky;
   top:0;
   z-index:20;
-  height:72px;
-  background:#11161c;
-  border-bottom:1px solid var(--line);
+  background:rgba(11,15,20,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:16px;
+}
+
+.topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 18px;
 }
 
-.brand{
-  font-size:24px;
-  font-weight:800;
-  letter-spacing:.5px;
-}
-
-.brand span{
-  color:var(--yellow);
-}
-
-.header-actions{
+.logo{
   display:flex;
+  align-items:center;
   gap:10px;
+  font-size:20px;
+  font-weight:800;
 }
 
-.icon-btn{
-  width:44px;
-  height:44px;
-  border:0;
+.logoIcon{
+  width:36px;
+  height:36px;
   border-radius:50%;
-  background:#202831;
+  background:var(--accent);
+  color:#111;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+}
+
+.headerButtons{
+  display:flex;
+  gap:8px;
+}
+
+.iconBtn{
+  width:40px;
+  height:40px;
+  border:1px solid var(--border);
+  background:var(--card);
   color:white;
+  border-radius:12px;
+}
+
+/* DEMO NOTICE */
+.demoNotice{
+  margin:14px 16px 0;
+  padding:11px 13px;
+  border:1px solid #66520a;
+  background:#211d0c;
+  color:#f5cf4a;
+  border-radius:12px;
+  font-size:12px;
+  text-align:center;
+}
+
+/* PAGES */
+.page{
+  display:none;
+  padding:18px 16px;
+}
+
+.page.active{
+  display:block;
+}
+
+h1{
+  font-size:28px;
+  margin:5px 0 20px;
+}
+
+h2{
   font-size:20px;
 }
 
-.avatar{
-  background:var(--yellow);
-  color:#111;
-  font-weight:800;
-}
-
-/* TICKER */
-.ticker{
-  display:flex;
-  gap:30px;
-  overflow:hidden;
-  white-space:nowrap;
-  padding:12px 18px;
-  border-bottom:1px solid var(--line);
-  color:var(--muted);
-}
-
-.up{color:var(--green)}
-.down{color:var(--red)}
-
-/* MAIN */
-main{
-  padding:20px;
-}
-
-.page-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
-}
-
-.page-title h1{
-  margin:0;
-  font-size:30px;
-}
-
-/* BALANCE */
-.balance-card{
-  background:linear-gradient(145deg,#202830,#141a20);
-  border:1px solid #38414b;
-  border-radius:22px;
-  padding:24px;
-  margin-bottom:18px;
-}
-
-.small-label{
+.subtitle{
   color:var(--muted);
   font-size:14px;
 }
 
-.balance-row{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-top:8px;
+/* BALANCE */
+.balanceCard{
+  background:linear-gradient(145deg,#1b222a,#11161c);
+  border:1px solid #80690b;
+  border-radius:20px;
+  padding:22px;
+}
+
+.balanceTitle{
+  color:var(--muted);
+  font-size:14px;
 }
 
 .balance{
-  font-size:39px;
+  font-size:38px;
   font-weight:800;
+  margin:10px 0;
   letter-spacing:-1px;
 }
 
-.eye{
-  border:0;
-  background:none;
-  color:var(--muted);
-  font-size:21px;
+.balanceRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
-.balance-note{
+.eye{
+  background:none;
+  border:0;
   color:var(--muted);
-  margin-top:8px;
+  font-size:20px;
+}
+
+.change{
+  color:var(--green);
+  font-weight:700;
 }
 
 .actions{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:22px;
+  margin-top:18px;
 }
 
-.action{
-  border:1px solid var(--line);
-  background:#202831;
+.primary,.secondary{
+  padding:14px;
+  border-radius:13px;
+  border:0;
+  font-weight:700;
+}
+
+.primary{
+  background:var(--accent);
+  color:#111;
+}
+
+.secondary{
+  background:var(--card2);
   color:white;
-  border-radius:14px;
-  padding:14px 5px;
-}
-
-.action strong{
-  display:block;
-  margin-bottom:5px;
+  border:1px solid var(--border);
 }
 
 /* CARDS */
 .card{
   background:var(--card);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:20px;
-  margin-bottom:16px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  margin-top:15px;
 }
 
-.card-title{
+.cardHeader{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  margin-bottom:16px;
+  align-items:center;
 }
 
-.card-title h2{
-  margin:0;
-  font-size:20px;
-}
-
-/* ASSETS */
 .asset{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:16px 0;
-  border-bottom:1px solid var(--line);
+  gap:12px;
+  padding:15px 0;
+  border-bottom:1px solid var(--border);
 }
 
 .asset:last-child{
   border-bottom:0;
 }
 
-.asset-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
 .coin{
   width:44px;
   height:44px;
   border-radius:50%;
+  background:#252d37;
   display:grid;
   place-items:center;
-  background:#282d35;
   font-weight:800;
 }
 
-.asset-name{
+.assetInfo{
+  flex:1;
+}
+
+.assetName{
   font-weight:700;
 }
 
-.asset-sub{
+.assetSmall{
   color:var(--muted);
   font-size:13px;
   margin-top:4px;
 }
 
-.asset-value{
+.assetPrice{
   text-align:right;
   font-weight:700;
 }
 
-/* SCREEN */
-.screen{
-  display:none;
+.marketPrice{
+  font-size:13px;
+  color:var(--muted);
 }
 
-.screen.active{
-  display:block;
+/* MARKET */
+.marketGrid{
+  display:grid;
+  gap:12px;
 }
 
-/* FORM */
+.marketItem{
+  padding:16px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+}
+
+.marketTop{
+  display:flex;
+  justify-content:space-between;
+}
+
+.marketValue{
+  font-size:25px;
+  font-weight:800;
+  margin-top:10px;
+}
+
+/* MENU */
+.menuItem{
+  width:100%;
+  padding:17px;
+  margin-bottom:10px;
+  background:var(--card);
+  color:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  text-align:left;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.menuLeft{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.menuIcon{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:var(--card2);
+}
+
+/* FORMS */
 label{
   display:block;
   color:var(--muted);
-  margin:18px 0 8px;
+  font-size:13px;
+  margin:15px 0 7px;
 }
 
 input,select{
   width:100%;
-  padding:16px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:#0e1217;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#0e1319;
   color:white;
   outline:none;
 }
 
 input:focus,select:focus{
-  border-color:var(--yellow);
+  border-color:var(--accent);
 }
 
-.primary{
+.formButton{
   width:100%;
-  margin-top:20px;
-  padding:16px;
-  border:0;
-  border-radius:14px;
-  background:var(--yellow);
-  color:#111;
-  font-weight:800;
-}
-
-.secondary{
-  width:100%;
-  margin-top:10px;
+  margin-top:18px;
   padding:15px;
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#202831;
-  color:white;
-}
-
-/* MENU */
-.menu-item{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:18px 0;
   border:0;
-  border-bottom:1px solid var(--line);
-  background:none;
-  color:white;
-  text-align:left;
-}
-
-.menu-left{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-
-.menu-icon{
-  width:40px;
-  height:40px;
-  border-radius:12px;
-  background:#252d35;
-  display:grid;
-  place-items:center;
-}
-
-/* PROFILE */
-.profile{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  margin-bottom:20px;
-}
-
-.profile-avatar{
-  width:65px;
-  height:65px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:var(--yellow);
+  border-radius:13px;
+  background:var(--accent);
   color:#111;
-  font-size:22px;
   font-weight:800;
-}
-
-.profile h2{
-  margin:0 0 5px;
-}
-
-.profile p{
-  margin:0;
-  color:var(--muted);
 }
 
 /* BOTTOM NAV */
-.bottom-nav{
+.bottomNav{
   position:fixed;
-  z-index:30;
   bottom:0;
   left:50%;
   transform:translateX(-50%);
-  width:min(720px,100%);
+  width:min(520px,100%);
+  background:rgba(16,21,27,.97);
+  border-top:1px solid var(--border);
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  background:#11161c;
-  border-top:1px solid var(--line);
-  padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+  grid-template-columns:repeat(4,1fr);
+  padding:8px 5px calc(8px + env(safe-area-inset-bottom));
+  z-index:30;
 }
 
-.nav-btn{
-  border:0;
+.navBtn{
   background:none;
+  border:0;
   color:var(--muted);
-  padding:9px 2px;
+  padding:8px 3px;
   font-size:12px;
 }
 
-.nav-btn span{
-  display:block;
-  font-size:20px;
-  margin-bottom:3px;
+.navBtn.active{
+  color:var(--accent);
 }
 
-.nav-btn.active{
-  color:var(--yellow);
+.navIcon{
+  font-size:19px;
+  display:block;
+  margin-bottom:3px;
 }
 
 /* MODAL */
 .modal{
   position:fixed;
   inset:0;
+  z-index:100;
   background:rgba(0,0,0,.72);
   display:none;
   align-items:flex-end;
-  z-index:100;
+  justify-content:center;
 }
 
-.modal.open{
+.modal.show{
   display:flex;
 }
 
-.modal-box{
-  width:100%;
-  max-width:720px;
-  margin:auto;
-  background:#171c22;
-  border:1px solid var(--line);
-  border-radius:24px 24px 0 0;
+.modalBox{
+  width:min(520px,100%);
+  background:#151b22;
+  border:1px solid var(--border);
+  border-radius:22px 22px 0 0;
   padding:22px;
-  max-height:90vh;
+  max-height:88vh;
   overflow:auto;
 }
 
-.modal-head{
+.modalHeader{
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
 .close{
+  background:none;
   border:0;
-  background:#252d35;
-  color:white;
-  width:38px;
-  height:38px;
-  border-radius:50%;
+  color:var(--muted);
+  font-size:25px;
 }
 
-/* STATUS */
 .status{
   padding:15px;
-  border-radius:14px;
-  background:#202831;
-  color:var(--muted);
+  background:#10161d;
+  border:1px solid var(--border);
+  border-radius:13px;
   margin-top:15px;
+  color:var(--muted);
   line-height:1.5;
 }
 
-.notice{
-  padding:14px;
-  border-radius:14px;
-  background:#241f0d;
-  border:1px solid #55490e;
-  color:#e7d98a;
+.confirmButtons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
   margin-top:15px;
 }
 
-/* RESPONSIVE */
-@media(max-width:480px){
-  main{padding:15px}
-  .balance{font-size:33px}
-  .actions{grid-template-columns:repeat(2,1fr)}
+/* TOAST */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:85px;
+  transform:translateX(-50%) translateY(20px);
+  background:#202832;
+  border:1px solid var(--border);
+  color:white;
+  padding:12px 16px;
+  border-radius:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:200;
+  width:max-content;
+  max-width:90%;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
 }
 </style>
 </head>
@@ -458,773 +458,793 @@ input:focus,select:focus{
 
 <div class="app">
 
-<header class="header">
-  <div class="brand"><span>◆</span> WALLET</div>
+<header>
+  <div class="topbar">
+    <div class="logo">
+      <div class="logoIcon">W</div>
+      Wallet
+    </div>
 
-  <div class="header-actions">
-    <button class="icon-btn" onclick="openScreen('notifications')">🔔</button>
-    <button class="icon-btn avatar" onclick="openScreen('profile')">JS</button>
+    <div class="headerButtons">
+      <button class="iconBtn" onclick="showPage('profile')">👤</button>
+      <button class="iconBtn" onclick="showToast('Notifications are currently empty.')">🔔</button>
+    </div>
   </div>
 </header>
 
-<div class="ticker">
-  <span>BTC/USDT <b id="btcPrice">$73,344.27</b> <i class="up">+2.34%</i></span>
-  <span>ETH/USDT <b>$3,421.50</b> <i class="up">+1.21%</i></span>
-  <span>SOL/USDT <b id="solPrice">$87.92</b> <i class="down">-0.52%</i></span>
+<div class="demoNotice">
+  FRONT-END WALLET PROTOTYPE • NO REAL FUNDS OR TRANSACTIONS
 </div>
-
 
 <!-- HOME -->
-<section id="home" class="screen active">
+<section id="home" class="page active">
 
-<main>
+  <h1>Portfolio</h1>
 
-<div class="page-title">
-  <h1>Wallet</h1>
-  <span class="up">● Live</span>
-</div>
+  <div class="balanceCard">
+    <div class="balanceTitle">Total Portfolio Value</div>
 
-<div class="balance-card">
+    <div class="balanceRow">
+      <div id="balance" class="balance">$263,532.10</div>
+      <button class="eye" onclick="toggleBalance()">◉</button>
+    </div>
 
-  <div class="small-label">Total Balance</div>
+    <div class="change">+3.21% today</div>
 
-  <div class="balance-row">
-    <div class="balance" id="balance">$263,753.10</div>
-    <button class="eye" onclick="toggleBalance()">◉</button>
+    <div class="actions">
+      <button class="primary" onclick="openWithdraw()">Withdraw</button>
+      <button class="secondary" onclick="showPage('refund')">Refund</button>
+    </div>
   </div>
 
-  <div class="balance-note">Estimated value in USD</div>
+  <div class="card">
+    <div class="cardHeader">
+      <h2>Your Assets</h2>
+      <span class="subtitle">Simulated</span>
+    </div>
 
-  <div class="actions">
+    <div class="asset">
+      <div class="coin">₿</div>
+      <div class="assetInfo">
+        <div class="assetName">Bitcoin</div>
+        <div class="assetSmall">BTC</div>
+      </div>
+      <div>
+        <div class="assetPrice">$219,603.08</div>
+        <div class="assetSmall">3.000000 BTC</div>
+      </div>
+    </div>
 
-    <button class="action" onclick="openScreen('deposit')">
-      <strong>＋</strong>
-      Deposit
-    </button>
+    <div class="asset">
+      <div class="coin">S</div>
+      <div class="assetInfo">
+        <div class="assetName">Solana</div>
+        <div class="assetSmall">SOL</div>
+      </div>
+      <div>
+        <div class="assetPrice">$6,675.65</div>
+        <div class="assetSmall">76.000000 SOL</div>
+      </div>
+    </div>
 
-    <button class="action" onclick="openScreen('withdraw')">
-      <strong>↑</strong>
-      Withdraw
-    </button>
-
-    <button class="action" onclick="openScreen('refund')">
-      <strong>↻</strong>
-      Refund
-    </button>
-
-    <button class="action" onclick="openScreen('p2p')">
-      <strong>⇄</strong>
-      P2P
-    </button>
-
+    <div class="asset">
+      <div class="coin">R</div>
+      <div class="assetInfo">
+        <div class="assetName">Reward</div>
+        <div class="assetSmall">Bonus Credit</div>
+      </div>
+      <div>
+        <div class="assetPrice">$40,000.00</div>
+      </div>
+    </div>
   </div>
-</div>
 
+  <div class="card">
+    <div class="cardHeader">
+      <h2>Live Market</h2>
+      <span class="subtitle">API</span>
+    </div>
 
-<div class="card">
+    <div id="markets" class="marketGrid">
+      <div class="marketItem">Loading market prices...</div>
+    </div>
+  </div>
 
-<div class="card-title">
-  <h2>Your Assets</h2>
-  <button class="secondary" style="width:auto;margin:0;padding:8px 12px"
-          onclick="refreshPrices()">Refresh</button>
-</div>
-
-
-<div class="asset">
-
-<div class="asset-left">
-<div class="coin">₿</div>
-<div>
-<div class="asset-name">Bitcoin</div>
-<div class="asset-sub">3.00000000 BTC</div>
-</div>
-</div>
-
-<div>
-<div class="asset-value" id="btcValue">$220,032.81</div>
-<div class="asset-sub">BTC</div>
-</div>
-
-</div>
-
-
-<div class="asset">
-
-<div class="asset-left">
-<div class="coin">S</div>
-<div>
-<div class="asset-name">Solana</div>
-<div class="asset-sub">78.00000000 SOL</div>
-</div>
-</div>
-
-<div>
-<div class="asset-value" id="solValue">$6,857.76</div>
-<div class="asset-sub">SOL</div>
-</div>
-
-</div>
-
-
-<div class="asset">
-
-<div class="asset-left">
-<div class="coin">R</div>
-<div>
-<div class="asset-name">Trading Rewards</div>
-<div class="asset-sub">Test account reward</div>
-</div>
-</div>
-
-<div>
-<div class="asset-value">$4,000.00</div>
-<div class="asset-sub">Reward balance</div>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<div class="card-title">
-<h2>Quick Access</h2>
-</div>
-
-<button class="menu-item" onclick="openScreen('history')">
-<span class="menu-left">
-<span class="menu-icon">↔</span>
-<span>Transaction History</span>
-</span>
-<span>›</span>
-</button>
-
-<button class="menu-item" onclick="openScreen('security')">
-<span class="menu-left">
-<span class="menu-icon">🔒</span>
-<span>Security</span>
-</span>
-<span>›</span>
-</button>
-
-<button class="menu-item" onclick="openScreen('settings')">
-<span class="menu-left">
-<span class="menu-icon">⚙</span>
-<span>Settings</span>
-</span>
-<span>›</span>
-</button>
-
-</div>
-
-</main>
 </section>
 
+<!-- MARKETS -->
+<section id="marketsPage" class="page">
 
-<!-- WITHDRAW -->
-<section id="withdraw" class="screen">
-<main>
+  <h1>Markets</h1>
 
-<div class="page-title">
-<h1>Withdraw</h1>
-<button class="icon-btn" onclick="openScreen('home')">×</button>
-</div>
+  <div id="marketsFull" class="marketGrid">
+    <div class="marketItem">Loading...</div>
+  </div>
 
-<div class="card">
-
-<div class="status">
-Enter the destination address and select the asset you want to withdraw.
-</div>
-
-<label>Wallet Address</label>
-<input id="withdrawAddress"
-placeholder="Paste destination wallet address">
-
-<label>Asset</label>
-<select id="withdrawAsset">
-<option>Bitcoin (BTC)</option>
-<option>Solana (SOL)</option>
-<option>Ethereum (ETH)</option>
-</select>
-
-<label>Network</label>
-<select>
-<option>Bitcoin Network</option>
-<option>Solana Network</option>
-<option>Ethereum Network</option>
-</select>
-
-<label>Amount</label>
-<input id="withdrawAmount" type="number" placeholder="Enter amount">
-
-<div class="status">
-Withdrawal fee will be calculated before confirmation.
-</div>
-
-<button class="primary" onclick="reviewWithdrawal()">
-Review Withdrawal
-</button>
-
-</div>
-
-</main>
 </section>
-
-
-<!-- DEPOSIT -->
-<section id="deposit" class="screen">
-<main>
-
-<div class="page-title">
-<h1>Deposit</h1>
-<button class="icon-btn" onclick="openScreen('home')">×</button>
-</div>
-
-<div class="card">
-
-<label>Asset</label>
-
-<select>
-<option>Bitcoin (BTC)</option>
-<option>Solana (SOL)</option>
-<option>Ethereum (ETH)</option>
-</select>
-
-<label>Network</label>
-
-<select>
-<option>Bitcoin Network</option>
-<option>Solana Network</option>
-<option>Ethereum Network</option>
-</select>
-
-<label>Deposit Address</label>
-
-<input value="" placeholder="Your deposit address">
-
-<button class="primary" onclick="showMessage('Deposit address copied')">
-Copy Address
-</button>
-
-</div>
-
-</main>
-</section>
-
 
 <!-- P2P -->
-<section id="p2p" class="screen">
-<main>
+<section id="p2p" class="page">
 
-<div class="page-title">
-<h1>P2P Trading</h1>
-<button class="icon-btn" onclick="openScreen('home')">×</button>
-</div>
+  <h1>P2P</h1>
+  <p class="subtitle">Explore peer-to-peer trading options.</p>
 
-<div class="card">
+  <button class="menuItem" onclick="showToast('Buy Crypto page opened.')">
+    <span class="menuLeft">
+      <span class="menuIcon">🛒</span>
+      Buy Crypto
+    </span>
+    <span>›</span>
+  </button>
 
-<button class="menu-item" onclick="selectP2P('Buy Crypto')">
-<span class="menu-left">
-<span class="menu-icon">↓</span>
-<span>Buy Crypto</span>
-</span>
-<span>›</span>
-</button>
+  <button class="menuItem" onclick="showToast('Sell Crypto page opened.')">
+    <span class="menuLeft">
+      <span class="menuIcon">💱</span>
+      Sell Crypto
+    </span>
+    <span>›</span>
+  </button>
 
-<button class="menu-item" onclick="selectP2P('Sell Crypto')">
-<span class="menu-left">
-<span class="menu-icon">↑</span>
-<span>Sell Crypto</span>
-</span>
-<span>›</span>
-</button>
+  <button class="menuItem" onclick="showToast('P2P orders are empty.')">
+    <span class="menuLeft">
+      <span class="menuIcon">📋</span>
+      My P2P Orders
+    </span>
+    <span>›</span>
+  </button>
 
-<button class="menu-item" onclick="selectP2P('My Orders')">
-<span class="menu-left">
-<span class="menu-icon">▣</span>
-<span>My Orders</span>
-</span>
-<span>›</span>
-</button>
+  <button class="menuItem" onclick="showToast('No active P2P advertisements.')">
+    <span class="menuLeft">
+      <span class="menuIcon">📢</span>
+      P2P Advertisements
+    </span>
+    <span>›</span>
+  </button>
 
-<button class="menu-item" onclick="selectP2P('Payment Methods')">
-<span class="menu-left">
-<span class="menu-icon">▤</span>
-<span>Payment Methods</span>
-</span>
-<span>›</span>
-</button>
-
-<button class="menu-item" onclick="selectP2P('Merchant Center')">
-<span class="menu-left">
-<span class="menu-icon">◆</span>
-<span>Merchant Center</span>
-</span>
-<span>›</span>
-</button>
-
-</div>
-
-</main>
 </section>
-
 
 <!-- REFUND -->
-<section id="refund" class="screen">
-<main>
+<section id="refund" class="page">
 
-<div class="page-title">
-<h1>Refund</h1>
-<button class="icon-btn" onclick="openScreen('home')">×</button>
-</div>
+  <h1>Refund</h1>
 
-<div class="card">
+  <div class="card">
+    <h2>Refund Status</h2>
 
-<div class="status">
-Refund status
-</div>
+    <p class="subtitle">
+      This is a simulated refund status for the front-end prototype.
+    </p>
 
-<div class="notice">
-The refund fee has been recorded as paid. The destination account currently cannot receive the remaining funds. Please verify the receiving account and network details before continuing.
-</div>
+    <div class="status">
+      <strong style="color:var(--green)">Payment recorded</strong><br><br>
+      The refund has been marked as paid in this prototype.
+      The simulated wallet balance is not changed by this demonstration.
+    </div>
+  </div>
 
-<button class="primary" onclick="showMessage('Refund status reviewed')">
-Review Refund
-</button>
-
-</div>
-
-</main>
 </section>
-
 
 <!-- PROFILE -->
-<section id="profile" class="screen">
-<main>
+<section id="profile" class="page">
 
-<div class="page-title">
-<h1>Profile</h1>
-<button class="icon-btn" onclick="openScreen('home')">×</button>
-</div>
+  <h1>Profile</h1>
 
-<div class="card">
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:15px">
+      <div class="logoIcon">U</div>
 
-<div class="profile">
+      <div>
+        <strong>Wallet User</strong>
+        <div class="subtitle">Account profile</div>
+      </div>
+    </div>
+  </div>
 
-<div class="profile-avatar">JS</div>
+  <div style="margin-top:15px">
 
-<div>
-<h2>Account</h2>
-<p>Account ID: 756371252</p>
-</div>
+    <button class="menuItem" onclick="showPage('settings')">
+      <span class="menuLeft">
+        <span class="menuIcon">⚙️</span>
+        Settings
+      </span>
+      <span>›</span>
+    </button>
 
-</div>
+    <button class="menuItem" onclick="showPage('security')">
+      <span class="menuLeft">
+        <span class="menuIcon">🔐</span>
+        Security
+      </span>
+      <span>›</span>
+    </button>
 
+    <button class="menuItem" onclick="showToast('No transactions yet.')">
+      <span class="menuLeft">
+        <span class="menuIcon">🧾</span>
+        Transaction History
+      </span>
+      <span>›</span>
+    </button>
 
-<button class="menu-item" onclick="openScreen('settings')">
-<span class="menu-left">
-<span class="menu-icon">⚙</span>
-<span>Settings</span>
-</span>
-<span>›</span>
-</button>
+    <button class="menuItem" onclick="showPage('language')">
+      <span class="menuLeft">
+        <span class="menuIcon">🌐</span>
+        Language
+      </span>
+      <span id="currentLanguage">English</span>
+    </button>
 
-<button class="menu-item" onclick="openScreen('security')">
-<span class="menu-left">
-<span class="menu-icon">🔒</span>
-<span>Security</span>
-</span>
-<span>›</span>
-</button>
+  </div>
 
-<button class="menu-item" onclick="openScreen('notifications')">
-<span class="menu-left">
-<span class="menu-icon">🔔</span>
-<span>Notifications</span>
-</span>
-<span>›</span>
-</button>
-
-<button class="menu-item" onclick="openScreen('history')">
-<span class="menu-left">
-<span class="menu-icon">↔</span>
-<span>Transaction History</span>
-</span>
-<span>›</span>
-</button>
-
-</div>
-
-</main>
 </section>
-
 
 <!-- SETTINGS -->
-<section id="settings" class="screen">
-<main>
+<section id="settings" class="page">
 
-<div class="page-title">
-<h1>Settings</h1>
-<button class="icon-btn" onclick="openScreen('profile')">×</button>
-</div>
+  <h1>Settings</h1>
 
-<div class="card">
+  <div class="card">
 
-<button class="menu-item" onclick="showSetting('Account email')">
-<span class="menu-left">
-<span class="menu-icon">✉</span>
-<span>Email</span>
-</span>
-<span>›</span>
-</button>
+    <label>Email address</label>
+    <input id="emailInput" type="email" placeholder="Enter your email">
 
-<button class="menu-item" onclick="showSetting('Account ID: 756371252')">
-<span class="menu-left">
-<span class="menu-icon">ID</span>
-<span>Account ID</span>
-</span>
-<span>›</span>
-</button>
+    <button class="formButton" onclick="saveEmail()">
+      Save Email
+    </button>
 
-<button class="menu-item" onclick="showSetting('Display currency: USD')">
-<span class="menu-left">
-<span class="menu-icon">$</span>
-<span>Currency</span>
-</span>
-<span>›</span>
-</button>
+    <div class="status">
+      <strong>Account ID</strong><br>
+      <span id="accountId">756371252</span>
+    </div>
 
-<button class="menu-item" onclick="showSetting('Language: English')">
-<span class="menu-left">
-<span class="menu-icon">A</span>
-<span>Language</span>
-</span>
-<span>›</span>
-</button>
+  </div>
 
-<button class="menu-item" onclick="showSetting('Balance visibility settings')">
-<span class="menu-left">
-<span class="menu-icon">◉</span>
-<span>Balance Visibility</span>
-</span>
-<span>›</span>
-</button>
+  <button class="menuItem" onclick="showPage('language')">
+    <span class="menuLeft">
+      <span class="menuIcon">🌐</span>
+      Language
+    </span>
+    <span>›</span>
+  </button>
 
-<button class="menu-item" onclick="showSetting('Notification preferences')">
-<span class="menu-left">
-<span class="menu-icon">🔔</span>
-<span>Notifications</span>
-</span>
-<span>›</span>
-</button>
+  <button class="menuItem" onclick="showToast('Currency preferences opened.')">
+    <span class="menuLeft">
+      <span class="menuIcon">💵</span>
+      Currency
+    </span>
+    <span>›</span>
+  </button>
 
-</div>
+  <button class="menuItem" onclick="showToast('Appearance preferences opened.')">
+    <span class="menuLeft">
+      <span class="menuIcon">🎨</span>
+      Appearance
+    </span>
+    <span>›</span>
+  </button>
 
-</main>
+  <button class="secondary" style="width:100%;margin-top:10px"
+          onclick="showPage('profile')">
+    Back to Profile
+  </button>
+
 </section>
-
 
 <!-- SECURITY -->
-<section id="security" class="screen">
-<main>
+<section id="security" class="page">
 
-<div class="page-title">
-<h1>Security</h1>
-<button class="icon-btn" onclick="openScreen('home')">×</button>
-</div>
+  <h1>Security</h1>
 
-<div class="card">
+  <button class="menuItem" onclick="showToast('Two-factor authentication settings opened.')">
+    <span class="menuLeft">
+      <span class="menuIcon">🛡️</span>
+      Two-Factor Authentication
+    </span>
+    <span>›</span>
+  </button>
 
-<button class="menu-item" onclick="showSetting('Two-factor authentication settings')">
-<span class="menu-left">
-<span class="menu-icon">2FA</span>
-<span>Two-Factor Authentication</span>
-</span>
-<span>›</span>
-</button>
+  <button class="menuItem" onclick="showToast('Passcode settings opened.')">
+    <span class="menuLeft">
+      <span class="menuIcon">🔑</span>
+      Passcode
+    </span>
+    <span>›</span>
+  </button>
 
-<button class="menu-item" onclick="showSetting('Active sessions')">
-<span class="menu-left">
-<span class="menu-icon">●</span>
-<span>Active Sessions</span>
-</span>
-<span>›</span>
-</button>
+  <button class="menuItem" onclick="showToast('Active sessions opened.')">
+    <span class="menuLeft">
+      <span class="menuIcon">📱</span>
+      Active Sessions
+    </span>
+    <span>›</span>
+  </button>
 
-<button class="menu-item" onclick="showSetting('Withdrawal security')">
-<span class="menu-left">
-<span class="menu-icon">🔐</span>
-<span>Withdrawal Security</span>
-</span>
-<span>›</span>
-</button>
-
-</div>
-
-</main>
 </section>
 
+<!-- LANGUAGE -->
+<section id="language" class="page">
 
-<!-- HISTORY -->
-<section id="history" class="screen">
-<main>
+  <h1>Language</h1>
 
-<div class="page-title">
-<h1>Transactions</h1>
-<button class="icon-btn" onclick="openScreen('home')">×</button>
-</div>
+  <div class="card">
 
-<div class="card">
+    <label>Select language</label>
 
-<div style="text-align:center;padding:35px 10px">
+    <select id="languageSelect" onchange="changeLanguage()">
+      <option value="English">English</option>
+      <option value="Português (Brasil)">Português (Brasil)</option>
+      <option value="Español">Español</option>
+      <option value="Français">Français</option>
+      <option value="Deutsch">Deutsch</option>
+      <option value="Italiano">Italiano</option>
+      <option value="Nederlands">Nederlands</option>
+      <option value="Türkçe">Türkçe</option>
+      <option value="日本語">日本語</option>
+      <option value="한국어">한국어</option>
+      <option value="中文">中文</option>
+      <option value="العربية">العربية</option>
+      <option value="Русский">Русский</option>
+    </select>
 
-<div style="font-size:42px">↔</div>
+    <div class="status">
+      Language selection is stored locally in this prototype.
+    </div>
 
-<h2>No transactions yet</h2>
+  </div>
 
-<p style="color:var(--muted)">
-Your transaction history will appear here when transactions are recorded.
-</p>
-
-</div>
-
-</div>
-
-</main>
 </section>
 
+<!-- WITHDRAW MODAL -->
+<div id="withdrawModal" class="modal">
 
-<!-- NOTIFICATIONS -->
-<section id="notifications" class="screen">
-<main>
+  <div class="modalBox">
 
-<div class="page-title">
-<h1>Notifications</h1>
-<button class="icon-btn" onclick="openScreen('home')">×</button>
+    <div class="modalHeader">
+      <h2>Withdraw</h2>
+      <button class="close" onclick="closeWithdraw()">×</button>
+    </div>
+
+    <p class="subtitle">
+      Enter the destination address and select the asset you want to send.
+    </p>
+
+    <label>Withdrawal address</label>
+    <input
+      id="withdrawAddress"
+      type="text"
+      placeholder="Paste your receiving wallet address">
+
+    <label>Select coin</label>
+    <select id="withdrawCoin">
+      <option>Bitcoin (BTC)</option>
+      <option>Ethereum (ETH)</option>
+      <option>Solana (SOL)</option>
+      <option>USDT</option>
+      <option>USDC</option>
+    </select>
+
+    <label>Network</label>
+    <select id="withdrawNetwork">
+      <option>Automatic selection</option>
+      <option>Bitcoin Network</option>
+      <option>Ethereum</option>
+      <option>Solana</option>
+      <option>TRON</option>
+      <option>BSC</option>
+    </select>
+
+    <label>Amount</label>
+    <input
+      id="withdrawAmount"
+      type="number"
+      min="0"
+      step="any"
+      placeholder="Enter amount">
+
+    <button class="formButton" onclick="reviewWithdrawal()">
+      Review Withdrawal
+    </button>
+
+    <div id="withdrawReview" style="display:none">
+
+      <div class="status">
+        <strong style="color:var(--accent)">
+          Approval status
+        </strong>
+        <br><br>
+
+        This prototype requires confirmation of the
+        trading-management approval status before a
+        withdrawal can proceed.
+
+        <br><br>
+
+        <strong>
+          Have you confirmed the withdrawal approval
+          from the Trading Management Center?
+        </strong>
+      </div>
+
+      <div class="confirmButtons">
+
+        <button class="primary" onclick="confirmWithdrawal()">
+          Confirmed
+        </button>
+
+        <button class="secondary" onclick="notConfirmed()">
+          Not confirmed yet
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 </div>
 
-<div class="card">
-
-<div class="status">
-No new notifications.
-</div>
-
-</div>
-
-</main>
-</section>
-
+<div id="toast" class="toast"></div>
 
 <!-- BOTTOM NAV -->
-<nav class="bottom-nav">
+<nav class="bottomNav">
 
-<button class="nav-btn active" onclick="openScreen('home')">
-<span>⌂</span>
-Home
-</button>
+  <button class="navBtn active" onclick="showPage('home',this)">
+    <span class="navIcon">⌂</span>
+    Home
+  </button>
 
-<button class="nav-btn" onclick="openScreen('deposit')">
-<span>＋</span>
-Deposit
-</button>
+  <button class="navBtn" onclick="showPage('marketsPage',this)">
+    <span class="navIcon">📈</span>
+    Markets
+  </button>
 
-<button class="nav-btn" onclick="openScreen('withdraw')">
-<span>↑</span>
-Withdraw
-</button>
+  <button class="navBtn" onclick="showPage('p2p',this)">
+    <span class="navIcon">⇄</span>
+    P2P
+  </button>
 
-<button class="nav-btn" onclick="openScreen('p2p')">
-<span>⇄</span>
-P2P
-</button>
-
-<button class="nav-btn" onclick="openScreen('profile')">
-<span>●</span>
-Profile
-</button>
+  <button class="navBtn" onclick="showPage('profile',this)">
+    <span class="navIcon">●</span>
+    Profile
+  </button>
 
 </nav>
 
 </div>
 
-
-<!-- MODAL -->
-<div id="modal" class="modal" onclick="closeModal(event)">
-
-<div class="modal-box" onclick="event.stopPropagation()">
-
-<div class="modal-head">
-<h2 id="modalTitle">Information</h2>
-<button class="close" onclick="closeModal()">×</button>
-</div>
-
-<div id="modalContent" class="status"></div>
-
-<button class="primary" onclick="closeModal()">Continue</button>
-
-</div>
-
-</div>
-
-
 <script>
+/* ---------------------------
+   LOCAL SETTINGS
+---------------------------- */
 
-/* -------------------------
-   SCREEN NAVIGATION
-------------------------- */
+let balanceVisible = true;
 
-function openScreen(id){
+const savedEmail =
+  localStorage.getItem("wallet_email") || "";
 
-  document.querySelectorAll(".screen")
-    .forEach(s => s.classList.remove("active"));
+document.getElementById("emailInput").value = savedEmail;
 
-  const screen=document.getElementById(id);
 
-  if(screen){
-    screen.classList.add("active");
+/* ---------------------------
+   PAGE NAVIGATION
+---------------------------- */
+
+function showPage(id, navButton){
+
+  document.querySelectorAll(".page")
+    .forEach(page => page.classList.remove("active"));
+
+  const page = document.getElementById(id);
+
+  if(page){
+    page.classList.add("active");
     window.scrollTo({top:0,behavior:"smooth"});
   }
 
-  document.querySelectorAll(".nav-btn")
-    .forEach(b=>b.classList.remove("active"));
+  if(navButton){
+    document.querySelectorAll(".navBtn")
+      .forEach(btn => btn.classList.remove("active"));
+
+    navButton.classList.add("active");
+  }
 }
 
 
-/* -------------------------
+/* ---------------------------
    BALANCE VISIBILITY
-------------------------- */
-
-let balanceVisible=true;
+---------------------------- */
 
 function toggleBalance(){
 
-  const balance=document.getElementById("balance");
+  const balance =
+    document.getElementById("balance");
 
-  balanceVisible=!balanceVisible;
+  balanceVisible = !balanceVisible;
 
-  balance.textContent=
-    balanceVisible ? "$263,753.10" : "••••••••";
+  balance.textContent =
+    balanceVisible
+      ? "$263,532.10"
+      : "••••••••";
 }
 
 
-/* -------------------------
-   DEMO MARKET MOVEMENT
-------------------------- */
+/* ---------------------------
+   WITHDRAW
+---------------------------- */
 
-let btc=73344.27;
-let sol=87.92;
+function openWithdraw(){
 
-function randomMove(value){
+  document.getElementById("withdrawModal")
+    .classList.add("show");
 
-  const movement=(Math.random()-.5)*0.012;
-
-  return value+(value*movement);
+  document.getElementById("withdrawReview")
+    .style.display = "none";
 }
 
-function updatePrices(){
+function closeWithdraw(){
 
-  btc=randomMove(btc);
-  sol=randomMove(sol);
-
-  document.getElementById("btcPrice").textContent=
-    "$"+btc.toLocaleString("en-US",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    });
-
-  document.getElementById("solPrice").textContent=
-    "$"+sol.toFixed(2);
-
-  document.getElementById("btcValue").textContent=
-    "$"+(btc*3).toLocaleString("en-US",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    });
-
-  document.getElementById("solValue").textContent=
-    "$"+(sol*78).toLocaleString("en-US",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    });
+  document.getElementById("withdrawModal")
+    .classList.remove("show");
 }
-
-setInterval(updatePrices,5000);
-
-function refreshPrices(){
-  updatePrices();
-  showMessage("Market prices refreshed.");
-}
-
-
-/* -------------------------
-   WITHDRAWAL REVIEW
-------------------------- */
 
 function reviewWithdrawal(){
 
-  const address=
+  const address =
     document.getElementById("withdrawAddress").value.trim();
 
-  const amount=
-    document.getElementById("withdrawAmount").value.trim();
+  const amount =
+    document.getElementById("withdrawAmount").value;
 
   if(!address){
-    showMessage("Please enter a destination wallet address.");
+    showToast("Please enter a withdrawal address.");
     return;
   }
 
-  if(!amount || Number(amount)<=0){
-    showMessage("Please enter a valid withdrawal amount.");
+  if(!amount || Number(amount) <= 0){
+    showToast("Please enter a valid withdrawal amount.");
     return;
   }
 
-  showMessage(
-    "Withdrawal review: please verify the destination address, asset, network, amount and applicable fee before submitting."
-  );
+  document.getElementById("withdrawReview")
+    .style.display = "block";
+}
+
+function confirmWithdrawal(){
+
+  document.getElementById("withdrawReview").innerHTML = `
+    <div class="status">
+      <strong style="color:var(--accent)">
+        Approval confirmation pending
+      </strong>
+      <br><br>
+
+      No approval confirmation has been received
+      in this front-end prototype.
+
+      <br><br>
+
+      Please wait for the appropriate confirmation
+      through your actual wallet/trading-management
+      system before proceeding.
+    </div>
+
+    <button
+      class="secondary"
+      style="width:100%;margin-top:15px"
+      onclick="closeWithdraw()">
+      Close
+    </button>
+  `;
+}
+
+function notConfirmed(){
+
+  document.getElementById("withdrawReview").innerHTML = `
+    <div class="status">
+      <strong style="color:var(--accent)">
+        Withdrawal approval not confirmed
+      </strong>
+      <br><br>
+
+      The withdrawal cannot proceed in this
+      prototype until the required approval status
+      has been confirmed through the appropriate
+      trading-management system.
+
+      <br><br>
+
+      Please wait for confirmation or contact the
+      responsible support team for the next step.
+    </div>
+
+    <button
+      class="secondary"
+      style="width:100%;margin-top:15px"
+      onclick="closeWithdraw()">
+      Close
+    </button>
+  `;
 }
 
 
-/* -------------------------
-   P2P
-------------------------- */
+/* ---------------------------
+   EMAIL
+---------------------------- */
 
-function selectP2P(option){
-  showMessage(option+" selected.");
-}
+function saveEmail(){
 
+  const email =
+    document.getElementById("emailInput")
+      .value.trim();
 
-/* -------------------------
-   SETTINGS
-------------------------- */
-
-function showSetting(text){
-  showMessage(text);
-}
-
-
-/* -------------------------
-   MODAL
-------------------------- */
-
-function showMessage(message,title="Information"){
-
-  document.getElementById("modalTitle").textContent=title;
-
-  document.getElementById("modalContent").textContent=message;
-
-  document.getElementById("modal").classList.add("open");
-}
-
-function closeModal(event){
-
-  if(event && event.target!==document.getElementById("modal")){
+  if(!email || !email.includes("@")){
+    showToast("Enter a valid email address.");
     return;
   }
 
-  document.getElementById("modal").classList.remove("open");
+  localStorage.setItem("wallet_email",email);
+
+  showToast("Email address saved.");
 }
 
+
+/* ---------------------------
+   LANGUAGE
+---------------------------- */
+
+function changeLanguage(){
+
+  const value =
+    document.getElementById("languageSelect").value;
+
+  localStorage.setItem("wallet_language",value);
+
+  document.getElementById("currentLanguage")
+    .textContent = value;
+
+  showToast("Language preference saved.");
+}
+
+
+/* ---------------------------
+   TOAST
+---------------------------- */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(()=>{
+    toast.classList.remove("show");
+  },2600);
+}
+
+
+/* ---------------------------
+   LIVE MARKET API
+   CoinGecko public endpoint
+---------------------------- */
+
+async function loadMarkets(){
+
+  const ids =
+    "bitcoin,ethereum,solana,usd-coin,tether";
+
+  try{
+
+    const response =
+      await fetch(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`
+      );
+
+    const data = await response.json();
+
+    const coins = [
+      ["bitcoin","Bitcoin","BTC"],
+      ["ethereum","Ethereum","ETH"],
+      ["solana","Solana","SOL"],
+      ["tether","Tether","USDT"],
+      ["usd-coin","USD Coin","USDC"]
+    ];
+
+    const html =
+      coins.map(([id,name,symbol])=>{
+
+        const price =
+          data[id]?.usd;
+
+        const change =
+          data[id]?.usd_24h_change;
+
+        if(price === undefined){
+          return "";
+        }
+
+        const changeText =
+          change >= 0
+            ? `+${change.toFixed(2)}%`
+            : `${change.toFixed(2)}%`;
+
+        return `
+          <div class="marketItem">
+            <div class="marketTop">
+              <strong>${name}</strong>
+              <span class="${change >= 0 ? "change" : ""}"
+                    style="${change < 0 ? "color:var(--red)" : ""}">
+                ${changeText}
+              </span>
+            </div>
+
+            <div class="marketValue">
+              $${Number(price).toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits:2,
+                  maximumFractionDigits:2
+                }
+              )}
+            </div>
+
+            <div class="marketPrice">
+              ${symbol}/USD • Live market data
+            </div>
+          </div>
+        `;
+
+      }).join("");
+
+    document.getElementById("markets")
+      .innerHTML = html;
+
+    document.getElementById("marketsFull")
+      .innerHTML = html;
+
+  }catch(error){
+
+    const message = `
+      <div class="marketItem">
+        Market data is temporarily unavailable.
+        <br><br>
+        Check your internet connection and refresh.
+      </div>
+    `;
+
+    document.getElementById("markets")
+      .innerHTML = message;
+
+    document.getElementById("marketsFull")
+      .innerHTML = message;
+  }
+}
+
+
+/* ---------------------------
+   START
+---------------------------- */
+
+const savedLanguage =
+  localStorage.getItem("wallet_language");
+
+if(savedLanguage){
+
+  document.getElementById("languageSelect")
+    .value = savedLanguage;
+
+  document.getElementById("currentLanguage")
+    .textContent = savedLanguage;
+}
+
+loadMarkets();
+
+/* Refresh market prices every 60 seconds */
+setInterval(loadMarkets,60000);
 </script>
 
 </body>
